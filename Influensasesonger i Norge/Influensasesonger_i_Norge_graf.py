@@ -1,3 +1,11 @@
+"""
+    WIP: Command line arguments to get the wanted year.
+         Pass year to plot to get the correct label on the graph.
+
+    @ Sandra Moen
+"""
+
+
 import matplotlib.pyplot as plt
 import numpy as np
 

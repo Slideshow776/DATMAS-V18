@@ -1,8 +1,16 @@
+"""
+    WIP: Command line arguments to get the wanted year.
+         Pass year data to drawGraph in order to get the correct label on the graph.
+
+    @ Sandra Moen
+"""
+
+
 from openpyxl import load_workbook
 import matplotlib.pyplot as plt
 import numpy as np
 
-wb2 = load_workbook('C:/Users/Slideshow/Dropbox/School/Masteroppgave/Git/DATMAS-V18/Trafikkregistrering Statens Vegvesen/Aars og Maanedsdøgn trafikk  2002-2015.xlsx')
+wb2 = load_workbook('C:/Users/Slideshow/Dropbox/School/DATMAS-V18/Git/Trafikkregistrering Statens Vegvesen/Aars og Maanedsdøgn trafikk  2002-2015.xlsx')
 ws = wb2['Trafikkdata']
 
 def getData(year):    
