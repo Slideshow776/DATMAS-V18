@@ -1,7 +1,7 @@
-Rapport/report.aux
-Rapport/report.log
-Rapport/report.pdf
-Rapport/report.synctex.gz
-report.tex.bak
-EN_Forside for masteroppgave.doc
-EN_Forside for masteroppgave.pdf
+*.aux
+*.log
+*.pdf
+*.gz
+*.tex.bak
+*.dvi
+*.toc
