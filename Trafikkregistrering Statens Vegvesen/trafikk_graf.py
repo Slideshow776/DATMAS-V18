@@ -1,3 +1,4 @@
+# coding=utf8
 """
     WIP: Command line arguments to get the wanted year.
          Pass year data to drawGraph in order to get the correct label on the graph.
@@ -5,10 +6,18 @@
     @ Sandra Moen
 """
 
-
+import sys
 from openpyxl import load_workbook
 import matplotlib.pyplot as plt
 import numpy as np
+
+print("Accepts command lines, first: [Bergen OR Oslo]")
+user_input_places = sys.argv[1:][0].lower()
+if not user_input_places == 'oslo' and not user_input_places == 'bergen':
+    print("Error: Invalid command, please choose from 'Oslo' or 'Bergen'")
+
+bergen_places = ['TRENGEREIDTUNNELEN', 'SONGSTAD', 'TUNNELEN', 'TAKVAM', 'INDRE ARNA FV276', 'BJØRKHAUGTUNNELEN', 'BLINDHEIMTUNNELEN', 'GAMLE NYGÅRDSBRO', 'CHRISTIESGT', 'HEIANE BRU', 'VALLAHEIENE', 'NESTTUN TUNNEL', 'NESTTUNVEIEN SØR', 'FJØSANGER V/BOMST.(K', 'NYGÅRD', 'NYGÅRD, KRINGSJÅV.', 'FLØYFJELLTUNNELEN', 'FLØYFJ NORDGÅENDE', 'FLØYFJ SØRGÅENDE', 'AMALIE/MUNKEBOTTENT', 'SANDVIKSVEIEN', 'EIDSVÅGTUNNELEN', 'VÅGSBOTN FV 267', 'VÅGSBOTN', 'EIKÅSTUNNELEN', 'EIKÅS', 'KNARVIK', 'DAMSGÅRDSVEIEN BOM', 'DAMSGÅRDTUNNELEN', 'LYDERHORNSVEI', 'HARAFJELLTUNNELEN', 'SOTRABRUA VEST', 'KOLLTVEITTUNNELEN', 'TORBORG NEDREAASGT.', 'TROLDHAUGTUNNEL' ,'LAGUNEN' ,'HÅVARDSTUN' ,'GULLBOTN (KLIMA)' ,'ISDALSTØ FARTSTAVLE', 'FANA V/KIRKEVOLL SK', 'KJØKKELVIKVEIEN', 'LODDEFJORD NORD', 'ØVREGATEN', 'BØNESSKOGEN', 'BØNES', 'LØVSTAKKTUNNELEN', 'BJØRGEVN.SANDEIDET', 'KNAPPETUNNELEN SANDEIDET', 'SANDEIDET', 'KRÅKENES', 'STRAUME BRO', 'BJØRGEVEIEN STRAUME', 'STRAUMEVEIEN', 'YTREBYGDSVN. VED DOLVIK SØR', 'YTREBYGDSVN. VED DOLVIK NORD', 'KNAPPETUN.DOLVIK', 'KNAPPETUN.SANDEIDET', 'KNAPPETUN.STRAUME', 'RAVNANGER', 'SALHUS FARTSTAVLE', 'OSTERØYBRUA', 'HAUKELAND', 'MIDTTUNTUNNEL', 'SKJOLDSKIFTET NORD', 'SKJOLD', 'STORETVEITVEIEN BOM', 'BJØRNSONSGATEN', 'MICHAEL KROHNGT.BOM', 'MANNSVERK', 'KALFARBAKKEN', 'TORGET', 'BRYGGEN']
+oslo_places = ['E6 V/KARIHAUGEN', 'SVARTDALSTUNNELEN', 'EV 18 V/ MASTEMYR', 'E18-MOSSEV V/FISKEV', 'FESTNINGTUNNEL', 'MARITIM-510B', 'AMMERUD', 'ST.RINGV V/NYDALSBR', 'VATERLANDTUNNELEN']
 
 wb2 = load_workbook('C:/Users/Slideshow/Dropbox/School/DATMAS-V18/Git/Trafikkregistrering Statens Vegvesen/Aars og Maanedsdøgn trafikk  2002-2015.xlsx')
 ws = wb2['Trafikkdata']
@@ -18,12 +27,19 @@ def getData(year):
     for i in range(0, 12):
         months.append(0)
 
+    places = [] # oslo or bergen    
+    if user_input_places == 'bergen':
+        places = bergen_places
+    elif user_input_places == 'oslo':
+        places = oslo_places
+
     for i in range(2, ws.max_row):
-        if ws['D' + str(i)].value == year:        
-            for j in range(0, len(months)):
-                if not isinstance(ws[chr(69+j) + str(i)].value, int): # chr(69) = E in ascii
-                    continue
-                months[j] += int(ws[chr(69+j) + str(i)].value)
+        if ws['B' + str(i)].value in places:
+            if ws['D' + str(i)].value == year:        
+                for j in range(0, len(months)):
+                    if not isinstance(ws[chr(69+j) + str(i)].value, int): # chr(69) = E in ascii
+                        continue
+                    months[j] += int(ws[chr(69+j) + str(i)].value)
     return months
 
 def drawGraph(data):
