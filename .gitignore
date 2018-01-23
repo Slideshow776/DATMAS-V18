@@ -5,4 +5,5 @@
 *.tex.bak
 *.dvi
 *.toc
+*.pdf
 keys.txt

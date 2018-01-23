@@ -123,7 +123,7 @@ while i < len(SEARCH_TERMS):
             )
     i = i+1
 
-    print(twitter_search.get('statuses'))
+    #print(twitter_search.get('statuses'))
     for result in twitter_search.get('statuses'):
         tweet_count += 1
         ids = result.get('id_str')
