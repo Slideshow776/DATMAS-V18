@@ -129,6 +129,8 @@ while i < len(SEARCH_TERMS):
         ids = result.get('id_str')
         created_at = result.get('created_at')
         location = result.get('user').get('location')
+        # geolocation = result.get('user').get('location')
+        # print("\nTEST: ", result)
         text = result.get('full_text')
 
         if not ids in ids_in_file:
