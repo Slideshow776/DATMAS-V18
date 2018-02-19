@@ -7,3 +7,10 @@
 *.toc
 *.pdf
 keys.txt
+*.bbl
+*.bcf
+*.blg
+*.lof
+*.lot
+main.run.xml
+*.bak
