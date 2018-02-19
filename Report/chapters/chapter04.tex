@@ -1,0 +1,47 @@
+\section*{4.1 Folkehelseinstituttet}
+From the datasets available it was a simple job to plot the data in a graph. Figure \ref{fig:infstat} show the three last seasons of influenza. The plotting was done manually as fhi only provides the data in pdf format.
+
+\begin{figure}[ht]
+\includegraphics[width=16cm]{influenza_15_till_18}
+\centering
+\caption{Influenza seasons}
+\label{fig:infstat}
+\end{figure}
+
+\newpage
+
+\section*{4.2 Vegvesenet}
+From the XML statistics some simple graphs were created in python showing the total annual traffic on Norwegian roads from 2002 to 2015 as seen in figure \ref{fig:anualtotal}. 
+
+\begin{figure}[ht]
+\includegraphics[width=16cm]{xml_02_15_annual_total}
+\centering
+\caption{Annual traffic 2002-2015}
+\label{fig:anualtotal}
+\end{figure}
+
+Also derived from this the annual traffic of the two cities Bergen and Oslo, which are towns in interest. Figure \ref{fig:anualbergen} shows the traffic in Bergen, and figure \ref{fig:anualoslo} show the traffic in Oslo.
+
+\begin{figure}[ht]
+\includegraphics[width=16cm]{xml_02_15_annual_bergen}
+\centering
+\caption{Bergen traffic 2002-2015}
+\label{fig:anualbergen}
+\end{figure}
+
+\begin{figure}[ht]
+\includegraphics[width=16cm]{xml_02_15_annual_oslo}
+\centering
+\caption{Oslo traffic 2002-2015}
+\label{fig:anualoslo}
+\end{figure}
+The dataset is an XLM file structure that is downloaded from the NPRA manually. A python program was created that reads through all rows and collects the relevant columns into an array and then draws a graph. For the annual graph every month of every year was collected. For the towns of Bergen and Oslo the correct roads were identified and loaded from a separate text file, then every year of every month of those roads were collected, loaded into an array and the drawn as a graph. The separate text file is to make it easy to edit should these roads change in the future.
+The problem of using these datasets is that the data is an average calculation of monthly traffic, this is too coarse for comparison against the influenza data as they are on a weekly basis. Luckily upon further investigation and help from the NPRA better data was accessible upon request, hidden from that available on their website. A set of traffic registration stations was needed to define the temporal bounds of each area of interest. Defined are the towns of Oslo and Bergen, as well as the whole of Norway on a level 1 basis. The level 1 registrations ensures continually registration throughout the year, and is exactly what this project requires.
+
+\newpage\newpage
+
+\section*{4.3 Twitter}
+Using the REST search API it was paramount that in order to build a sufficient dataset acquiring and collecting data had to begin as soon as possible. A simple python program was created that takes the input of the API keys and the keywords to be searched upon . The program ensures that no duplicate messages are recorded, and the limit of a hundred tweets was overcome simply by searching for yet another hundred from the last date of the previous hundred, until the date limit was reached.
+The output is appended to a file in this format: id, date, location, tweet.
+
+Analysis of the output then need to be divided into categories based on relevant content.

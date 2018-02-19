@@ -1,0 +1,17 @@
+[0] Config.pm:302> INFO - This is Biber 2.10
+[1] Config.pm:305> INFO - Logfile is 'main.blg'
+[78] biber-MSWIN64:313> INFO - === 
+[193] Biber.pm:371> INFO - Reading 'main.bcf'
+[341] Biber.pm:857> INFO - Found 1 citekeys in bib section 0
+[363] Biber.pm:3976> INFO - Processing section 0
+[466] Biber.pm:4136> INFO - Looking for bibtex format file 'references.bib' for section 0
+[487] bibtex.pm:1490> INFO - LaTeX decoding ...
+[494] bibtex.pm:1306> INFO - Found BibTeX data source 'references.bib'
+[507] Utils.pm:193> WARN - BibTeX subsystem: C:\Users\SLIDES~1\AppData\Local\Temp\tDHe8OpLJx\references.bib_12080.utf8, line 5, warning: undefined macro "ttps://www.vegvesen.no/om+statens+vegvesen/om+organisasjonen/For+utviklere+API"
+[523] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[523] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[524] Biber.pm:3804> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-US'
+[525] Biber.pm:3810> INFO - No sort tailoring available for locale 'en-US'
+[528] bbl.pm:617> INFO - Writing 'main.bbl' with encoding 'UTF-8'
+[529] bbl.pm:720> INFO - Output to main.bbl
+[537] Biber.pm:110> INFO - WARNINGS: 1

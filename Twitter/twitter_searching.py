@@ -4,7 +4,7 @@
 
     search_terms.txt:   Sett av nøkkelord du vil søke på, skriv nytt ord på ny linje
     keys.txt:           Sett av twitterkonto api keys, i rekkefølge på ny linje: ACCESS_TOKEN, ACCESS_SECRET, CONSUMER_KEY, CONSUMER_SECRET
-    twitter_data:       tweets funnet, format: id, dato, lokasjon, tweet, ----------------------------------------------------------------------------
+    twitter_data.txt:   Tweets funnet, format: id, dato, lokasjon, tweet, ----------------------------------------------------------------------------
 
     @author Sandra Moen
 """
@@ -31,7 +31,7 @@ FILE.close()
 FILE = open("search_terms.txt")
 SEARCH_TERMS = FILE.readlines()
 
-FILE = open("twitter_data.txt", "r+", encoding='utf-8')
+FILE = open("twitter_data.txt", "r+", encoding='iso-8859-1')
 
 def get_all_ids_in_file():
     file_data = FILE.readlines()
@@ -138,11 +138,11 @@ while i < len(SEARCH_TERMS):
                 FILE.write(ids + '\n')
                 FILE.write(created_at + '\n')
                 if location:
-                    FILE.write(location + '\n')
+                    FILE.write(str(location.encode("utf-8")) + '\n')
                 else:
                     FILE.write('None\n')
 
-                FILE.write(text)
+                FILE.write(str(text.encode("utf-8")))
                 FILE.write("\n----------------------------------------------------------------------------\n")
         latest_date = convert_date(created_at)
 

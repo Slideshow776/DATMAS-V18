@@ -23,7 +23,7 @@ user_input_places = sys.argv[1:][0].lower()
 if not user_input_places == 'oslo' and not user_input_places == 'bergen' and not user_input_places == 'stavanger':
     print("Error: Invalid command, please choose from 'Oslo' or 'Bergen'")
 
-wb2 = load_workbook(r'C:\Users\Slideshow\Dropbox\School\DATMAS-V18\Git\Statens Vegvesen\Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx')
+wb2 = load_workbook('Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx')
 if user_input_places == 'bergen':
     ws = wb2['Bergen']
 elif user_input_places == 'oslo':
@@ -58,7 +58,7 @@ def getData(year):
 def drawGraph(data):
     ticks, x = [], []
     for i in range(0, 52):
-        ticks.append("Uke " + str(i+1))
+        ticks.append("Week " + str(i+1))
         x.append(i)
     x = np.array(x)
 
@@ -72,8 +72,8 @@ def drawGraph(data):
 
     plt.xticks(x, ticks)
     plt.xticks(rotation=45)
-    plt.title('Ukestrafikk fra Statens Vegvesen 2002-2015 i ' + user_input_places.title())
-    plt.ylabel("Trafikk per uke")
+    plt.title('Weekly traffic from the NPRA 2002-2015 in ' + user_input_places.title())
+    plt.ylabel("Trafic per week")
     plt.legend(loc='upper left')
     plt.grid(axis='y', linestyle='-')
     plt.grid(axis='x', linestyle='-')

@@ -42,9 +42,9 @@ def make_the_graph(x, y, ticks):
     plt.xticks(x, ticks)
     plt.plot(np.array(x), np.array(y))
 
-    plt.title('Tweets')
-    plt.xlabel("dag/måned")
-    plt.ylabel("Antall")
+    plt.title('Tweets about influenza symptoms in Norway 2018')
+    plt.xlabel("Date")
+    plt.ylabel("Number of tweets")
     plt.grid(axis='y', linestyle='-')
     plt.grid(axis='x', linestyle='-')
     plt.show()

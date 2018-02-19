@@ -64,7 +64,6 @@ def daglig(data):
         tempy = 0
     return x, y
 
-
 def periode(data):
     x, y = [], []
     tempx, tempy = '', 0
