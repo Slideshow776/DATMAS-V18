@@ -51,11 +51,11 @@ def getData(year):
                     if not isinstance(ws[chr(66) + chr(65) + str(i)].value, int): # chr(66) = B in ascii
                         continue
                     weeks[j] += int(ws[chr(66) + chr(65) + str(i)].value)
-
-
     return weeks
 
-def drawGraph(data):
+
+
+def drawGraph(years, data): # Input: List of years. Each year contain a total amount of traffic data per week
     ticks, x = [], []
     for i in range(0, 52):
         ticks.append("Week " + str(i+1))
@@ -63,12 +63,10 @@ def drawGraph(data):
     x = np.array(x)
 
     colors=["#FF0000", "#800000", "#FFFF00", "#808000", "#00FF00", "#008000", "#00FFFF", "#008080", "#0000FF", "#000080", "#FF00FF", "#800080", "#f58231", "#aaffc3"]
-    for i in range(2, len(data)+2):
-        y = np.array(data[i-2])
-        label = "201" + str(i+1)
-        plt.plot(x, y, label=label, color=colors[i-2])
-
-    
+    for i in range(0, len(years)):
+        y = np.array(data[i])
+        label = years[i]
+        plt.plot(x, y, label=label, color=colors[i])
 
     plt.xticks(x, ticks)
     plt.xticks(rotation=45)
@@ -81,7 +79,8 @@ def drawGraph(data):
         plt.axvline(x=xc, color='magenta', linestyle='--')
     plt.show()
 
-data_years = []
-for i in range(2013, 2018): # data tilgjengelig år 2013-2017
+data_years, years = [], []
+for i in range(2013, 2018): # data available years 2013-2017
     data_years.append(getData(i))
-drawGraph(data_years)
+    years.append(i)
+drawGraph(years, data_years)

@@ -14,3 +14,4 @@ keys.txt
 *.lot
 main.run.xml
 *.bak
+masterappen/frontend/node_modules/*

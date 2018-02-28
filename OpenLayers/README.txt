@@ -1,0 +1,1 @@
+Used this tutorial: https://stackoverflow.com/questions/24315801/how-to-add-markers-with-openlayers-3
