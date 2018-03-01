@@ -27,12 +27,9 @@ def getWorksheetUserEnteredCommands():
         print("Error: Invalid command, please choose from 'Oslo', 'Stavanger' or 'Bergen'")
 
     wb2 = load_workbook('Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx')
-    if user_input_places == 'bergen':
-        ws = wb2['Bergen']
-    elif user_input_places == 'oslo':
-        ws = wb2['Oslo']
-    elif user_input_places == 'stavanger':
-        ws = wb2['Stavanger']
+    if user_input_places == 'bergen': ws = wb2['Bergen']
+    elif user_input_places == 'oslo': ws = wb2['Oslo']
+    elif user_input_places == 'stavanger': ws = wb2['Stavanger']
     return ws, user_input_places
 
 def getWorksheetsUserEnteredNoCommands():

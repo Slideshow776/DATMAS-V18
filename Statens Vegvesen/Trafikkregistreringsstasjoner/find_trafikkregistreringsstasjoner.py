@@ -11,6 +11,6 @@ with open(trafikkregistreringsstasjonsett[3], 'r') as fp:
     next(reader, None)  # skip the headers
     data_read = [row for row in reader]
 
-# Print data in riht format
+# Print data in right format
 for data in data_read:
     print(data[0].split(';')[5].strip('"'))

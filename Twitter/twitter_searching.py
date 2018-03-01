@@ -1,50 +1,43 @@
 """
-    Bruker twitter sitt REST-API for å søke etter nøkkelord.
-    Nye tweets blir lagt til på slutten av output filen.
+    Uses Twitter's REST-API to search on terms.
+    New tweets are added in the output file.
 
-    search_terms.txt:   Sett av nøkkelord du vil søke på, skriv nytt ord på ny linje
-    keys.txt:           Sett av twitterkonto api keys, i rekkefølge på ny linje: ACCESS_TOKEN, ACCESS_SECRET, CONSUMER_KEY, CONSUMER_SECRET
-    twitter_data.txt:   Tweets funnet, format: id, dato, lokasjon, tweet, ----------------------------------------------------------------------------
+    search_terms.txt:   Set of terms you want to search on, add a new term on a new line.
+    keys.txt:           Set of Twitter account api keys, in order each on a new line: ACCESS_TOKEN, ACCESS_SECRET, CONSUMER_KEY, CONSUMER_SECRET
+    twitter_data.txt:   Tweets found, format: id, date, location, tweet, ----------------------------------------------------------------------------
 
     @author Sandra Moen
 """
 
 from twitter import Twitter, OAuth
 
-# Loading keys from hidden textfile, in order to protect my keys from misuse
-FILE = open("keys.txt", "r")
+# Twitter initialization
+FILE = open("keys.txt", "r") # Loading keys from hidden textfile, in order to protect private keys from misuse
 KEYS = FILE.readlines()
-
-# Variables that contains the user credentials to access Twitter API
 ACCESS_TOKEN = KEYS[0].strip()
 ACCESS_SECRET = KEYS[1].strip()
 CONSUMER_KEY = KEYS[2].strip()
 CONSUMER_SECRET = KEYS[3].strip()
-
 OAUTH = OAuth(ACCESS_TOKEN, ACCESS_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
+TWITTER = Twitter(auth=OAUTH) # Initiate the connection to Twitter REST API
 
-# Initiate the connection to Twitter REST API
-TWITTER = Twitter(auth=OAUTH)
-
-# Load the search terms
+# Files initialization
 FILE.close()
 FILE = open("search_terms.txt")
-SEARCH_TERMS = FILE.readlines()
-
+SEARCH_TERMS = FILE.readlines() # Load the search terms
+FILE.close()
 FILE = open("twitter_data.txt", "r+", encoding='iso-8859-1')
 
 def get_all_ids_in_file():
     file_data = FILE.readlines()
     FILE.seek(0)
-    ids_in_file = []
-    temp = []
+    ids_in_file, temp = [], []
     if file_data:
-        for i in range(0, len(file_data)-1):
+        for i in range(len(file_data)-1):
             if file_data[i] == '----------------------------------------------------------------------------\n':
                 ids_in_file.append(file_data[i+1])
             elif i == 0:
                 ids_in_file.append(file_data[i])
-        temp = []
         for dates in ids_in_file:
             temp.append(dates.strip('\n'))
     return temp
@@ -52,13 +45,11 @@ def get_all_ids_in_file():
 def get_all_texts_in_file(): # gets the first line of all texts in file
     file_text = FILE.readlines()
     FILE.seek(0)
-    ids_in_file = []
-    temp = []
+    ids_in_file, temp = [], []
     if file_text:
         for i in range(0, len(file_text)):
             if file_text[i] == '----------------------------------------------------------------------------\n':
                 ids_in_file.append(file_text[i-1])
-        temp = []
         for dates in ids_in_file:
             temp.append(dates.strip('\n'))
     return temp
@@ -100,17 +91,18 @@ texts_in_file = get_all_texts_in_file()
 ids_in_file = get_all_ids_in_file()
 
 # Search tweets
+MAX_NUMBER_OF_SEARCHABLE_TWEETS = 100
 tweet_count, i = 0, 0
 latest_date = ""
 while i < len(SEARCH_TERMS):
-    if tweet_count == 100:
+    if tweet_count == MAX_NUMBER_OF_SEARCHABLE_TWEETS:
         tweet_count = 0
         i = i-1
         twitter_search = TWITTER.search.tweets(
             q=SEARCH_TERMS[i].strip('\n'),
             tweet_mode='extended',
             lang='no',
-            count=100,
+            count=MAX_NUMBER_OF_SEARCHABLE_TWEETS,
             until=latest_date
             )
     else:        
@@ -119,7 +111,7 @@ while i < len(SEARCH_TERMS):
             q=SEARCH_TERMS[i].strip('\n'),
             tweet_mode='extended',
             lang='no',
-            count=100
+            count=MAX_NUMBER_OF_SEARCHABLE_TWEETS
             )
     i = i+1
 
@@ -137,11 +129,8 @@ while i < len(SEARCH_TERMS):
             if not text in texts_in_file: # ignore duplicate tweets in search and file
                 FILE.write(ids + '\n')
                 FILE.write(created_at + '\n')
-                if location:
-                    FILE.write(str(location.encode("utf-8")) + '\n')
-                else:
-                    FILE.write('None\n')
-
+                if location: FILE.write(str(location.encode("utf-8")) + '\n')
+                else: FILE.write('None\n')
                 FILE.write(str(text.encode("utf-8")))
                 FILE.write("\n----------------------------------------------------------------------------\n")
         latest_date = convert_date(created_at)

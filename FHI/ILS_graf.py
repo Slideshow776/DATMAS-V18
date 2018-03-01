@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 def get_data():
-    wb2 = load_workbook(r'C:\Users\Slideshow\Dropbox\School\DATMAS-V18\Fra Lars\ILI_tall_2016_17.xlsx')
+    wb2 = load_workbook(r'C:\Users\Slideshow\Dropbox\School\DATMAS-V18\Fra Lars\ILI_tall_2016_17.xlsx') # TODO: change this to relative path?
     ws = wb2['ILI_tall_2016_17']
 
     x, y = [], []
@@ -30,5 +30,7 @@ def draw_graph(x, y):
     plt.grid(axis='x', linestyle='-')
     plt.show()
 
-x, y = get_data()
-draw_graph(x, y)
+def main():    
+    x, y = get_data()
+    draw_graph(x, y)
+    
