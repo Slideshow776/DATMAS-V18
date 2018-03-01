@@ -13,55 +13,49 @@ from openpyxl import load_workbook
 import matplotlib.pyplot as plt
 import numpy as np
 
+NUMBER_OF_WEEKS_IN_YEAR, YEARS = 52, [2013, 2014, 2015, 2016, 2017]
 worksheets, vertical_lines = [], []
 user_input_places = "norway"
 print("Accepts command lines first: [Bergen, Oslo or Stavanger], second: set of vertical lines in weeks\nNo commands shows total traffic of all of Norway")
 
-def userEnteredCommands():
-    if len(sys.argv) >= 2:
+def getWorksheetUserEnteredCommands():
+    if len(sys.argv) >= 2: # TODO: remove?
         for i in range(2, len(sys.argv)):
             vertical_lines.append(int(sys.argv[i]))
     user_input_places = sys.argv[1:][0].lower()
     if not user_input_places == 'oslo' and not user_input_places == 'bergen' and not user_input_places == 'stavanger':
-        print("Error: Invalid command, please choose from 'Oslo' or 'Bergen'")
+        print("Error: Invalid command, please choose from 'Oslo', 'Stavanger' or 'Bergen'")
 
     wb2 = load_workbook('Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx')
     if user_input_places == 'bergen':
-        user_input_places = 'bergen'
         ws = wb2['Bergen']
     elif user_input_places == 'oslo':
-        user_input_places = 'oslo'
         ws = wb2['Oslo']
     elif user_input_places == 'stavanger':
-        user_input_places = 'stavanger'
         ws = wb2['Stavanger']
     return ws, user_input_places
 
-def userEnteredNoCommands():
-    worksheets = []
-    workbook = load_workbook('Ukeverdiger utvalgte punkter hele landet 2013-2017.xlsx')
+def getWorksheetsUserEnteredNoCommands():
+    worksheets, workbook = [], load_workbook('Ukeverdiger utvalgte punkter hele landet 2013-2017.xlsx')
     for ws in workbook:
         worksheets.append(ws)
     return worksheets
 
-# Input: year (String), ws (worksheet)
-# Output: total number of traffic for each week of the year (int)
+# Input: a single year (int), ws (worksheet)
+# Output: list of total number of traffic for 52 weeks of the year (int[])
 def getData(year, ws): 
-    weeks = [0] * 52
+    weeks = [0] * NUMBER_OF_WEEKS_IN_YEAR
     for i in range(1, ws.max_row):
         if ws['A' + str(i)].value == year:        
-            for j in range(0, len(weeks)):
+            for j in range(NUMBER_OF_WEEKS_IN_YEAR):
                 if j < 25: # xlm counts A-Z, then AA-AZ ...
-                    if not isinstance(ws[chr(66+j) + str(i)].value, int): # chr(66) = B in ascii
-                        continue
+                    if not isinstance(ws[chr(66+j) + str(i)].value, int): continue # chr(66) = B in ascii
                     weeks[j] += int(ws[chr(66+j) + str(i)].value)
-                elif j < 51:
-                    if not isinstance(ws[chr(65) + chr(65+j-25) + str(i)].value, int): # chr(66) = B in ascii
-                        continue
+                elif j < 51: # xlm counts AA-AZ, then BA-BZ ...
+                    if not isinstance(ws[chr(65) + chr(65+j-25) + str(i)].value, int): continue # chr(66) = B in ascii
                     weeks[j] += int(ws[chr(65) + chr(65+j-25) + str(i)].value)
-                else:
-                    if not isinstance(ws[chr(66) + chr(65) + str(i)].value, int): # chr(66) = B in ascii
-                        continue
+                else: # xlm counts BA-BZ, then CA-CZ ...
+                    if not isinstance(ws[chr(66) + chr(65) + str(i)].value, int): continue # chr(66) = B in ascii
                     weeks[j] += int(ws[chr(66) + chr(65) + str(i)].value)
     return weeks
 
@@ -89,23 +83,20 @@ def drawGraph(years, data): # Input: List of years (String[]). Each year contain
         plt.axvline(x=xc, color='magenta', linestyle='--')
     plt.show()
 
-if len(sys.argv)>1: # if commands were given
-    data_years, years = [], []
-    worksheet, user_input_places = userEnteredCommands()
-    for i in range(2013, 2018): # data available years 2013-2017
-        data_years.append(getData(i, worksheet))
-        years.append(i)
-    drawGraph(years, data_years)
-else:
-    bikes = [1, 3, 4, 6, 9, 11, 13, 15, 17, 19]
-    total_years = [[0]*52 for i in range(5)]
-    years = [2013, 2014, 2015, 2016, 2017]
-    worksheets = userEnteredNoCommands()
-    for i in range(0, len(worksheets)):
-        data_years = [[0]*52 for i in range(5)]
-        if not i in bikes: # only cars for now ...
-            for j in range(2013, 2018):
-                data_years[j - 2013] = getData(j, worksheets[i])
-                for k in range(52):
-                    total_years[j - 2013][k] += data_years[j - 2013][k]
-    drawGraph(years, total_years)
+def main():
+    if len(sys.argv)>1: # if console commands were given
+        total_years, (worksheet, user_input_places) = [], getWorksheetUserEnteredCommands()
+        for year in YEARS:
+            total_years.append(getData(year, worksheet))
+    else:
+        total_years = [[0]*NUMBER_OF_WEEKS_IN_YEAR for i in range(len(YEARS))] # initialize empty list of lists
+        worksheets = getWorksheetsUserEnteredNoCommands()
+        for worksheet in worksheets:
+            data_years = [[0]*NUMBER_OF_WEEKS_IN_YEAR for i in range(len(YEARS))] # initialize empty list of lists
+            for year in YEARS:
+                data_years[year - YEARS[0]] = getData(year, worksheet)
+                for week in range(NUMBER_OF_WEEKS_IN_YEAR):
+                    total_years[year - YEARS[0]][week] += data_years[year - YEARS[0]][week]
+    drawGraph(YEARS, total_years)
+
+main()
