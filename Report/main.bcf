@@ -1923,8 +1923,9 @@
     <bcf:datasource type="file" datatype="bibtex">references.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1">fhi</bcf:citekey>
-    <bcf:citekey order="2">vegvesenet</bcf:citekey>
+    <bcf:citekey order="1">fhi_sykdommer</bcf:citekey>
+    <bcf:citekey order="2">fhi</bcf:citekey>
+    <bcf:citekey order="3">vegvesenet</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">
