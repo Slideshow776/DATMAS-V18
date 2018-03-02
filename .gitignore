@@ -12,6 +12,7 @@
 *.bak
 *.tex.bak
 *.log
+*.bib.bak
 main.run.xml
 keys.txt
 masterappen/frontend/node_modules/*
