@@ -1,6 +1,6 @@
 This chapter describes how the use of the different datasets were implemented.
 
-\section*{4.1 Folkehelseinstituttet}
+\section{Folkehelseinstituttet}
 The data contained two different sets, and it was a simple job to plot them in a graph. Figure \ref{fig:infstat} show the three last seasons of influenza. The plotting was done manually as fhi only provides the data in pdf format.
 
 \begin{figure}[ht]
@@ -21,7 +21,7 @@ Figure \ref{fig:ilsstat} shows the ILS of the year 2016/2017. This was not done 
 
 \newpage
 
-\section*{4.2 Vegvesenet}
+\section{Vegvesenet}
 From the XML statistics some simple graphs were created in python showing the total annual traffic on Norwegian roads from 2002 to 2015 as seen in figure \ref{fig:anualtotal}. 
 
 \begin{figure}[ht]
@@ -96,10 +96,10 @@ Figure \ref{fig:boundsbergen}, \ref{fig:boundsoslo} and \ref{fig:boundsstavanger
 
 \newpage\newpage
 
-\section*{4.3 Twitter}
+\section{Twitter}
 Using the REST search API it was paramount that in order to build a sufficient dataset acquiring and collecting data had to begin as soon as possible. A simple python program was created that takes the input of the API keys and the keywords to be searched upon . The program ensures that no duplicate messages are recorded, and the limit of a hundred tweets was overcome simply by searching for yet another hundred from the last date of the previous hundred, until the date limit was reached.
 The output is appended to a file in this format: id, date, location, tweet.
 
 Analysis of the output then need to be divided into categories based on relevant content.
 
-\section*{4.4 Kolumbus}
+\section{Kolumbus}
