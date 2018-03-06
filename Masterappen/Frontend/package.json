@@ -10,6 +10,7 @@
   "author": "Sandra Moen",
   "license": "ISC",
   "dependencies": {
+    "npm": "^5.7.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "webpack": "^3.11.0",
