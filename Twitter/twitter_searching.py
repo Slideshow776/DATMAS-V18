@@ -23,10 +23,10 @@ TWITTER = Twitter(auth=OAUTH) # Initiate the connection to Twitter REST API
 
 # Files initialization
 FILE.close()
-FILE = open("search_terms.txt")
+FILE = open("search_terms.txt", "r")
 SEARCH_TERMS = FILE.readlines() # Load the search terms
 FILE.close()
-FILE = open("twitter_data.txt", "r+", encoding='iso-8859-1')
+FILE = open("twitter_data.txt", "a+", encoding='iso-8859-1')
 
 def get_all_ids_in_file():
     file_data = FILE.readlines()

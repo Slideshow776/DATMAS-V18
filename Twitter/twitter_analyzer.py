@@ -1,5 +1,5 @@
 """
-    'Analyzes' the Twitter data collected by twitter_searching.py.
+    'Analyzes' the Twitter data collected by twitter_searching.py and draws a graph.
     The analyzation consists of simply counting how many tweets there are.
 
     @author Sandra Moen
@@ -24,6 +24,7 @@ def get_dates_from_file(file_name):
 
 def draw_graph(x, y, ticks):
     plt.xticks(x, ticks)
+    plt.xticks(rotation=45)
     plt.plot(np.array(x), np.array(y))
 
     plt.title('Tweets about influenza symptoms in Norway 2018')
