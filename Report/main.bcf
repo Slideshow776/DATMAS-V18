@@ -1924,8 +1924,10 @@
   </bcf:bibdata>
   <bcf:section number="0">
     <bcf:citekey order="1">fhi_sykdommer</bcf:citekey>
-    <bcf:citekey order="2">fhi</bcf:citekey>
-    <bcf:citekey order="3">vegvesenet</bcf:citekey>
+    <bcf:citekey order="2">niph</bcf:citekey>
+    <bcf:citekey order="3">NorSySS</bcf:citekey>
+    <bcf:citekey order="4">fhi</bcf:citekey>
+    <bcf:citekey order="5">vegvesenet</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

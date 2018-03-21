@@ -19,7 +19,7 @@
 
 \refsection{0}
   \datalist[entry]{none/global//global/global}
-    \entry{fhi_sykdommer}{online}{}
+    \entry{niph}{online}{}
       \name{author}{1}{}{%
         {{hash=100de1d2b72707449f34f6e68dd5788f}{%
            family={instituttet},
@@ -37,6 +37,52 @@
       \field{sortinit}{1}
       \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
       \field{extraalpha}{1}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Norwegian Institute of Public Health}
+      \field{year}{2018}
+    \endentry
+    \entry{NorSySS}{online}{}
+      \name{author}{1}{}{%
+        {{hash=100de1d2b72707449f34f6e68dd5788f}{%
+           family={instituttet},
+           familyi={i\bibinitperiod},
+           prefix={folkehelse},
+           prefixi={f\bibinitperiod}}}%
+      }
+      \strng{namehash}{100de1d2b72707449f34f6e68dd5788f}
+      \strng{fullhash}{100de1d2b72707449f34f6e68dd5788f}
+      \strng{bibnamehash}{100de1d2b72707449f34f6e68dd5788f}
+      \strng{authorbibnamehash}{100de1d2b72707449f34f6e68dd5788f}
+      \strng{authornamehash}{100de1d2b72707449f34f6e68dd5788f}
+      \strng{authorfullhash}{100de1d2b72707449f34f6e68dd5788f}
+      \field{labelalpha}{ins18}
+      \field{sortinit}{2}
+      \field{sortinithash}{cbff857e587bcb4635511624d773949e}
+      \field{extraalpha}{2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Influensa liknende symptomer}
+      \field{year}{2018}
+    \endentry
+    \entry{fhi_sykdommer}{online}{}
+      \name{author}{1}{}{%
+        {{hash=100de1d2b72707449f34f6e68dd5788f}{%
+           family={instituttet},
+           familyi={i\bibinitperiod},
+           prefix={folkehelse},
+           prefixi={f\bibinitperiod}}}%
+      }
+      \strng{namehash}{100de1d2b72707449f34f6e68dd5788f}
+      \strng{fullhash}{100de1d2b72707449f34f6e68dd5788f}
+      \strng{bibnamehash}{100de1d2b72707449f34f6e68dd5788f}
+      \strng{authorbibnamehash}{100de1d2b72707449f34f6e68dd5788f}
+      \strng{authornamehash}{100de1d2b72707449f34f6e68dd5788f}
+      \strng{authorfullhash}{100de1d2b72707449f34f6e68dd5788f}
+      \field{labelalpha}{ins18}
+      \field{sortinit}{3}
+      \field{sortinithash}{a4b52e5432884761f50fb9571273b93e}
+      \field{extraalpha}{3}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Influensa symptomer}
@@ -57,9 +103,9 @@
       \strng{authornamehash}{100de1d2b72707449f34f6e68dd5788f}
       \strng{authorfullhash}{100de1d2b72707449f34f6e68dd5788f}
       \field{labelalpha}{ins18}
-      \field{sortinit}{2}
-      \field{sortinithash}{cbff857e587bcb4635511624d773949e}
-      \field{extraalpha}{2}
+      \field{sortinit}{4}
+      \field{sortinithash}{11cdaee3b18e01d77f3f428b13c1fc76}
+      \field{extraalpha}{4}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Influensa overvåkning}
@@ -80,8 +126,8 @@
       \strng{authornamehash}{4084d9168ffd1566e754f95bf74d2841}
       \strng{authorfullhash}{4084d9168ffd1566e754f95bf74d2841}
       \field{labelalpha}{veg18}
-      \field{sortinit}{3}
-      \field{sortinithash}{a4b52e5432884761f50fb9571273b93e}
+      \field{sortinit}{5}
+      \field{sortinithash}{3c19c3776b658b3558e9e2e4840c01e2}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{For utviklere/API}
