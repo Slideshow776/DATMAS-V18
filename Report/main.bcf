@@ -1926,8 +1926,14 @@
     <bcf:citekey order="1">fhi_sykdommer</bcf:citekey>
     <bcf:citekey order="2">niph</bcf:citekey>
     <bcf:citekey order="3">NorSySS</bcf:citekey>
-    <bcf:citekey order="4">fhi</bcf:citekey>
-    <bcf:citekey order="5">vegvesenet</bcf:citekey>
+    <bcf:citekey order="4">twitter_politic</bcf:citekey>
+    <bcf:citekey order="5">twitter_flu_trends</bcf:citekey>
+    <bcf:citekey order="6">twitter_linguistics</bcf:citekey>
+    <bcf:citekey order="7">twitter_earthQuake</bcf:citekey>
+    <bcf:citekey order="8">twitter_flu_trends</bcf:citekey>
+    <bcf:citekey order="9">twitter_what_you_tweet</bcf:citekey>
+    <bcf:citekey order="10">fhi</bcf:citekey>
+    <bcf:citekey order="11">vegvesenet</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

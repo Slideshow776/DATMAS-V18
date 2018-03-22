@@ -1,21 +1,18 @@
-[1] Config.pm:302> INFO - This is Biber 2.10
-[3] Config.pm:305> INFO - Logfile is 'main.blg'
-[85] biber-MSWIN64:313> INFO - === 
-[149] Biber.pm:371> INFO - Reading 'main.bcf'
-[378] Biber.pm:857> INFO - Found 5 citekeys in bib section 0
-[402] Biber.pm:3976> INFO - Processing section 0
-[426] Biber.pm:4136> INFO - Looking for bibtex format file 'references.bib' for section 0
-[434] bibtex.pm:1490> INFO - LaTeX decoding ...
-[493] bibtex.pm:1306> INFO - Found BibTeX data source 'references.bib'
-[528] Utils.pm:193> WARN - BibTeX subsystem: C:\Users\SLIDES~1\AppData\Local\Temp\6H6efPqZNb\references.bib_8904.utf8, line 5, warning: undefined macro "ttps://www.vegvesen.no/om+statens+vegvesen/om+organisasjonen/For+utviklere+API"
-[529] Utils.pm:193> WARN - BibTeX subsystem: C:\Users\SLIDES~1\AppData\Local\Temp\6H6efPqZNb\references.bib_8904.utf8, line 11, warning: undefined macro "ttps://fhi.no/nettpub/smittevernveilederen/sykdommer-a-a/influensa/"
-[531] Utils.pm:193> WARN - BibTeX subsystem: C:\Users\SLIDES~1\AppData\Local\Temp\6H6efPqZNb\references.bib_8904.utf8, line 17, warning: undefined macro "ttps://fhi.no/sv/influensa/"
-[531] Utils.pm:193> WARN - BibTeX subsystem: C:\Users\SLIDES~1\AppData\Local\Temp\6H6efPqZNb\references.bib_8904.utf8, line 23, warning: undefined macro "ttps://www.fhi.no/en/hn/statistics/NorSySS/about-the-norwegian-syndromic-surveillance-system/"
-[532] Utils.pm:193> WARN - BibTeX subsystem: C:\Users\SLIDES~1\AppData\Local\Temp\6H6efPqZNb\references.bib_8904.utf8, line 29, warning: undefined macro "ttps://www.fhi.no/en/"
-[562] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[563] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[563] Biber.pm:3804> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-US'
-[564] Biber.pm:3810> INFO - No sort tailoring available for locale 'en-US'
-[570] bbl.pm:617> INFO - Writing 'main.bbl' with encoding 'UTF-8'
-[574] bbl.pm:720> INFO - Output to main.bbl
-[580] Biber.pm:110> INFO - WARNINGS: 5
+[0] Config.pm:302> INFO - This is Biber 2.10
+[2] Config.pm:305> INFO - Logfile is 'main.blg'
+[70] biber-MSWIN64:313> INFO - === 
+[131] Biber.pm:371> INFO - Reading 'main.bcf'
+[293] Biber.pm:857> INFO - Found 9 citekeys in bib section 0
+[319] Biber.pm:3976> INFO - Processing section 0
+[351] Biber.pm:4136> INFO - Looking for bibtex format file 'references.bib' for section 0
+[358] bibtex.pm:1490> INFO - LaTeX decoding ...
+[384] bibtex.pm:1306> INFO - Found BibTeX data source 'references.bib'
+[435] Utils.pm:193> WARN - Name "Jacob Eisenstein, Brendan O'Connor, Noah A. Smith, Eric P. Xing" has too many commas: skipping name
+[456] Utils.pm:193> WARN - BibTeX subsystem: C:\Users\SLIDES~1\AppData\Local\Temp\KtL3Te3PHM\references.bib_532.utf8, line 5, warning: undefined macro "ttps://www.vegvesen.no/om+statens+vegvesen/om+organisasjonen/For+utviklere+API"
+[458] Utils.pm:193> WARN - BibTeX subsystem: C:\Users\SLIDES~1\AppData\Local\Temp\KtL3Te3PHM\references.bib_532.utf8, line 11, warning: undefined macro "ttps://fhi.no/nettpub/smittevernveilederen/sykdommer-a-a/influensa/"
+[459] Utils.pm:193> WARN - BibTeX subsystem: C:\Users\SLIDES~1\AppData\Local\Temp\KtL3Te3PHM\references.bib_532.utf8, line 17, warning: undefined macro "ttps://fhi.no/sv/influensa/"
+[460] Utils.pm:193> WARN - BibTeX subsystem: C:\Users\SLIDES~1\AppData\Local\Temp\KtL3Te3PHM\references.bib_532.utf8, line 23, warning: undefined macro "ttps://www.fhi.no/en/hn/statistics/NorSySS/about-the-norwegian-syndromic-surveillance-system/"
+[461] Utils.pm:193> WARN - BibTeX subsystem: C:\Users\SLIDES~1\AppData\Local\Temp\KtL3Te3PHM\references.bib_532.utf8, line 29, warning: undefined macro "ttps://www.fhi.no/en/"
+[462] Utils.pm:209> ERROR - BibTeX subsystem: C:\Users\SLIDES~1\AppData\Local\Temp\KtL3Te3PHM\references.bib_532.utf8, line 35, syntax error: found "=", expected end of entry ("}" or ")") (skipping to next "@")
+[463] Biber.pm:110> INFO - WARNINGS: 6
+[464] Biber.pm:114> INFO - ERRORS: 1
