@@ -41,6 +41,10 @@ _EARTHPIX = 268435456  # Number of pixels in half the earth's circumference at z
 _DEGREE_PRECISION = 4  # Number of decimal places for rounding coordinates
 _TILESIZE = 640        # Larget tile we can grab without paying
 _GRABRATE = 4          # Fastest rate at which we can download tiles without paying
+markers = []    
+markers.append([58.9362,5.5741])
+markers.append([58.97,5.7331])
+print(str(markers[0]).strip('[').strip(']').replace(" ", ""))
 
 _pixrad = _EARTHPIX / math.pi
  
@@ -56,32 +60,31 @@ def _pixels_to_degrees(pixels, zoom):
     return pixels * 2 ** (21 - zoom)
 
 def _grab_tile(lat, lon, zoom, maptype, _TILESIZE, sleeptime): # This method was edited by Sandra Moen
-    urlbase = 'https://maps.googleapis.com/maps/api/staticmap?center=%f,%f&zoom=%d&maptype=%s&size=%dx%d&format=jpg'
-    urlbase += _KEY
-    specs = lat, lon, zoom, maptype, _TILESIZE, _TILESIZE
-    filename = 'mapscache/' + ('%f_%f_%d_%s_%d_%d' % specs) + '.jpg'
+    urlbase = ("https://maps.googleapis.com/maps/api/staticmap?"
+        "center=%f,%f"
+        "&zoom=%d"
+        "&maptype=%s"
+        "&size=%dx%d"
+        "&format=jpg"
+        "&markers=color:blue%%7C%f,%f"
+        "&key=")
+    t_lat, t_lon = 58.9362, 5.5741
+    specs = lat, lon, zoom, maptype, _TILESIZE, _TILESIZE, t_lat, t_lon
+    filename = 'mapscache/' + ('%f_%f_%d_%s_%d_%d_%f_%f' % specs) + '.jpg'
     tile = None
 
     if os.path.isfile(filename):
         tile = PIL.Image.open(filename)
     else:
+        urlbase += _KEY
         url = urlbase % specs
-        retries = 0
-        while True: # ask three times max, this increases probability of getting a correct answer back
-            try:
-                #print("URL: ", url)
-                result = urlopen(url).read()
-                time.sleep(sleeptime) # Choke back speed to avoid maxing out limit
-                break
-            except:
-                retries += 1
-                if retries > 3:
-                    urlopen(url).read()
-                    break
-        tile = PIL.Image.open(BytesIO(result)).convert('RGB')
+        print("Requesting image from google, URL: ", url)
+        result = urlopen(url).read()
+        tile = PIL.Image.open(BytesIO(result))
         if not os.path.exists('mapscache'):
             os.mkdir('mapscache')
         tile.save(filename)
+        #time.sleep(sleeptime) # Choke back speed to avoid maxing out limit
     return tile
 
 def _pix_to_lon(j, lonpix, ntiles, _TILESIZE, zoom):
@@ -96,8 +99,8 @@ def fetchTiles(latitude, longitude, zoom, maptype, radius_meters=None, default_n
     'terrain', 'satellite', or 'hybrid').  The value of radius_meters deteremines the number of tiles that will be 
     fetched; if it is unspecified, the number defaults to default_ntiles.  Tiles are stored as JPEG images 
     in the mapscache folder.
-    '''
- 
+    '''    
+
     latitude = _roundto(latitude, _DEGREE_PRECISION)
     longitude = _roundto(longitude, _DEGREE_PRECISION)
 
@@ -171,10 +174,23 @@ class GooMPy(object):
         '''
         Moves the view by the specified pixels dx, dy.
         '''
+        w, h = _TILESIZE, _TILESIZE
+        zoom = self.zoom
+        lat = self.lat
+        lng = self.lon
+        x, y = (w/2) + dx, (h/2) + dy*-1
+
+        degreesPerPixelX = 360 / math.pow(2, zoom + 8)
+        degreesPerPixelY = 360 / math.pow(2, zoom + 8) * math.cos(lat * math.pi / 180)
+    
+        self.lat = lat + degreesPerPixelY * ( y - w / 2)
+        self.lon = lng + degreesPerPixelX * ( x  - w / 2)
 
         self.leftx = self._constrain(self.leftx, dx, self.width)
         self.uppery = self._constrain(self.uppery, dy, self.height)
         self._update()
+
+        #print("Moved: " + str(self.lat) + ", " + str(self.lon))
 
     def useMaptype(self, maptype):
         '''
@@ -190,24 +206,25 @@ class GooMPy(object):
         Uses the specified zoom level 0 through 22.
         Map tiles are fetched as needed.
         '''
-
+        
         self.zoom = zoom
-        self._fetch_and_update()
+        #self.__init__(self, self.width, self.height, self.lat, self.lon, self.zoom, self.maptype)
+        self._fetch()
+        halfsize = int(self.bigimage.size[0] / 2)
+        self.leftx = halfsize
+        self.uppery = halfsize
+        self._update()
 
     def _fetch_and_update(self):
-
         self._fetch()
         self._update()
 
     def _fetch(self):
-
         self.bigimage, self.northwest, self.southeast = fetchTiles(self.lat, self.lon, self.zoom, self.maptype, self.radius_meters)
 
     def _update(self):
-
         self.winimage.paste(self.bigimage, (-self.leftx, -self.uppery))
 
     def _constrain(self, oldval, diff, dimsize):
-
         newval = oldval + diff
         return newval if newval > 0 and newval < self.bigimage.size[0]-dimsize else oldval

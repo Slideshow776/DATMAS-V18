@@ -22,8 +22,8 @@ else: import tkinter as tk
 from PIL import ImageTk
 from goompy import GooMPy
 
-WIDTH = 800
-HEIGHT = 500
+WIDTH = 640
+HEIGHT = 640
 
 LATITUDE, LONGITUDE =  58.97, 5.7331 # Stavanger
 ZOOM = 6
@@ -65,6 +65,12 @@ class UI(tk.Tk):
         self.goompy = GooMPy(WIDTH, HEIGHT, LATITUDE, LONGITUDE, ZOOM, MAPTYPE)
 
         self.restart()
+
+    def hello(self):
+        return "Hello from example.py"
+
+    def return_canvas(self):
+        return self.canvas
 
     def add_zoom_button(self, text, sign):
         button = tk.Button(self.canvas, text=text, width=1, command=lambda:self.zoom(sign))
@@ -113,7 +119,7 @@ class UI(tk.Tk):
         self.restart()
 
     def zoom(self, sign):
-        newlevel = self.zoomlevel + sign
+        newlevel = self.zoomlevel + sign # sign = 1 or -1
         if newlevel > 0 and newlevel < 22:
             self.zoomlevel = newlevel
             self.goompy.useZoom(newlevel)

@@ -1,1 +1,16 @@
 AIzaSyD8SKdRXPcWKVLMxTaJDZSSlInXvuEBoqc
+
+https://maps.googleapis.com/maps/api/staticmap?center=%f,%f&zoom=%d&maptype=%s&size=%dx%d&format=jpg
+
+https://maps.googleapis.com/maps/api/staticmap?center=59.195789,5.293647&zoom=12&maptype=roadmap&size=640x640&format=jpg&key=AIzaSyD8SKdRXPcWKVLMxTaJDZSSlInXvuEBoqc
+
+https://maps.googleapis.com/maps/api/staticmap?center=58.880800,5.672600&zoom=9&maptype=roadmap&size=640x640&format=jpg&markers=color:blue%7C58.9362,5.5741&key=AIzaSyD8SKdRXPcWKVLMxTaJDZSSlInXvuEBoqc
+
+
+
+
+http://maps.googleapis.com/maps/api/staticmap?&size=600x400&style=visibility:on&style=feature:water%7Celement:geometry%7Cvisibility:on&style=feature:landscape%7Celement:geometry%7Cvisibility:on&markers=anchor:32,10%7Cicon:https://goo.gl/5y3S82%7CCanberra+ACT&key=AIzaSyD8SKdRXPcWKVLMxTaJDZSSlInXvuEBoqc
+
+http://maps.googleapis.com/maps/api/staticmap?&size=600x400&style=visibility:on&style=feature:water%7Celement:geometry%7Cvisibility:on&style=feature:landscape%7Celement:geometry%7Cvisibility:on&markers=anchor:32,10%7Cicon:https://user-images.githubusercontent.com/4059636/38048384-81033a46-32c5-11e8-8e94-9ffdbad4d7a7.png&key=AIzaSyD8SKdRXPcWKVLMxTaJDZSSlInXvuEBoqc
+
+
