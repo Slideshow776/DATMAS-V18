@@ -13,7 +13,7 @@ import datetime
 
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
-from example import UI
+#from example import UI
 
 # current_dir = os.getcwd()
 # root = os.path.dirname(current_dir) + r'\Ruter'
@@ -82,10 +82,6 @@ def main():
     dates, passengers = getData()
     return drawGraph(dates, passengers)
 
-top = Tk()
-top.geometry("800x600")
-top.title("Masterappen, TODO: finn på et bedre navn")
-top.rowconfigure(0, weight = 1)
 
 def helloCallBack(message):
    # TODO: Vis alt som har med vegvesenet å gjøre
@@ -111,7 +107,15 @@ def drawMap():
 
     return fig
 
-frame0 = Frame(top, bg='red')
+root = Tk()
+root.geometry("800x600")
+root.title("Masterappen, TODO: finn på et bedre navn")
+#   root.rowconfigure(0, weight = 1)
+#vscrollbar = Scrollbar(root)
+#vscrollbar.pack(side=RIGHT, fill=Y)
+#hscrollbar = Scrollbar(root, orient='horizontal')
+#hscrollbar.pack(side=BOTTOM, fill=X)
+frame0 = Frame(root, bg='red')
 frame0.grid(row=0, column=0)
 
 addButton(frame0, 0, "Vegvesenet", 5, 5, helloCallBack("Vegvesenet"))
@@ -120,30 +124,18 @@ addButton(frame0, 2, "Kolumbus", 5, 65, helloCallBack("Kolumbus"))
 addButton(frame0, 3, "Ruter", 5, 95, helloCallBack("Ruter"))
 addButton(frame0, 4, "Twitter", 5, 125, helloCallBack("Twitter"))
 
-frame1 = Frame(top, bg='yellow')
+frame1 = Frame(root, bg='yellow')
 frame1.grid(row=0, column=1)
-frame1.rowconfigure(0, weight = 1)
 
 figure = main()
 canvas1 = FigureCanvasTkAgg(figure, master=frame1)
 plot_widget1 = canvas1.get_tk_widget()
-plot_widget1.grid(row=0, column=0)
-# plot_widget1.place(x = 100, y = 5)
-# plot_widget1.pack(side=RIGHT, fill=BOTH, expand=YES)
+plot_widget1.pack(side=RIGHT, fill=BOTH, expand=YES)
 
-frame2 = Frame(top, bg='green')
+frame2 = Frame(root, bg='green')
 frame2.grid(row=1, column=1)
-frame2.rowconfigure(0, weight = 1)
 
-figure2 = drawMap()
+w = Canvas(frame2, width=640, height=640, bg="magenta")
+w.pack(side=LEFT, fill=BOTH, expand=YES)
 
-googlemap = UI()
-canvas2 = googlemap.return_canvas()
-
-#canvas2 = FigureCanvasTkAgg(figure2, master=frame2)
-plot_widget2 = canvas2.get_tk_widget()
-plot_widget2.grid(row=0, column=0)
-# plot_widget.place(x = 200, y = 5)
-# plot_widget2.pack(side=BOTTOM, fill=BOTH, expand=YES)
-
-top.mainloop()
+root.mainloop()

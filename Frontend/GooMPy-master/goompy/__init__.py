@@ -30,6 +30,8 @@ else:
     import urllib.request
     urlopen = urllib.request.urlopen    
 
+import polyline
+
 _KEY = ''
 try:
     FILE = open("api_key.txt", "r") # Loading keys from hidden textfile, in order to protect private keys from misuse
@@ -41,44 +43,39 @@ _EARTHPIX = 268435456  # Number of pixels in half the earth's circumference at z
 _DEGREE_PRECISION = 4  # Number of decimal places for rounding coordinates
 _TILESIZE = 640        # Larget tile we can grab without paying
 _GRABRATE = 4          # Fastest rate at which we can download tiles without paying
-markers = []    
-markers.append([58.9362,5.5741])
-markers.append([58.97,5.7331])
-print(str(markers[0]).strip('[').strip(']').replace(" ", ""))
-
 _pixrad = _EARTHPIX / math.pi
  
 def _new_image(width, height):
-
     return PIL.Image.new('RGB', (width, height))
 
 def _roundto(value, digits):
-
     return int(value * 10**digits) / 10.**digits
 
 def _pixels_to_degrees(pixels, zoom):
     return pixels * 2 ** (21 - zoom)
 
-def _grab_tile(lat, lon, zoom, maptype, _TILESIZE, sleeptime): # This method was edited by Sandra Moen
+def _grab_tile(lat, lon, zoom, maptype, markers_1, _TILESIZE, sleeptime): # This method was edited by Sandra Moen
+    #helloz = polyline.encode([(58.956944, 5.700362), (58.956393, 5.699716), (58.956561, 5.700709), (58.956944, 5.700362)], 5)
+    #print("TEST: ", markers_1)
     urlbase = ("https://maps.googleapis.com/maps/api/staticmap?"
         "center=%f,%f"
         "&zoom=%d"
         "&maptype=%s"
         "&size=%dx%d"
         "&format=jpg"
-        "&markers=color:blue%%7C%f,%f"
-        "&key=")
-    t_lat, t_lon = 58.9362, 5.5741
-    specs = lat, lon, zoom, maptype, _TILESIZE, _TILESIZE, t_lat, t_lon
-    filename = 'mapscache/' + ('%f_%f_%d_%s_%d_%d_%f_%f' % specs) + '.jpg'
+        )    
+    specs = lat, lon, zoom, maptype, _TILESIZE, _TILESIZE
+    filename = 'mapscache/' + ('%f_%f_%d_%s_%d_%d' % specs) + '.jpg'
     tile = None
 
     if os.path.isfile(filename):
         tile = PIL.Image.open(filename)
     else:
-        urlbase += _KEY
         url = urlbase % specs
-        print("Requesting image from google, URL: ", url)
+        for m in markers_1:
+            url += "&path=fillcolor:0xc92240bb%7Cweight:1%7Ccolor:0x000000ff%7Cenc:"+m
+        url += "&key=" + _KEY
+        #print("Requesting image from google, URL: ", url)
         result = urlopen(url).read()
         tile = PIL.Image.open(BytesIO(result))
         if not os.path.exists('mapscache'):
@@ -93,7 +90,7 @@ def _pix_to_lon(j, lonpix, ntiles, _TILESIZE, zoom):
 def _pix_to_lat(k, latpix, ntiles, _TILESIZE, zoom):
     return math.degrees(math.pi/2 - 2 * math.atan(math.exp(((latpix + _pixels_to_degrees((k-ntiles/2)*_TILESIZE, zoom)) - _EARTHPIX) / _pixrad))) 
 
-def fetchTiles(latitude, longitude, zoom, maptype, radius_meters=None, default_ntiles=4):
+def fetchTiles(latitude, longitude, zoom, maptype, markers_1, radius_meters=None, default_ntiles=4):
     '''
     Fetches tiles from GoogleMaps at the specified coordinates, zoom level (0-22), and map type ('roadmap', 
     'terrain', 'satellite', or 'hybrid').  The value of radius_meters deteremines the number of tiles that will be 
@@ -122,7 +119,7 @@ def fetchTiles(latitude, longitude, zoom, maptype, radius_meters=None, default_n
         lon = _pix_to_lon(j, lonpix, ntiles, _TILESIZE, zoom)
         for k in range(ntiles):
             lat = _pix_to_lat(k, latpix, ntiles, _TILESIZE, zoom)
-            tile = _grab_tile(lat, lon, zoom, maptype, _TILESIZE, 1./_GRABRATE)
+            tile = _grab_tile(lat, lon, zoom, maptype, markers_1, _TILESIZE, 1./_GRABRATE)
             bigimage.paste(tile, (j*_TILESIZE,k*_TILESIZE))
 
     west = _pix_to_lon(0, lonpix, ntiles, _TILESIZE, zoom)
@@ -133,16 +130,14 @@ def fetchTiles(latitude, longitude, zoom, maptype, radius_meters=None, default_n
 
     return bigimage, (north,west), (south,east)
 
-
 class GooMPy(object):
-    def __init__(self, width, height, latitude, longitude, zoom, maptype, radius_meters=None, default_ntiles=4):
+    def __init__(self, width, height, latitude, longitude, zoom, maptype, markers_1, radius_meters=None, default_ntiles=4):
         '''
         Creates a GooMPy object for specified display widthan and height at the specified coordinates,
         zoom level (0-22), and map type ('roadmap', 'terrain', 'satellite', or 'hybrid').
         The value of radius_meters deteremines the number of tiles that will be used to create
         the map image; if it is unspecified, the number defaults to default_ntiles.  
         '''
-
         self.lat = latitude
         self.lon = longitude
 
@@ -152,6 +147,7 @@ class GooMPy(object):
         self.zoom = zoom
         self.maptype = maptype
         self.radius_meters = radius_meters
+        self.markers_1 = markers_1
 
         self.winimage = _new_image(self.width, self.height)
 
@@ -163,12 +159,25 @@ class GooMPy(object):
 
         self._update()
 
+    def _drawCircle(self, markers, zoom, radius=3):
+        encodedCircledMarkers = []
+        radius = radius / (zoom*700)
+        for m in markers:
+            n = (m[0] + radius, m[1])
+            w = (m[0], m[1] - radius*2)
+            s = (m[0] - radius, m[1])
+            e = (m[0], m[1] + radius*2)
+            encodedCircledMarkers.append(polyline.encode([n, w, s, e, n])) # the extra n closes the loop drawn        
+        return encodedCircledMarkers
+
     def getImage(self):
         '''
-        Returns the current image as a PIL.Image object.
-        '''
+        Returns the current image as a PIL.Image object.        '''
 
         return self.winimage
+
+    def getMarker_1(self):
+        return self.marker_1_locations
 
     def move(self, dx, dy):
         '''
@@ -220,7 +229,13 @@ class GooMPy(object):
         self._update()
 
     def _fetch(self):
-        self.bigimage, self.northwest, self.southeast = fetchTiles(self.lat, self.lon, self.zoom, self.maptype, self.radius_meters)
+        self.bigimage, self.northwest, self.southeast = fetchTiles(
+            self.lat,
+            self.lon,
+            self.zoom,
+            self.maptype,
+            self._drawCircle(self.markers_1, self.zoom),
+            self.radius_meters)
 
     def _update(self):
         self.winimage.paste(self.bigimage, (-self.leftx, -self.uppery))

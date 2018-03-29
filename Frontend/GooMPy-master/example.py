@@ -26,7 +26,7 @@ WIDTH = 640
 HEIGHT = 640
 
 LATITUDE, LONGITUDE =  58.97, 5.7331 # Stavanger
-ZOOM = 6
+ZOOM = 19
 MAPTYPE = 'roadmap'
 
 class UI(tk.Tk):
@@ -62,7 +62,12 @@ class UI(tk.Tk):
         maptype_index = 0
         self.radiovar.set(maptype_index)
 
-        self.goompy = GooMPy(WIDTH, HEIGHT, LATITUDE, LONGITUDE, ZOOM, MAPTYPE)
+        markers_1 = [] # markers should be a list of lists: [[lat_a,_long_a],[lat_b,long_b],...[lat_z,long_z]]
+        markers_1.append([58.9362,5.5741])
+        markers_1.append([58.97,5.7331])
+        markers_1.append([58.939243,5.589634])
+
+        self.goompy = GooMPy(WIDTH, HEIGHT, LATITUDE, LONGITUDE, ZOOM, MAPTYPE, markers_1)
 
         self.restart()
 
