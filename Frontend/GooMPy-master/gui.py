@@ -6,56 +6,75 @@ import matplotlib
 import numpy as np
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-import matplotlib.pyplot as plt
-
-from openpyxl import load_workbook
-import datetime
 
 import ruter
+import example
 
+def helloCallBack():
+    print("helloCallBack: TODO")
 
-def helloCallBack(message):
-   # TODO: Vis alt som har med vegvesenet å gjøre
-    print("Button " + message + " is ready.")
-
-def addButton(frame, it, name, x, y, command):
+def addButton(frame, name, command):
     B = Button(frame, text = name, command = command, width = 10)
-    B.place(x = x, y = y)
-    B.grid(row=it, column=0)
-    # B.pack(side=TOP)
+    B.pack(side=TOP, padx=2, pady=2)
 
 def main():
     root = Tk()
     root.geometry("800x600")
-    root.title("Masterappen, TODO: finn på et bedre navn")
-    #root.rowconfigure(0, weight = 1)
-    #vscrollbar = Scrollbar(root)
-    #vscrollbar.pack(side=RIGHT, fill=Y)
-    #hscrollbar = Scrollbar(root, orient='horizontal')
-    #hscrollbar.pack(side=BOTTOM, fill=X)
-    frame0 = Frame(root, bg='red')
-    frame0.grid(row=0, column=0)
+    root.wm_iconbitmap('sandra.ico')
+    root.title("Automated collection of multi-source spatial information for emergency management")
 
-    addButton(frame0, 0, "Vegvesenet", 5, 5, helloCallBack("Vegvesenet"))
-    addButton(frame0, 1, "FHI", 5, 35, helloCallBack("FHI"))
-    addButton(frame0, 2, "Kolumbus", 5, 65, helloCallBack("Kolumbus"))
-    addButton(frame0, 3, "Ruter", 5, 95, helloCallBack("Ruter"))
-    addButton(frame0, 4, "Twitter", 5, 125, helloCallBack("Twitter"))
+    container = Frame(root)
+    container.pack(side="right", fill='both', expand=True)
+    container.rowconfigure(0, weight = 1)
+    container.columnconfigure(0, weight = 1)
 
-    frame1 = Frame(root, bg='yellow')
-    frame1.grid(row=0, column=1)
+    # ---------------- Toolbar ---------------------------------------------
+    toolbar = Frame(root, bg='cyan', width=100)
+    toolbar.pack(side='left', fill='both', expand=False)
+    """
+    toolbar.grid(rowspan = 3, sticky='ns')
+    toolbar.columnconfigure(0, weight=2)
+    toolbar.rowconfigure(0, weight=2)
+    toolbar.grid_propagate(False)
+    toolbar.grid_propagate(False)
+    """
 
-    print("TEST: ", ruter)
-    figure = ruter.get_graph()
-    canvas1 = FigureCanvasTkAgg(figure, master=frame1)
+    addButton(toolbar, "Vegvesenet", helloCallBack)
+    addButton(toolbar, "FHI", helloCallBack)
+    addButton(toolbar, "Kolumbus", helloCallBack)
+    addButton(toolbar, "Ruter", helloCallBack)
+    addButton(toolbar, "Twitter", helloCallBack)
+
+    # ---------------- Dataframe -------------------------------------------
+    data_frame = Frame(container, bg ='black')
+    #data_frame.grid(row = 0, column = 1, sticky='nsew')
+    data_frame.pack()
+    
+    # ----------------------------------------------------------------------
+    graph1 = Frame(data_frame, bg='red')
+    graph1.pack(side=TOP, fill='both', expand=True)
+    
+    ruterFigure = ruter.Ruter(1)
+    figure = ruterFigure.get_graph()
+
+    canvas1 = FigureCanvasTkAgg(figure, master=graph1)
     plot_widget1 = canvas1.get_tk_widget()
-    plot_widget1.pack(side=RIGHT, fill=BOTH, expand=YES)
+    plot_widget1.pack(side=RIGHT, fill=BOTH, expand=True)
+    """
+    # ----------------------------------------------------------------------
+    the_map = example.Map(data_frame)
+    map1 = the_map.get_frame() #Frame(data_frame, bg='green')
+    #map1.pack(side=BOTTOM) #, fill='both', expand=True)
+    #w = the_map.get_frame()
+    #w.pack()
+    #w = Canvas(map1, width=640, height=80, bg="magenta")
+    #w.pack(side=LEFT, fill=BOTH, expand=True)
 
-    frame2 = Frame(root, bg='green')
-    frame2.grid(row=1, column=1)
-
-    w = Canvas(frame2, width=640, height=640, bg="magenta")
-    w.pack(side=LEFT, fill=BOTH, expand=YES)
+    # ---------------- Status bar ------------------------------------------
+    #status = Label(root, text="Idle...", bd=1, relief=SUNKEN, bg="yellow", anchor=W)
+    #status.grid(row = 3, column = 0, columnspan = 3, sticky='we')
+    #status.pack(side='bottom', fill=X, expand=True)
+    #status.place(anchor=N, x=root.winfo_height(), y=root.winfo_width()-20)
 
     root.mainloop()
 
