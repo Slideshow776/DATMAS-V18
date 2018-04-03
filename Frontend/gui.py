@@ -6,139 +6,97 @@ import matplotlib
 import numpy as np
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-import matplotlib.pyplot as plt
 
-from openpyxl import load_workbook
-import datetime
+import ruter
+import map_frame
 
-import cartopy.crs as ccrs
-import cartopy.feature as cfeature
+WIDTH, HEIGHT = 800, 600
 
-# current_dir = os.getcwd()
-# root = os.path.dirname(current_dir) + r'\Ruter'
-# sys.path.append(root)
-# import Ruter
 
-def isDate(date):
-    try:
-        datetime.datetime.strptime(date, '%d.%m.%Y')
-        return True
-    except ValueError:
-        return False
+def helloCallBack():
+    print("helloCallBack: TODO")
 
-def getData():
-    workbook = load_workbook('Antall påstigende per dag_Oslo_2015_2017.xlsx')
-    worksheet = workbook['Antall påstigende per dag_Oslo']
-    
-    years_dates, years_passengers = [], []
-    dates, passengers = [], []
-    for i in range(5, worksheet.max_row+1):
-        if isDate(worksheet['A' + str(i)].value):
-            dates.append(worksheet['A' + str(i)].value)
-            passengers.append(worksheet['B' + str(i)].value)
-        else:
-            years_dates.append(dates)
-            years_passengers.append(passengers)
-            dates, passengers = [], []
-    return years_dates, years_passengers
+def addButton(frame, name, command):
+    B = Button(frame, text = name, command = command, width = 10)
+    B.pack(side=TOP, padx=2, pady=2)
+    return B
 
-def drawGraph(dates, passengers):
-    x_365 = []
-    for i in range(365):
-        x_365.append(i)
-    x_365 = np.array(x_365)
-    x_366 = []
-    for i in range(366):
-        x_366.append(i)
-    x_366 = np.array(x_366)
-    x_58 = []
-    for i in range(58):
-        x_58.append(i)
-    x_58 = np.array(x_58)
-    x_ticks = dates[0]
+def toolbar(root):
+    toolbar = Frame(root, bg='cyan')
+    toolbar.pack(side='left', fill='both', expand=False)
 
-    y_2015 = passengers[0]
-    y_2016 = passengers[1]
-    y_2017 = passengers[2]
-    y_2018 = passengers[3]
+    addButton(toolbar, "Vegvesenet", helloCallBack)
+    addButton(toolbar, "FHI", helloCallBack)
+    addButton(toolbar, "Kolumbus", helloCallBack)
+    addButton(toolbar, "Ruter", helloCallBack)
+    addButton(toolbar, "Twitter", helloCallBack)
 
-    plt.xticks(x_365, x_ticks)
-    plt.xticks(rotation=45)
-    plt.plot(x_365, y_2015, label="2015")
-    plt.plot(x_366, y_2016, label="2016")
-    plt.plot(x_365, y_2017, label="2017")
-    plt.plot(x_58, y_2018, label="2018")
+    return toolbar
 
-    plt.title('Passengers traveling with Ruter in Oslo county')
-    plt.ylabel("Passengers")
-    plt.legend(loc='upper left')
-    plt.grid(axis='y', linestyle='-')
-    plt.grid(axis='x', linestyle='-')
-    #plt.show()
-    return plt.figure(1)
+def statusbar(root):
+    status = Label(root, text="Idle...", bd=1, relief=SUNKEN, bg="yellow", anchor=W)
+    status.grid(row = 3, column = 0, columnspan = 3, sticky='we')
+    status.pack(side='bottom', fill=X, expand=True)
+    status.place(anchor=N, x=root.winfo_height(), y=root.winfo_width()-20)
+
+def scroll_function(event, canvas):
+    canvas.configure(
+        scrollregion=canvas.bbox("all"),
+        width=695,
+        height=HEIGHT
+    )
+
+def click(event):
+    print("gui.py: ", event.x, event.y)
 
 def main():
-    dates, passengers = getData()
-    return drawGraph(dates, passengers)
+    root = Tk()
+    root.geometry("%dx%d" % (WIDTH, HEIGHT))
+    root.wm_iconbitmap('sandra.ico')
+    root.title("Automated collection of multi-source spatial information for emergency management")
 
-top = Tk()
-top.geometry("800x600")
-top.title("Masterappen, TODO: finn på et bedre navn")
-top.rowconfigure(0, weight = 1)
+    container = Frame(root)
+    container.pack(side="right", fill='both', expand=True)
+    container.rowconfigure(0, weight = 1)
+    container.columnconfigure(0, weight = 1)    
 
-def helloCallBack(message):
-   # TODO: Vis alt som har med vegvesenet å gjøre
-    print("Button " + message + " is ready.")
+    the_toolbar = toolbar(root)
+    #the_toolbar.focus_set()
+    #statusbar(root)
 
-def addButton(frame, it, name, x, y, command):
-    B = Button(frame, text = name, command = command, width = 10)
-    B.place(x = x, y = y)
-    B.grid(row=it, column=0)
-    # B.pack(side=TOP)
+    canvas = Canvas(container)
+    frame = Frame(canvas)
+    scrollbar = Scrollbar(container, orient='vertical', command=canvas.yview)
 
-def drawMap():
-    fig = plt.figure()
-    ax = fig.add_subplot(1, 1, 1, projection=ccrs.PlateCarree())
-    ax.set_extent([32, 3.928428, 71.894243, 57], crs=ccrs.PlateCarree())
+    canvas.configure(yscrollcommand=scrollbar.set)
+    scrollbar.pack(side='right', fill='y')
+    canvas.pack()
+    canvas.create_window((200, 0), window=frame, anchor='nw')
+    frame.bind('<Configure>', lambda event: scroll_function(event, canvas))
 
-    ax.add_feature(cfeature.LAND)
-    ax.add_feature(cfeature.OCEAN)
-    ax.add_feature(cfeature.COASTLINE)
-    ax.add_feature(cfeature.BORDERS, linestyle=':')
-    ax.add_feature(cfeature.LAKES, alpha=0.5)
-    ax.add_feature(cfeature.RIVERS)
+    # ---------------- Dataframe -------------------------------------------
+    data_frame = Frame(frame, bg ='black')
+    #data_frame.grid(row = 0, column = 1, sticky='nsew')
+    data_frame.pack()
+    
+    
+    graph1 = Frame(data_frame, bg='red', width=640, height=160)
+    graph1.pack(side=TOP, fill='both', expand=True)
+    
+    figure = ruter.Ruter().get_graph()
 
-    return fig
+    canvas1 = FigureCanvasTkAgg(figure, master=graph1)
+    plot_widget1 = canvas1.get_tk_widget()
+    plot_widget1.pack(side=RIGHT, fill=BOTH, expand=True)
+    
+    markers = []
+    markers.append([58.9362,5.5741])
+    markers.append([58.97,5.7331])
+    markers.append([58.939243,5.589634])
 
-frame0 = Frame(top, bg='red')
-frame0.grid(row=0, column=0)
+    map_frame.Map(root, data_frame, markers)
+    
+    root.mainloop()
 
-addButton(frame0, 0, "Vegvesenet", 5, 5, helloCallBack("Vegvesenet"))
-addButton(frame0, 1, "FHI", 5, 35, helloCallBack("FHI"))
-addButton(frame0, 2, "Kolumbus", 5, 65, helloCallBack("Kolumbus"))
-addButton(frame0, 3, "Ruter", 5, 95, helloCallBack("Ruter"))
-addButton(frame0, 4, "Twitter", 5, 125, helloCallBack("Twitter"))
-
-frame1 = Frame(top, bg='yellow')
-frame1.grid(row=0, column=1)
-frame1.rowconfigure(0, weight = 1)
-
-figure = main()
-canvas1 = FigureCanvasTkAgg(figure, master=frame1)
-plot_widget1 = canvas1.get_tk_widget()
-plot_widget1.grid(row=0, column=0)
-# plot_widget1.place(x = 100, y = 5)
-# plot_widget1.pack(side=RIGHT, fill=BOTH, expand=YES)
-
-frame2 = Frame(top, bg='green')
-frame2.grid(row=1, column=1)
-frame2.rowconfigure(0, weight = 1)
-
-figure2 = drawMap()
-canvas2 = FigureCanvasTkAgg(figure2, master=frame2)
-plot_widget2 = canvas2.get_tk_widget()
-plot_widget2.grid(row=0, column=0)
-# plot_widget.place(x = 200, y = 5)
-# plot_widget2.pack(side=BOTTOM, fill=BOTH, expand=YES)
-
-top.mainloop()
+if __name__ == '__main__':
+    main()
