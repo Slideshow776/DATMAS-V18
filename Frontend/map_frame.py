@@ -17,8 +17,9 @@ along with this code.  If not, see <http://www.gnu.org/licenses/>.
 
 ----------------------------------------------------------------------------
 Edited by Sandra Moen:
-Added: Better zoom function, marker input as list, and rewrote this as a tkinter.Frame
-Simply call module.name.Map(root, root_widget, markers) from main and a Goompy map will be drawn.
+Added: Better zoom function, marker input as list, and rewrote this as a tkinter.Canvas
+Simply call module.name.Map(root, root_widget, markers) from main and a Goompy map will be drawn on a tkinter.Canvas.
+Fixed a bug with keybindings.
 '''
 
 import sys
@@ -27,7 +28,7 @@ else: import tkinter as tk
 from PIL import ImageTk
 from goompy import GooMPy
 
-WIDTH, HEIGHT = 640, 640
+WIDTH, HEIGHT = 640, 640 # resolution of one tile
 LATITUDE, LONGITUDE =  58.97, 5.7331 # Stavanger
 ZOOM = 12
 MAPTYPE = 'roadmap'
@@ -38,12 +39,12 @@ class Map(tk.Canvas, tk.Tk):
         self.widget = widget
 
         tk.Canvas.__init__(self, widget, bg='orange', width=WIDTH, height=HEIGHT)
-        self.pack()
+        self.pack(fill='both', expand=True)
 
         self.label = tk.Label(self)
 
-        self.label.bind('<B1-Motion>', self.drag)
-        self.label.bind('<Button-1>', self.click)
+        self.label.bind('<B1-Motion>', self.callback_drag)
+        self.label.bind('<Button-1>', self.callback_click)
         
         self.radiogroup = tk.Frame(self)
         self.radiovar = tk.IntVar()
@@ -85,10 +86,10 @@ class Map(tk.Canvas, tk.Tk):
         tk.Radiobutton(self.radiogroup, text=maptype, variable=self.radiovar, value=index, 
                 command=lambda:self.usemap(maptype)).grid(row=0, column=index)
 
-    def click(self, event):
+    def callback_click(self, event):
         self.coords = event.x, event.y
 
-    def drag(self, event):
+    def callback_drag(self, event):
         self.goompy.move(self.coords[0]-event.x, self.coords[1]-event.y)
         self.image = self.goompy.getImage()
         self.redraw()
