@@ -1,7 +1,7 @@
 
 # TODO: WIP
 
-from distutils.core import setup
+from setuptools import setup
 
 setup(
     name='Automated collection of multi-source spatial information for emergency management',
@@ -20,5 +20,6 @@ setup(
 		"matplotlib==2.1.2",
 		"openpyxl==2.4.10",
 		"twitter==1.18.0",
+        "polyline==1.3.2"
     ],
 )

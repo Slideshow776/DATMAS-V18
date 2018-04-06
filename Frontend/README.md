@@ -1,0 +1,1 @@
+Please create a .txt file in this directory named api_key.txt, open it and paste in your [static google api key](https://developers.google.com/maps/documentation/static-maps/get-api-key) here. 
