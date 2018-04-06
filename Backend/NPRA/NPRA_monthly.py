@@ -14,9 +14,10 @@ import numpy as np
 
 
 class NPRA_monthly:
-    def __init__(self):
+    def __init__(self, filepath):
+        self.filepath = filepath
         self.user_input = "norway"
-        wb2 = load_workbook('Aars og Maanedsdøgn trafikk  2002-2015.xlsx')
+        wb2 = load_workbook(self.filepath)
         ws = wb2['Trafikkdata'] 
         data_years = []
         for i in range(2002, 2016): # data tilgjengelig år 2002-2015
@@ -54,6 +55,7 @@ class NPRA_monthly:
         return months
 
     def drawGraph(self, data):
+        plt.figure(6)
         ticks = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "Desember"]
         x = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
 
@@ -70,7 +72,9 @@ class NPRA_monthly:
         plt.legend(loc='upper left')
         plt.grid(axis='y', linestyle='-')
         plt.grid(axis='x', linestyle='-')
-        return plt.figure(1)
+        figure = plt.figure(6)
+        figure.patch.set_facecolor('#fff7ff')
+        return figure
 
     def get_specific_graph_(self, user_input): # accepts: 'norway', 'bergen' and 'oslo'
         self.user_input = user_input
@@ -86,7 +90,7 @@ class NPRA_monthly:
 
 def main():
     print("Accepts command lines, first: [Bergen OR Oslo]")
-    NPRA_monthly().get_graph()
+    NPRA_monthly('./Aars og Maanedsdøgn trafikk  2002-2015.xlsx').get_graph()
     plt.show()
 
 if __name__ == '__main__':

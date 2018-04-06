@@ -20,6 +20,7 @@ class FHI_ILI:
         return x, y
 
     def draw_graph(self, x, y):
+        plt.figure(1)
         ticks = [] # in order to get the correct x axis...
         for i in range(40, 53):
             ticks.append(str(i))
@@ -34,7 +35,9 @@ class FHI_ILI:
         plt.ylabel("Percent")
         plt.grid(axis='y', linestyle='-')
         plt.grid(axis='x', linestyle='-')
-        return plt.figure(1)
+        figure = plt.figure(1)
+        figure.patch.set_facecolor('#fff7ff')
+        return figure
     
     def get_graph(self):
         return self._FIGURE

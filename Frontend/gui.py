@@ -15,30 +15,86 @@ from Kolumbus import kolumbus
 from NPRA import NPRA_weekly, NPRA_monthly
 from Twitter import twitter_analyzer
 
-import map_frame
+import map_canvas
 import scrframe
 
-WIDTH, HEIGHT = 1366, 768 # resolution of average laptop
+WIDTH, HEIGHT = 1366/1.2, 768/1.2 # resolution of average laptop
 
 def helloCallBack(name):
-    print('Button was pressed: ', name)
     if name == 'FHI':
         FHI_ILI_graph.pack(fill='both', expand=True)
+        FHI_virus_graph.pack(fill='both', expand=True)
         ruter_graph.pack_forget()
+        kolumbus_graph.pack_forget()
+        twitter_graph.pack_forget()
+        NPRA_norway_graph.pack_forget()
+        NPRA_bergen_graph.pack_forget()
+        NPRA_stavanger_graph.pack_forget()
+        NPRA_oslo_graph.pack_forget()
+        map1.pack_forget()
     elif name == 'Ruter':
         FHI_ILI_graph.pack_forget()
+        FHI_virus_graph.pack_forget()
         ruter_graph.pack(fill='both', expand=True)
-    """elif name == 'Kolumbus':
+        kolumbus_graph.pack_forget()
+        twitter_graph.pack_forget()
+        NPRA_norway_graph.pack_forget()
+        NPRA_bergen_graph.pack_forget()
+        NPRA_stavanger_graph.pack_forget()
+        NPRA_oslo_graph.pack_forget()
+        map1.pack_forget()
+    elif name == 'Kolumbus':
+        FHI_ILI_graph.pack_forget()
+        FHI_virus_graph.pack_forget()
+        ruter_graph.pack_forget()
+        kolumbus_graph.pack(fill='both', expand=True)
+        twitter_graph.pack_forget()
+        NPRA_norway_graph.pack_forget()
+        NPRA_bergen_graph.pack_forget()
+        NPRA_stavanger_graph.pack_forget()
+        NPRA_oslo_graph.pack_forget()
+        map1.pack_forget()
     elif name == 'NPRA':
-    elif name == 'Twitter':"""
+        FHI_ILI_graph.pack_forget()
+        FHI_virus_graph.pack_forget()
+        ruter_graph.pack_forget()
+        kolumbus_graph.pack_forget()
+        twitter_graph.pack_forget()
+        NPRA_norway_graph.pack(fill='both', expand=True)
+        NPRA_bergen_graph.pack(fill='both', expand=True)
+        NPRA_stavanger_graph.pack(fill='both', expand=True)
+        NPRA_oslo_graph.pack(fill='both', expand=True)
+        map1.pack(fill='both', expand=True)
+    elif name == 'Twitter':
+        FHI_ILI_graph.pack_forget()
+        FHI_virus_graph.pack_forget()
+        ruter_graph.pack_forget()
+        kolumbus_graph.pack_forget()
+        twitter_graph.pack(fill='both', expand=True)
+        NPRA_norway_graph.pack_forget()
+        NPRA_bergen_graph.pack_forget()
+        NPRA_stavanger_graph.pack_forget()
+        NPRA_oslo_graph.pack_forget()
+        map1.pack(fill='both', expand=True)
 
 def addButton(frame, name):
-    B = Button(frame, text = name, command = lambda: helloCallBack(name), width = 10)
+    B = Button(
+        frame,
+        text = name,
+        width=10,
+        bg='#ffcfff',
+        fg='#363636',
+        bd=3,
+        activebackground='#ffb1e6',
+        activeforeground='#363636',
+        highlightbackground='blue',
+        highlightcolor='magenta',
+        command = lambda: helloCallBack(name))
     B.pack(side=TOP, padx=2, pady=2)
     return B
 
 def toolbar(root):
-    toolbar = Frame(root, bg='cyan')
+    toolbar = Frame(root, bg='#F75C95') # hello-kitty pink
     toolbar.pack(side='left', fill='both', expand=False)
 
     addButton(toolbar, "NPRA")
@@ -78,16 +134,18 @@ def callback_scroll_function(event, canvas):
 def plot_widget(figure):
     figure_canvas = FigureCanvasTkAgg(figure, master=graph1)
     plot_widget = figure_canvas.get_tk_widget()
-    plot_widget.pack(fill='both', expand=True)
+    #plot_widget.pack(fill='both', expand=True)
     plot_widget.pack_forget()
     return plot_widget
 
+print('Loading ... \n(this may take some seconds)')
 root = Tk()
 root.geometry("%dx%d" % (WIDTH, HEIGHT))
 root.wm_iconbitmap('sandra.ico')
 root.title("Automated collection of multi-source spatial information for emergency management")
+root.configure(background='#363636')
 
-container = Frame(root, bg='black', width=600, height=300)
+container = Frame(root, bg='#363636', width=600, height=300)
 container.pack(side="right", fill='both', expand=True)
 #container.rowconfigure(0, weight = 1)
 #container.columnconfigure(0, weight = 1)    
@@ -98,10 +156,6 @@ the_toolbar = toolbar(root)
 
 # ---------------- Dataframe -------------------------------------------
 #data_frame = scrollbar(container)
-
-
-
-#---------------
 """
 data_frame = Canvas(
     container,
@@ -121,24 +175,36 @@ data_frame.config(yscrollcommand=scrollbar.set)
 data_frame.pack(fill='both', expand=True)
 #data_frame.configure(scrollregion = data_frame.bbox("all"))
 """
-#---------------
 
 data_frame1 = scrframe.VerticalScrolledFrame(container)
 data_frame1.pack(fill='both', expand=True)
 
-graph1 = Frame(data_frame1.interior, bg='red')
+graph1 = Frame(data_frame1.interior, bg='#363636')
 graph1.pack(fill='both', expand=True)
 
-figure_FHI_ILI = FHI_ILS_graf.FHI_ILI('../Backend/FHI/ILI_tall_2016_17.xlsx').get_graph()
-figure_Ruter = ruter.Ruter('../Backend/Ruter/Antall påstigende per dag_Oslo_2015_2017.xlsx').get_graph()
-"""figure_FHI_virus = 
-figure_kolumbus = 
-figure_twitter =""" 
+FHI_ILI_figure = FHI_ILS_graf.FHI_ILI('../Backend/FHI/ILI_tall_2016_17.xlsx').get_graph()
+Ruter_figure = ruter.Ruter('../Backend/Ruter/Antall påstigende per dag_Oslo_2015_2017.xlsx').get_graph()
+FHI_virus_figure = FHI_virus_detections.FHI_Virus().get_graph()
+kolumbus_figure = kolumbus.Kolumbus().get_graph()
+twitter_figure = twitter_analyzer.Twitter('../Backend/Twitter/twitter_data.txt').get_graph()
+NPRA_stavanger_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx').get_specific_graph_('stavanger')
+NPRA_norway_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx').get_specific_graph_('norway')
+NPRA_bergen_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx').get_specific_graph_('bergen')
+NPRA_oslo_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx').get_specific_graph_('oslo')
 
-FHI_ILI_graph = plot_widget(figure_FHI_ILI)
-ruter_graph = plot_widget(figure_Ruter)
+FHI_ILI_graph = plot_widget(FHI_ILI_figure)
+ruter_graph = plot_widget(Ruter_figure)
+FHI_virus_graph = plot_widget(FHI_virus_figure)
+kolumbus_graph = plot_widget(kolumbus_figure)
+twitter_graph = plot_widget(twitter_figure)
+NPRA_stavanger_graph = plot_widget(NPRA_stavanger_figure)
+NPRA_norway_graph = plot_widget(NPRA_norway_figure)
+NPRA_bergen_graph = plot_widget(NPRA_bergen_figure)
+NPRA_oslo_graph = plot_widget(NPRA_oslo_figure)
 
+# default starting view
 FHI_ILI_graph.pack(fill='both', expand=True)
+FHI_virus_graph.pack(fill='both', expand=True)
 
 #figure_canvas = FigureCanvasTkAgg(figure_FHI_ILI, master=graph1)
 #plot_widget = figure_canvas.get_tk_widget()
@@ -149,6 +215,8 @@ markers.append([58.9362,5.5741])
 markers.append([58.97,5.7331])
 markers.append([58.939243,5.589634])
 
-map_frame.Map(root, data_frame1.interior, markers) # creates a tkinter.Canvas
+map1 = map_canvas.Map(root, data_frame1.interior, markers) # creates a tkinter.Canvas
+map1.pack_forget()
 
+print('Loading complete')
 root.mainloop()

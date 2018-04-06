@@ -13,8 +13,9 @@ import numpy as np
 
 
 class Twitter:
-    def __init__(self):
-        DATES = self.get_dates_from_file('twitter_data.txt')
+    def __init__(self, filepath):
+        self.filepath = filepath
+        DATES = self.get_dates_from_file(self.filepath)
         D = {}
         for date in DATES:
             date_format = str(date.tm_mday) + "." + str(date.tm_mon) + " " + str(date.tm_year)
@@ -45,6 +46,7 @@ class Twitter:
             return sorted(list_of_dates)
 
     def draw_graph(self, x, y, ticks):
+        plt.figure(5)
         plt.xticks(x, ticks)
         plt.xticks(rotation=45)
         plt.plot(np.array(x), np.array(y))
@@ -54,13 +56,15 @@ class Twitter:
         plt.ylabel("Number of tweets")
         plt.grid(axis='y', linestyle='-')
         plt.grid(axis='x', linestyle='-')
-        return plt.figure(1)
+        figure = plt.figure(5)
+        figure.patch.set_facecolor('#fff7ff')
+        return figure
 
     def get_graph(self):
         return self._FIGURE
 
 def main():
-    Twitter().get_graph()
+    Twitter('./twitter_data.txt').get_graph()
     plt.show()
 
 if __name__ == '__main__':

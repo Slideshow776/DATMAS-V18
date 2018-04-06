@@ -14,7 +14,8 @@ import numpy as np
 
 
 class NPRA_weekly:
-    def __init__(self):
+    def __init__(self, filepath):
+        self.filepath = filepath
         self.NUMBER_OF_WEEKS_IN_YEAR, self.YEARS = 52, [2013, 2014, 2015, 2016, 2017]
         self.worksheets = []
         self.user_input_places = "norway"
@@ -36,18 +37,19 @@ class NPRA_weekly:
         self._FIGURE = self.drawGraph(self.YEARS, total_years)
 
     def getWorksheetUserEnteredCommands(self):
-        self.user_input_places = sys.argv[1:][0].lower()
-        if not self.user_input_places == 'oslo' and not self.user_input_places == 'bergen' and not self.user_input_places == 'stavanger':
-            print("Error: Invalid command, please choose from 'Oslo', 'Stavanger' or 'Bergen'")
+        if len(sys.argv) > 1:
+            self.user_input_places = sys.argv[1:][0].lower()
+            if not self.user_input_places == 'oslo' and not self.user_input_places == 'bergen' and not self.user_input_places == 'stavanger':
+                print("Error: Invalid command, please choose from 'Oslo', 'Stavanger' or 'Bergen'")
 
-        wb2 = load_workbook('Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx')
+        wb2 = load_workbook(self.filepath)
         if self.user_input_places == 'bergen': ws = wb2['Bergen']
         elif self.user_input_places == 'oslo': ws = wb2['Oslo']
         elif self.user_input_places == 'stavanger': ws = wb2['Stavanger']
         return ws, self.user_input_places
 
     def getWorksheetsUserEnteredNoCommands(self):
-        worksheets, workbook = [], load_workbook('Ukeverdiger utvalgte punkter hele landet 2013-2017.xlsx')
+        worksheets, workbook = [], load_workbook(self.filepath)
         for ws in workbook:
             worksheets.append(ws)
         return worksheets
@@ -71,6 +73,10 @@ class NPRA_weekly:
         return weeks
 
     def drawGraph(self, years, data): # Input: List of years (String[]). Each year contain a total amount of traffic data per week
+        if self.user_input_places == 'norway': plt.figure(7)
+        elif self.user_input_places == 'oslo': plt.figure(8)
+        elif self.user_input_places == 'bergen': plt.figure(9)
+        elif self.user_input_places == 'stavanger': plt.figure(10)
         ticks, x = [], []
         for i in range(0, 52):
             ticks.append("Week " + str(i+1))
@@ -90,16 +96,17 @@ class NPRA_weekly:
         plt.legend(loc='upper left')
         plt.grid(axis='y', linestyle='-')
         plt.grid(axis='x', linestyle='-')
-        return plt.figure(1)
+        if self.user_input_places == 'norway': figure = plt.figure(7)
+        elif self.user_input_places == 'oslo': figure = plt.figure(8)
+        elif self.user_input_places == 'bergen': figure = plt.figure(9)
+        elif self.user_input_places == 'stavanger': figure = plt.figure(10)
+        figure.patch.set_facecolor('#fff7ff')
+        return figure
 
     def get_specific_graph_(self, user_input): # accepts: 'norway', 'bergen' and 'oslo'
         self.user_input_places = user_input
-
-        if len(sys.argv)>1: # if console commands were given
-            total_years, (worksheet, self.user_input_places) = [], self.getWorksheetUserEnteredCommands()
-            for year in self.YEARS:
-                total_years.append(self.getData(year, worksheet))
-        else:
+        
+        if self.user_input_places == 'norway':
             total_years = [[0]*self.NUMBER_OF_WEEKS_IN_YEAR for i in range(len(self.YEARS))] # initialize empty list of lists
             worksheets = self.getWorksheetsUserEnteredNoCommands()
             for worksheet in worksheets:
@@ -108,7 +115,11 @@ class NPRA_weekly:
                     data_years[year - self.YEARS[0]] = self.getData(year, worksheet)
                     for week in range(self.NUMBER_OF_WEEKS_IN_YEAR):
                         total_years[year - self.YEARS[0]][week] += data_years[year - self.YEARS[0]][week]
-        
+        else: # if console commands were given
+            total_years, (worksheet, self.user_input_places) = [], self.getWorksheetUserEnteredCommands()
+            for year in self.YEARS:
+                total_years.append(self.getData(year, worksheet))
+
         return self.drawGraph(self.YEARS, total_years)     
 
     def get_graph(self):
@@ -116,7 +127,9 @@ class NPRA_weekly:
 
 def main():
     print("Accepts command lines first: [Bergen, Oslo or Stavanger]\nNo commands shows total traffic of all of Norway")
-    NPRA_weekly().get_graph()
+    NPRA_weekly(
+        './Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx'
+        ).get_graph()
     plt.show()
 
 if __name__ == '__main__':

@@ -38,7 +38,7 @@ class Map(tk.Canvas, tk.Tk):
         self.root = root
         self.widget = widget
 
-        tk.Canvas.__init__(self, widget, bg='orange', width=WIDTH, height=HEIGHT)
+        tk.Canvas.__init__(self, widget, bg='#363636', width=WIDTH, height=HEIGHT)
         self.pack(fill='both', expand=True)
 
         self.label = tk.Label(self)

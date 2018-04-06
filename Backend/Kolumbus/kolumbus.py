@@ -10,9 +10,13 @@ import numpy as np
 
 class Kolumbus:
     def __init__(self):
+        self._FIGURE = self._draw_graph()
+
+    def _draw_graph(self):
+        plt.figure(4)
         ticks = ['January', 'February', 'March', 'April',
-                    'May', 'June', 'July', 'August', 'Spetember',
-                    'October', 'November', 'December']
+                            'May', 'June', 'July', 'August', 'Spetember',
+                            'October', 'November', 'December']
 
         # 2015
         x = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
@@ -31,7 +35,9 @@ class Kolumbus:
         plt.legend(loc='upper left')
         plt.grid(axis='y', linestyle='-')
         plt.grid(axis='x', linestyle='-')
-        self._FIGURE = plt.figure(1)
+        figure = plt.figure(4)
+        figure.patch.set_facecolor('#fff7ff')
+        return figure
 
     def get_graph(self):
         return self._FIGURE

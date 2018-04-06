@@ -13,6 +13,7 @@ class FHI_Virus:
         self._FIGURE = self.draw_graph()
 
     def draw_graph(self):
+        plt.figure(3)
         # Influensasesongen 2015/2016
         x_2015_2016 = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29 ,30 ,31, 32, 33])
         y_2015_2016 = np.array([1126*.04, 1465*.002, 1551*.002, 1776*.003, 1641*.009, 1853*.015, 1921*.022, 2050*.029, 2046*.036, 2241*.043, 2467*.052, 2703*.072, 2227*.109, 2033*.116, 3622*.099, 3478*.105, 3235*.166, 4373*.209, 4858*.235, 5192*.245, 5589*.235, 4957*.272, 4877*.256, 4432*.227, 4027*.242, 2376*.213, 3096*.173, 3189*.145, 2837*.13, 2506*.106, 2573*.088, 2208*.08, 2036*.08, 1745*.042])
@@ -38,7 +39,9 @@ class FHI_Virus:
         plt.legend(loc='upper left')
         plt.grid(axis='y', linestyle='-')
         plt.grid(axis='x', linestyle='-')
-        return plt.figure(1)
+        figure = plt.figure(3)
+        figure.patch.set_facecolor('#fff7ff')
+        return figure
     
     def get_graph(self):
         return self._FIGURE

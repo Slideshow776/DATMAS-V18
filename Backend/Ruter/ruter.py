@@ -7,18 +7,18 @@ import numpy as np
 import datetime
 
 
-def _isDate(date):
-    try:
-        datetime.datetime.strptime(date, '%d.%m.%Y')
-        return True
-    except ValueError:
-        return False
-
 class Ruter:
     def __init__(self, filepath):
         self.filepath = filepath
         dates, passengers = self._getData()
         self._FIGURE = self._drawGraph(dates, passengers)
+
+    def _isDate(self, date):
+        try:
+            datetime.datetime.strptime(date, '%d.%m.%Y')
+            return True
+        except ValueError:
+            return False
 
     def _getData(self, ):
         workbook = load_workbook(self.filepath)
@@ -27,7 +27,7 @@ class Ruter:
         years_dates, years_passengers = [], []
         dates, passengers = [], []
         for i in range(5, worksheet.max_row+1):
-            if _isDate(worksheet['A' + str(i)].value):
+            if self._isDate(worksheet['A' + str(i)].value):
                 dates.append(worksheet['A' + str(i)].value)
                 passengers.append(worksheet['B' + str(i)].value)
             else:
@@ -69,7 +69,9 @@ class Ruter:
         plt.legend(loc='upper left')
         plt.grid(axis='y', linestyle='-')
         plt.grid(axis='x', linestyle='-')
-        return plt.figure(2)
+        figure = plt.figure(2)
+        figure.patch.set_facecolor('#fff7ff')
+        return figure
 
     def get_graph(self):
         return self._FIGURE
