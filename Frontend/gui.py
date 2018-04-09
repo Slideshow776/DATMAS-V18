@@ -1,7 +1,8 @@
 # !/usr/bin/python3
 from tkinter import *
 from tkinter import messagebox
-import sys, os
+import tkinter.ttk as ttk 
+import sys, os, time, threading
 import matplotlib
 import numpy as np
 
@@ -18,7 +19,22 @@ from Twitter import twitter_analyzer
 import map_canvas
 import scrframe
 
-WIDTH, HEIGHT = 1366/1.2, 768/1.2 # resolution of average laptop
+FHI_ILI_graph = None
+ruter_graph = None
+FHI_virus_graph = None
+kolumbus_graph = None
+twitter_graph = None
+NPRA_stavanger_graph = None
+NPRA_norway_graph = None
+NPRA_bergen_graph = None
+NPRA_oslo_graph = None
+map1 = None
+progress_var = None
+theLabel = None
+progressbar = None
+
+WIDTH, HEIGHT = 1366/1.2, 768/1.2 # (1366, 768) is the resolution of an average laptop.
+COLOR1, COLOR2, COLOR3 = '#363636', '#F75C95', '#ffb1e6' # color theme: darker to lighter
 
 def helloCallBack(name):
     if name == 'FHI':
@@ -82,11 +98,11 @@ def addButton(frame, name):
         frame,
         text = name,
         width=10,
-        bg='#ffcfff',
-        fg='#363636',
+        bg=COLOR3,
+        fg=COLOR1,
         bd=3,
-        activebackground='#ffb1e6',
-        activeforeground='#363636',
+        activebackground=COLOR3,
+        activeforeground=COLOR1,
         highlightbackground='blue',
         highlightcolor='magenta',
         command = lambda: helloCallBack(name))
@@ -94,7 +110,7 @@ def addButton(frame, name):
     return B
 
 def toolbar(root):
-    toolbar = Frame(root, bg='#F75C95') # hello-kitty pink
+    toolbar = Frame(root, bg=COLOR2) # hello-kitty pink
     toolbar.pack(side='left', fill='both', expand=False)
 
     addButton(toolbar, "NPRA")
@@ -106,23 +122,9 @@ def toolbar(root):
     return toolbar
 
 def statusbar(root):
-    status = Label(root, text="Idle...", bd=1, relief=SUNKEN, bg="yellow", anchor=W)
-    status.grid(row = 3, column = 0, columnspan = 3, sticky='we')
-    status.pack(side='bottom', fill=X, expand=True)
-    status.place(anchor=N, x=root.winfo_height(), y=root.winfo_width()-20)
-
-def scrollbar(container): # Jams a canvas inbetween which you can scroll on
-    canvas = Canvas(container, bg='#cc99ff') # light purple
-    frame = Frame(canvas, bg='#800000') # dark red
-    scrollbar = Scrollbar(container, orient='vertical', command=canvas.yview)
-
-    canvas.configure(yscrollcommand=scrollbar.set)
-    scrollbar.pack(side='right', fill='y', anchor='w')
-    canvas.pack(fill='both', expand=True)
-    canvas.create_window((200, 0), window=frame)
-    frame.pack(fill='both', expand=True)
-    frame.bind('<Configure>', lambda event: callback_scroll_function(event, canvas))
-    return frame
+    status = Label(root, text="Idle...", bd=1, relief=SUNKEN, bg="white", anchor=W)
+    status.pack(side=BOTTOM, fill=X, expand=False)
+    #status.place(anchor=S, x=200, y=200)
 
 def callback_scroll_function(event, canvas):
     canvas.configure(
@@ -131,92 +133,124 @@ def callback_scroll_function(event, canvas):
         height=HEIGHT
     )
 
-def plot_widget(figure):
-    figure_canvas = FigureCanvasTkAgg(figure, master=graph1)
+def plot_widget(figure, root):
+    figure_canvas = FigureCanvasTkAgg(figure, master=root)
     plot_widget = figure_canvas.get_tk_widget()
-    #plot_widget.pack(fill='both', expand=True)
+    plot_widget.pack(fill='both', expand=True)
     plot_widget.pack_forget()
     return plot_widget
 
-print('Loading ... \n(this may take some seconds)')
+def progress_bar(root):
+    global progress_var
+    global theLabel
+    global progressbar
+    
+    PROGRESS_MAX = 9
+    progress_var = DoubleVar()
+    theLabel = Label(
+        anchor=S, master=root, text="LOADING", height=int(HEIGHT/32),
+        background=COLOR1, foreground=COLOR2)
+    theLabel.pack(side=TOP)
+
+    style = ttk.Style() 
+    style.theme_use('default') 
+    style.configure("black.Horizontal.TProgressbar", background=COLOR3)
+    progressbar = ttk.Progressbar(
+            root, variable=progress_var,
+            maximum=PROGRESS_MAX, style='black.Horizontal.TProgressbar'
+        )
+    progressbar.pack()
+
 root = Tk()
 root.geometry("%dx%d" % (WIDTH, HEIGHT))
 root.wm_iconbitmap('sandra.ico')
 root.title("Automated collection of multi-source spatial information for emergency management")
-root.configure(background='#363636')
+root.configure(background=COLOR1)
 
-container = Frame(root, bg='#363636', width=600, height=300)
+container = Frame(root, bg=COLOR1)
 container.pack(side="right", fill='both', expand=True)
-#container.rowconfigure(0, weight = 1)
-#container.columnconfigure(0, weight = 1)    
 
 the_toolbar = toolbar(root)
-#the_toolbar.focus_set()
-#statusbar(root)
+#statusbar(container)
+progress_bar(container)
 
-# ---------------- Dataframe -------------------------------------------
-#data_frame = scrollbar(container)
-"""
-data_frame = Canvas(
-    container,
-    bg ='#99ff99', # light green
-    width=300,
-    height=300,
-    scrollregion=(0,0,500,500)
-)
+def data_frame1():
+    # ---------------- Dataframe -------------------------------------------
+    data_frame1 = scrframe.VerticalScrolledFrame(container)
 
-scrollbar = Scrollbar(container, orient='vertical')
-scrollbar.pack(side=RIGHT, fill=Y)
-scrollbar.config(command=data_frame.yview)
+    graph1 = Frame(data_frame1.interior, bg=COLOR1)
+    graph1.pack(fill='both', expand=True)
+ 
+    global progress_var
+    global theLabel
+    global progressbar
 
-#data_frame.grid(row = 0, column = 1, sticky='nsew')
-#data_frame.config(width=300, height=300)
-data_frame.config(yscrollcommand=scrollbar.set)
-data_frame.pack(fill='both', expand=True)
-#data_frame.configure(scrollregion = data_frame.bbox("all"))
-"""
+    progress_var.set(0)
+    root.update_idletasks()
+    FHI_ILI_figure = FHI_ILS_graf.FHI_ILI('../Backend/FHI/ILI_tall_2016_17.xlsx').get_graph()
+    progress_var.set(1)
+    root.update_idletasks()
+    Ruter_figure = ruter.Ruter('../Backend/Ruter/Antall påstigende per dag_Oslo_2015_2017.xlsx').get_graph()
+    progress_var.set(2)
+    root.update_idletasks()
+    FHI_virus_figure = FHI_virus_detections.FHI_Virus().get_graph()
+    progress_var.set(3)
+    root.update_idletasks()
+    kolumbus_figure = kolumbus.Kolumbus().get_graph()
+    progress_var.set(4)
+    root.update_idletasks()
+    twitter_figure = twitter_analyzer.Twitter('../Backend/Twitter/twitter_data.txt').get_graph()
+    progress_var.set(5)
+    root.update_idletasks()
+    NPRA_stavanger_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx').get_specific_graph_('stavanger')
+    progress_var.set(6)
+    root.update_idletasks()
+    NPRA_norway_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx').get_specific_graph_('norway')
+    progress_var.set(7)
+    root.update_idletasks()
+    NPRA_bergen_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx').get_specific_graph_('bergen')
+    progress_var.set(8)
+    root.update_idletasks()
+    NPRA_oslo_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx').get_specific_graph_('oslo')
+    progress_var.set(9)
+    root.update_idletasks()
 
-data_frame1 = scrframe.VerticalScrolledFrame(container)
-data_frame1.pack(fill='both', expand=True)
+    global FHI_ILI_graph
+    FHI_ILI_graph= plot_widget(FHI_ILI_figure, graph1)
+    global ruter_graph
+    ruter_graph = plot_widget(Ruter_figure, graph1)
+    global FHI_virus_graph
+    FHI_virus_graph = plot_widget(FHI_virus_figure, graph1)
+    global kolumbus_graph
+    kolumbus_graph = plot_widget(kolumbus_figure, graph1)
+    global twitter_graph
+    twitter_graph = plot_widget(twitter_figure, graph1)
+    global NPRA_stavanger_graph
+    NPRA_stavanger_graph = plot_widget(NPRA_stavanger_figure, graph1)
+    global NPRA_norway_graph
+    NPRA_norway_graph = plot_widget(NPRA_norway_figure, graph1)
+    global NPRA_bergen_graph
+    NPRA_bergen_graph = plot_widget(NPRA_bergen_figure, graph1)
+    global NPRA_oslo_graph
+    NPRA_oslo_graph = plot_widget(NPRA_oslo_figure, graph1)
 
-graph1 = Frame(data_frame1.interior, bg='#363636')
-graph1.pack(fill='both', expand=True)
+    # default starting view
+    FHI_ILI_graph.pack(fill='both', expand=True)
+    FHI_virus_graph.pack(fill='both', expand=True)
 
-FHI_ILI_figure = FHI_ILS_graf.FHI_ILI('../Backend/FHI/ILI_tall_2016_17.xlsx').get_graph()
-Ruter_figure = ruter.Ruter('../Backend/Ruter/Antall påstigende per dag_Oslo_2015_2017.xlsx').get_graph()
-FHI_virus_figure = FHI_virus_detections.FHI_Virus().get_graph()
-kolumbus_figure = kolumbus.Kolumbus().get_graph()
-twitter_figure = twitter_analyzer.Twitter('../Backend/Twitter/twitter_data.txt').get_graph()
-NPRA_stavanger_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx').get_specific_graph_('stavanger')
-NPRA_norway_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx').get_specific_graph_('norway')
-NPRA_bergen_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx').get_specific_graph_('bergen')
-NPRA_oslo_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx').get_specific_graph_('oslo')
+    markers = []
+    markers.append([58.9362,5.5741])
+    markers.append([58.97,5.7331])
+    markers.append([58.939243,5.589634])
 
-FHI_ILI_graph = plot_widget(FHI_ILI_figure)
-ruter_graph = plot_widget(Ruter_figure)
-FHI_virus_graph = plot_widget(FHI_virus_figure)
-kolumbus_graph = plot_widget(kolumbus_figure)
-twitter_graph = plot_widget(twitter_figure)
-NPRA_stavanger_graph = plot_widget(NPRA_stavanger_figure)
-NPRA_norway_graph = plot_widget(NPRA_norway_figure)
-NPRA_bergen_graph = plot_widget(NPRA_bergen_figure)
-NPRA_oslo_graph = plot_widget(NPRA_oslo_figure)
+    global map1
+    map1 = map_canvas.Map(root, data_frame1.interior, markers) # creates a tkinter.Canvas
+    map1.pack_forget()
+    
+    theLabel.pack_forget()
+    progressbar.pack_forget()
+    data_frame1.pack(side=TOP, fill='both', expand=True)
 
-# default starting view
-FHI_ILI_graph.pack(fill='both', expand=True)
-FHI_virus_graph.pack(fill='both', expand=True)
+root.after(1, data_frame1) # a little hack to make the window load properly before the other widgets
 
-#figure_canvas = FigureCanvasTkAgg(figure_FHI_ILI, master=graph1)
-#plot_widget = figure_canvas.get_tk_widget()
-#plot_widget.pack(fill='both', expand=True)
-
-markers = []
-markers.append([58.9362,5.5741])
-markers.append([58.97,5.7331])
-markers.append([58.939243,5.589634])
-
-map1 = map_canvas.Map(root, data_frame1.interior, markers) # creates a tkinter.Canvas
-map1.pack_forget()
-
-print('Loading complete')
 root.mainloop()
