@@ -8,7 +8,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-class FHI_Virus:
+class NIPH_Virus:
     def __init__(self):
         self._FIGURE = self.draw_graph()
 
@@ -47,7 +47,7 @@ class FHI_Virus:
         return self._FIGURE
 
 def main():
-    FHI_Virus().get_graph()
+    NIPH_Virus().get_graph()
     plt.show()
 
 if __name__ == '__main__':

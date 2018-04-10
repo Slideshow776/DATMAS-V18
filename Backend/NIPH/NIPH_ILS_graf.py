@@ -3,7 +3,7 @@ from openpyxl import load_workbook
 import matplotlib.pyplot as plt
 import numpy as np
 
-class FHI_ILI:
+class NIPH_ILI:
     def __init__(self, filepath):
         self.filepath = filepath
         x, y = self.get_data()
@@ -43,7 +43,7 @@ class FHI_ILI:
         return self._FIGURE
 
 def main():
-    FHI_ILI('./ILI_tall_2016_17.xlsx')
+    NIPH_ILI('./ILI_tall_2016_17.xlsx')
     plt.show()
 
 if __name__ == '__main__':

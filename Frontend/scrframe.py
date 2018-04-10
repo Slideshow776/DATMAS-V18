@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from tkinter import *
 # @author: Eugene Bakin @ https://gist.github.com/EugeneBakin/76c8f9bcec5b390e45df
+# @edit: Sandra Moen, added mouse scrollwheel functions
 
 class VerticalScrolledFrame(Frame):
     """A pure Tkinter scrollable frame that actually works!
@@ -19,6 +20,13 @@ class VerticalScrolledFrame(Frame):
                         yscrollcommand=vscrollbar.set)
         canvas.pack(side=LEFT, fill=BOTH, expand=TRUE)
         vscrollbar.config(command=canvas.yview)
+        
+        # edited @Sandra Moen--------------------------------------
+        def _on_mousewheel(event):
+            canvas.yview_scroll(int(-1*(event.delta/120)), "units")
+        
+        self.bind_all("<MouseWheel>", _on_mousewheel)
+        # ---------------------------------------------------------
 
         # reset the view
         canvas.xview_moveto(0)
@@ -37,9 +45,9 @@ class VerticalScrolledFrame(Frame):
             if interior.winfo_reqwidth() != canvas.winfo_width():
                 # update the canvas's width to fit the inner frame
                 canvas.config(width=interior.winfo_reqwidth())
-            """if interior.winfo_reqheight() != canvas.winfo_height():
+            if interior.winfo_reqheight() != canvas.winfo_height():
                 # update the canvas's width to fit the inner frame
-                canvas.config(height=interior.winfo_reqheight())"""
+                canvas.config(height=interior.winfo_reqheight())
         interior.bind('<Configure>', _configure_interior)
 
         def _configure_canvas(event):
