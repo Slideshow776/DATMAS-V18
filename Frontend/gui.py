@@ -157,10 +157,13 @@ the_toolbar = toolbar(root)
 #statusbar(container)
 progress_bar(container)
 
-#def _on_mousewheel(event):
-    #print(event.delta)
-
-#root.bind_all("<MouseWheel>", _on_mousewheel)
+"""
+self.canvas = Canvas(...)
+self.canvas.bind_all("<MouseWheel>", self._on_mousewheel)
+...
+def _on_mousewheel(self, event):
+    self.canvas.yview_scroll(-1*(event.delta/120), "units")
+"""
 
 def data_frame1():
     # ---------------- Dataframe -------------------------------------------
