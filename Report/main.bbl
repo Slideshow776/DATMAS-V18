@@ -1,14 +1,20 @@
 \begin{thebibliography}{10}
 
 \bibitem{fhi_sykdommer}
-T.~N.~I. of~Public~Health, ``Influenza symptoms,'' 2018.
+``The norwegian institute of public health: Influenza symptoms.''
+  https://www.fhi.no/en/id/influensa/seasonal-influenza/influenza---fact-sheet-about-season/.
+\newblock Accessed: 2018-06-11.
 
 \bibitem{niph}
-T.~N.~I. of~Public~Health, ``Norwegian institute of public health,'' 2018.
+``The norwegian institute of public health: Norwegian institute of public
+  health.'' https://www.fhi.no/en/.
+\newblock Accessed: 2018-06-11.
 
 \bibitem{NorSySS}
-T.~N.~I. of~Public~Health, ``About the norwegian syndromic surveillance
-  system,'' 2018.
+``The norwegian institute of public health: About the norwegian syndromic
+  surveillance system.''
+  https://www.fhi.no/en/hn/statistics/NorSySS/about-the-norwegian-syndromic-surveillance-system/.
+\newblock Accessed: 2018-06-11.
 
 \bibitem{spatiotemp_urban_sys}
 L.~O. Grottenberg, O.~Njå, E.~Tøssebro, G.~Braut, R.~Tønnessen, and G.~M.
@@ -43,7 +49,9 @@ M.~J. Paul and M.~Dredze, ``You are what you tweet: Analyzing twitter for
   public health.,'' {\em Icwsm}, vol.~20, pp.~265--272, 2011.
 
 \bibitem{fhi}
-T.~N.~I. of~Public~Health, ``Influenza information,'' 2018.
+``The norwegian institute of public health: Influenza information.''
+  https://fhi.no/en/id/influensa/seasonal-influenza/.
+\newblock Accessed: 2018-06-11.
 
 \bibitem{vegvesenet}
 ``The norwegian public roads administration: Open data, api for developers.''
