@@ -1,15 +1,12 @@
-[0] Config.pm:302> INFO - This is Biber 2.10
-[2] Config.pm:305> INFO - Logfile is 'main.blg'
-[73] biber-MSWIN64:313> INFO - === 
-[371] Biber.pm:371> INFO - Reading 'main.bcf'
-[585] Biber.pm:857> INFO - Found 11 citekeys in bib section 0
-[625] Biber.pm:3976> INFO - Processing section 0
-[675] Biber.pm:4136> INFO - Looking for bibtex format file 'references.bib' for section 0
-[711] bibtex.pm:1490> INFO - LaTeX decoding ...
-[859] bibtex.pm:1306> INFO - Found BibTeX data source 'references.bib'
-[1078] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[1079] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[1079] Biber.pm:3804> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-US'
-[1079] Biber.pm:3810> INFO - No sort tailoring available for locale 'en-US'
-[1265] bbl.pm:617> INFO - Writing 'main.bbl' with encoding 'UTF-8'
-[1274] bbl.pm:720> INFO - Output to main.bbl
+This is BibTeX, Version 0.99dThe top-level auxiliary file: main.aux
+The style file: ieeetr.bst
+Database file #1: references.bib
+Warning--entry type for "fhi_sykdommer" isn't style-file defined
+--line 7 of file references.bib
+Warning--entry type for "fhi" isn't style-file defined
+--line 14 of file references.bib
+Warning--entry type for "NorSySS" isn't style-file defined
+--line 21 of file references.bib
+Warning--entry type for "niph" isn't style-file defined
+--line 28 of file references.bib
+(There were 4 warnings)

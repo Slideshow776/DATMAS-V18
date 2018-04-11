@@ -1,433 +1,53 @@
-% $ biblatex auxiliary file $
-% $ biblatex bbl format version 2.9 $
-% Do not modify the above lines!
-%
-% This is an auxiliary file used by the 'biblatex' package.
-% This file may safely be deleted. It will be recreated by
-% biber as required.
-%
-\begingroup
-\makeatletter
-\@ifundefined{ver@biblatex.sty}
-  {\@latex@error
-     {Missing 'biblatex' package}
-     {The bibliography requires the 'biblatex' package.}
-      \aftergroup\endinput}
-  {}
-\endgroup
+\begin{thebibliography}{10}
 
+\bibitem{fhi_sykdommer}
+T.~N.~I. of~Public~Health, ``Influenza symptoms,'' 2018.
 
-\refsection{0}
-  \datalist[entry]{none/global//global/global}
-    \entry{fhi_sykdommer}{online}{}
-      \name{author}{1}{}{%
-        {{hash=c77097ade56e5fadf7fd846b02922ed8}{%
-           family={Public\bibnamedelima Health},
-           familyi={P\bibinitperiod\bibinitdelim H\bibinitperiod},
-           given={The\bibnamedelimb Norwegian\bibnamedelima Institute},
-           giveni={T\bibinitperiod\bibinitdelim N\bibinitperiod\bibinitdelim I\bibinitperiod},
-           prefix={of},
-           prefixi={o\bibinitperiod}}}%
-      }
-      \strng{namehash}{c77097ade56e5fadf7fd846b02922ed8}
-      \strng{fullhash}{c77097ade56e5fadf7fd846b02922ed8}
-      \strng{bibnamehash}{c77097ade56e5fadf7fd846b02922ed8}
-      \strng{authorbibnamehash}{c77097ade56e5fadf7fd846b02922ed8}
-      \strng{authornamehash}{c77097ade56e5fadf7fd846b02922ed8}
-      \strng{authorfullhash}{c77097ade56e5fadf7fd846b02922ed8}
-      \field{labelalpha}{Pub18}
-      \field{sortinit}{1}
-      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
-      \field{extraalpha}{1}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{Influenza symptoms}
-      \field{year}{2018}
-      \verb{urlraw}
-      \verb 'https://www.fhi.no/en/id/influensa/seasonal-influenza/influenza---fact-sheet-about-season/'
-      \endverb
-      \verb{url}
-      \verb 'https://www.fhi.no/en/id/influensa/seasonal-influenza/influenza---fact-sheet-about-season/'
-      \endverb
-    \endentry
-    \entry{niph}{online}{}
-      \name{author}{1}{}{%
-        {{hash=c77097ade56e5fadf7fd846b02922ed8}{%
-           family={Public\bibnamedelima Health},
-           familyi={P\bibinitperiod\bibinitdelim H\bibinitperiod},
-           given={The\bibnamedelimb Norwegian\bibnamedelima Institute},
-           giveni={T\bibinitperiod\bibinitdelim N\bibinitperiod\bibinitdelim I\bibinitperiod},
-           prefix={of},
-           prefixi={o\bibinitperiod}}}%
-      }
-      \strng{namehash}{c77097ade56e5fadf7fd846b02922ed8}
-      \strng{fullhash}{c77097ade56e5fadf7fd846b02922ed8}
-      \strng{bibnamehash}{c77097ade56e5fadf7fd846b02922ed8}
-      \strng{authorbibnamehash}{c77097ade56e5fadf7fd846b02922ed8}
-      \strng{authornamehash}{c77097ade56e5fadf7fd846b02922ed8}
-      \strng{authorfullhash}{c77097ade56e5fadf7fd846b02922ed8}
-      \field{labelalpha}{Pub18}
-      \field{sortinit}{2}
-      \field{sortinithash}{cbff857e587bcb4635511624d773949e}
-      \field{extraalpha}{2}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{Norwegian Institute of Public Health}
-      \field{year}{2018}
-      \verb{urlraw}
-      \verb https://www.fhi.no/en/'
-      \endverb
-      \verb{url}
-      \verb https://www.fhi.no/en/'
-      \endverb
-    \endentry
-    \entry{NorSySS}{online}{}
-      \name{author}{1}{}{%
-        {{hash=c77097ade56e5fadf7fd846b02922ed8}{%
-           family={Public\bibnamedelima Health},
-           familyi={P\bibinitperiod\bibinitdelim H\bibinitperiod},
-           given={The\bibnamedelimb Norwegian\bibnamedelima Institute},
-           giveni={T\bibinitperiod\bibinitdelim N\bibinitperiod\bibinitdelim I\bibinitperiod},
-           prefix={of},
-           prefixi={o\bibinitperiod}}}%
-      }
-      \strng{namehash}{c77097ade56e5fadf7fd846b02922ed8}
-      \strng{fullhash}{c77097ade56e5fadf7fd846b02922ed8}
-      \strng{bibnamehash}{c77097ade56e5fadf7fd846b02922ed8}
-      \strng{authorbibnamehash}{c77097ade56e5fadf7fd846b02922ed8}
-      \strng{authornamehash}{c77097ade56e5fadf7fd846b02922ed8}
-      \strng{authorfullhash}{c77097ade56e5fadf7fd846b02922ed8}
-      \field{labelalpha}{Pub18}
-      \field{sortinit}{3}
-      \field{sortinithash}{a4b52e5432884761f50fb9571273b93e}
-      \field{extraalpha}{3}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{About the Norwegian Syndromic Surveillance System}
-      \field{year}{2018}
-      \verb{urlraw}
-      \verb 'https://www.fhi.no/en/hn/statistics/NorSySS/about-the-norwegian-syndromic-surveillance-system/'
-      \endverb
-      \verb{url}
-      \verb 'https://www.fhi.no/en/hn/statistics/NorSySS/about-the-norwegian-syndromic-surveillance-system/'
-      \endverb
-    \endentry
-    \entry{spatiotemp_urban_sys}{article}{}
-      \name{author}{6}{}{%
-        {{hash=9129b146218f9c692bd802b6a5f96378}{%
-           family={Grottenberg},
-           familyi={G\bibinitperiod},
-           given={L.\bibnamedelimi O.},
-           giveni={L\bibinitperiod\bibinitdelim O\bibinitperiod}}}%
-        {{hash=e8eb342c682c70d3a19cdfe1aab43d12}{%
-           family={Njå},
-           familyi={N\bibinitperiod},
-           given={O.},
-           giveni={O\bibinitperiod}}}%
-        {{hash=fe3e59e9e67ec0d9d0f072050a5ec7d2}{%
-           family={Tøssebro},
-           familyi={T\bibinitperiod},
-           given={E.},
-           giveni={E\bibinitperiod}}}%
-        {{hash=4259416a09b0123cbed25d2b6c0d8c69}{%
-           family={Braut},
-           familyi={B\bibinitperiod},
-           given={G.S.},
-           giveni={G\bibinitperiod}}}%
-        {{hash=b0862b1eb86e6b3eec6a27ec7b540e2c}{%
-           family={Tønnessen},
-           familyi={T\bibinitperiod},
-           given={R.},
-           giveni={R\bibinitperiod}}}%
-        {{hash=f2937f4904ec1790cc7a651f8041c022}{%
-           family={Grøneng},
-           familyi={G\bibinitperiod},
-           given={G.\bibnamedelimi M.},
-           giveni={G\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
-      }
-      \strng{namehash}{469b525ca9a60a8c52fff84711ba75af}
-      \strng{fullhash}{43a765a4a64620f6c0e3fef65a86a55e}
-      \strng{bibnamehash}{469b525ca9a60a8c52fff84711ba75af}
-      \strng{authorbibnamehash}{469b525ca9a60a8c52fff84711ba75af}
-      \strng{authornamehash}{469b525ca9a60a8c52fff84711ba75af}
-      \strng{authorfullhash}{43a765a4a64620f6c0e3fef65a86a55e}
-      \field{labelalpha}{Gro+17}
-      \field{sortinit}{4}
-      \field{sortinithash}{11cdaee3b18e01d77f3f428b13c1fc76}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Icwsm}
-      \field{title}{Detecting flu outbreaks based on spatiotemporal information from urban systems – designing a novel study}
-      \field{volume}{20}
-      \field{year}{2017}
-      \field{pages}{1\bibrangedash 7}
-      \range{pages}{7}
-    \endentry
-    \entry{twitter_politic}{book}{}
-      \name{author}{5}{}{%
-        {{hash=1c8e1f311d92d3989d209279866d9b14}{%
-           family={Elson},
-           familyi={E\bibinitperiod},
-           given={Sara\bibnamedelima Beth},
-           giveni={S\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
-        {{hash=0d48c19b04cd7d97e76a55bb54a86fcc}{%
-           family={Yeung},
-           familyi={Y\bibinitperiod},
-           given={Douglas},
-           giveni={D\bibinitperiod}}}%
-        {{hash=f58e2823dd6d316de353ba465b55059c}{%
-           family={Roshan},
-           familyi={R\bibinitperiod},
-           given={Parisa},
-           giveni={P\bibinitperiod}}}%
-        {{hash=017dda47ce5a687e0837ad98d9c59a4b}{%
-           family={Bohandy},
-           familyi={B\bibinitperiod},
-           given={Susan\bibnamedelima R},
-           giveni={S\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
-        {{hash=f68fb63bf4124c74001ac0aba3006f89}{%
-           family={Nader},
-           familyi={N\bibinitperiod},
-           given={Alireza},
-           giveni={A\bibinitperiod}}}%
-      }
-      \list{publisher}{1}{%
-        {Rand Corporation}%
-      }
-      \strng{namehash}{079f1d8fca6a3a60f8c1ec87c1a1633a}
-      \strng{fullhash}{48e498db2029d72967c7487415e2d918}
-      \strng{bibnamehash}{079f1d8fca6a3a60f8c1ec87c1a1633a}
-      \strng{authorbibnamehash}{079f1d8fca6a3a60f8c1ec87c1a1633a}
-      \strng{authornamehash}{079f1d8fca6a3a60f8c1ec87c1a1633a}
-      \strng{authorfullhash}{48e498db2029d72967c7487415e2d918}
-      \field{labelalpha}{Els+12}
-      \field{sortinit}{5}
-      \field{sortinithash}{3c19c3776b658b3558e9e2e4840c01e2}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{Using social media to gauge Iranian public opinion and mood after the 2009 election}
-      \field{year}{2012}
-    \endentry
-    \entry{twitter_flu_trends}{inproceedings}{}
-      \name{author}{5}{}{%
-        {{hash=da4e77a7764dd51cee01a91b8e676dac}{%
-           family={Achrekar},
-           familyi={A\bibinitperiod},
-           given={Harshavardhan},
-           giveni={H\bibinitperiod}}}%
-        {{hash=a36a4c9859b9fd60294b05577ed36941}{%
-           family={Gandhe},
-           familyi={G\bibinitperiod},
-           given={Avinash},
-           giveni={A\bibinitperiod}}}%
-        {{hash=1838a6fa58e4e568abc8125c7b906dde}{%
-           family={Lazarus},
-           familyi={L\bibinitperiod},
-           given={Ross},
-           giveni={R\bibinitperiod}}}%
-        {{hash=f48262495e49042c19a0963b5a72f69a}{%
-           family={Yu},
-           familyi={Y\bibinitperiod},
-           given={Ssu-Hsin},
-           giveni={S\bibinithyphendelim H\bibinitperiod}}}%
-        {{hash=047994df96347782c0c4008d476050b6}{%
-           family={Liu},
-           familyi={L\bibinitperiod},
-           given={Benyuan},
-           giveni={B\bibinitperiod}}}%
-      }
-      \list{organization}{1}{%
-        {IEEE}%
-      }
-      \strng{namehash}{33a29a4c075935c1e7e87fe58f9f8784}
-      \strng{fullhash}{bb338403fbf9d2fe5df3c9688591595e}
-      \strng{bibnamehash}{33a29a4c075935c1e7e87fe58f9f8784}
-      \strng{authorbibnamehash}{33a29a4c075935c1e7e87fe58f9f8784}
-      \strng{authornamehash}{33a29a4c075935c1e7e87fe58f9f8784}
-      \strng{authorfullhash}{bb338403fbf9d2fe5df3c9688591595e}
-      \field{labelalpha}{Ach+11}
-      \field{sortinit}{6}
-      \field{sortinithash}{57e57fb8451e7fcfa45d1e069f6d3136}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{booktitle}{Computer Communications Workshops (INFOCOM WKSHPS), 2011 IEEE Conference on}
-      \field{title}{Predicting flu trends using twitter data}
-      \field{year}{2011}
-      \field{pages}{702\bibrangedash 707}
-      \range{pages}{6}
-    \endentry
-    \entry{twitter_linguistics}{inproceedings}{}
-      \name{author}{4}{}{%
-        {{hash=c63e034ea77c7c55818aa4da5f40f479}{%
-           family={Eisenstein},
-           familyi={E\bibinitperiod},
-           given={Jacob},
-           giveni={J\bibinitperiod}}}%
-        {{hash=9571b2b14f23c45ebda0321a8ac01394}{%
-           family={O'Connor},
-           familyi={O\bibinitperiod},
-           given={Brendan},
-           giveni={B\bibinitperiod}}}%
-        {{hash=9a7134e1e77eb89fe5582543a3025f2a}{%
-           family={Smith},
-           familyi={S\bibinitperiod},
-           given={Noah\bibnamedelima A},
-           giveni={N\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
-        {{hash=1d416fa2a6186b2cf1ffbd502fd4b0f2}{%
-           family={Xing},
-           familyi={X\bibinitperiod},
-           given={Eric\bibnamedelima P},
-           giveni={E\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
-      }
-      \list{organization}{1}{%
-        {Association for Computational Linguistics}%
-      }
-      \strng{namehash}{b867e66eb011f48f8c7e8347477672a1}
-      \strng{fullhash}{1163134f49578ea31dc37aa1a8fe3dc3}
-      \strng{bibnamehash}{b867e66eb011f48f8c7e8347477672a1}
-      \strng{authorbibnamehash}{b867e66eb011f48f8c7e8347477672a1}
-      \strng{authornamehash}{b867e66eb011f48f8c7e8347477672a1}
-      \strng{authorfullhash}{1163134f49578ea31dc37aa1a8fe3dc3}
-      \field{labelalpha}{Eis+10}
-      \field{sortinit}{7}
-      \field{sortinithash}{c818dd9105a2852444fc9f5e145c294e}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{booktitle}{Proceedings of the 2010 Conference on Empirical Methods in Natural Language Processing}
-      \field{title}{A latent variable model for geographic lexical variation}
-      \field{year}{2010}
-      \field{pages}{1277\bibrangedash 1287}
-      \range{pages}{11}
-    \endentry
-    \entry{twitter_earthQuake}{inproceedings}{}
-      \name{author}{3}{}{%
-        {{hash=7575bc9ea82db470b2ae82b2e7dcc0f1}{%
-           family={Sakaki},
-           familyi={S\bibinitperiod},
-           given={Takeshi},
-           giveni={T\bibinitperiod}}}%
-        {{hash=1242d5977139b6fab5ae0429b80f83fe}{%
-           family={Okazaki},
-           familyi={O\bibinitperiod},
-           given={Makoto},
-           giveni={M\bibinitperiod}}}%
-        {{hash=db1de55b1de9e30bc3b3b38b224040bf}{%
-           family={Matsuo},
-           familyi={M\bibinitperiod},
-           given={Yutaka},
-           giveni={Y\bibinitperiod}}}%
-      }
-      \list{organization}{1}{%
-        {ACM}%
-      }
-      \strng{namehash}{c49f2f1f653c72aad683f62703cc7989}
-      \strng{fullhash}{c49f2f1f653c72aad683f62703cc7989}
-      \strng{bibnamehash}{c49f2f1f653c72aad683f62703cc7989}
-      \strng{authorbibnamehash}{c49f2f1f653c72aad683f62703cc7989}
-      \strng{authornamehash}{c49f2f1f653c72aad683f62703cc7989}
-      \strng{authorfullhash}{c49f2f1f653c72aad683f62703cc7989}
-      \field{labelalpha}{SOM10}
-      \field{sortinit}{8}
-      \field{sortinithash}{07edf88d4ea82509b9c4b4d13f41c452}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{booktitle}{Proceedings of the 19th international conference on World wide web}
-      \field{title}{Earthquake shakes Twitter users: real-time event detection by social sensors}
-      \field{year}{2010}
-      \field{pages}{851\bibrangedash 860}
-      \range{pages}{10}
-    \endentry
-    \entry{twitter_what_you_tweet}{article}{}
-      \name{author}{2}{}{%
-        {{hash=80eafc86d0afb297c74539f8a11027a2}{%
-           family={Paul},
-           familyi={P\bibinitperiod},
-           given={Michael\bibnamedelima J},
-           giveni={M\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
-        {{hash=fad798cd3972b70e217b653e07abc99d}{%
-           family={Dredze},
-           familyi={D\bibinitperiod},
-           given={Mark},
-           giveni={M\bibinitperiod}}}%
-      }
-      \strng{namehash}{109f10a977f9ad4e944ee710792707ba}
-      \strng{fullhash}{109f10a977f9ad4e944ee710792707ba}
-      \strng{bibnamehash}{109f10a977f9ad4e944ee710792707ba}
-      \strng{authorbibnamehash}{109f10a977f9ad4e944ee710792707ba}
-      \strng{authornamehash}{109f10a977f9ad4e944ee710792707ba}
-      \strng{authorfullhash}{109f10a977f9ad4e944ee710792707ba}
-      \field{labelalpha}{PD11}
-      \field{sortinit}{1}
-      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Icwsm}
-      \field{title}{You are what you Tweet: Analyzing Twitter for public health.}
-      \field{volume}{20}
-      \field{year}{2011}
-      \field{pages}{265\bibrangedash 272}
-      \range{pages}{8}
-    \endentry
-    \entry{fhi}{online}{}
-      \name{author}{1}{}{%
-        {{hash=c77097ade56e5fadf7fd846b02922ed8}{%
-           family={Public\bibnamedelima Health},
-           familyi={P\bibinitperiod\bibinitdelim H\bibinitperiod},
-           given={The\bibnamedelimb Norwegian\bibnamedelima Institute},
-           giveni={T\bibinitperiod\bibinitdelim N\bibinitperiod\bibinitdelim I\bibinitperiod},
-           prefix={of},
-           prefixi={o\bibinitperiod}}}%
-      }
-      \strng{namehash}{c77097ade56e5fadf7fd846b02922ed8}
-      \strng{fullhash}{c77097ade56e5fadf7fd846b02922ed8}
-      \strng{bibnamehash}{c77097ade56e5fadf7fd846b02922ed8}
-      \strng{authorbibnamehash}{c77097ade56e5fadf7fd846b02922ed8}
-      \strng{authornamehash}{c77097ade56e5fadf7fd846b02922ed8}
-      \strng{authorfullhash}{c77097ade56e5fadf7fd846b02922ed8}
-      \field{labelalpha}{Pub18}
-      \field{sortinit}{1}
-      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
-      \field{extraalpha}{4}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{Influenza information}
-      \field{year}{2018}
-      \verb{urlraw}
-      \verb 'https://fhi.no/en/id/influensa/seasonal-influenza/'
-      \endverb
-      \verb{url}
-      \verb 'https://fhi.no/en/id/influensa/seasonal-influenza/'
-      \endverb
-    \endentry
-    \entry{vegvesenet}{online}{}
-      \name{author}{1}{}{%
-        {{hash=8266fbacd195ad043ec8d19526d6f3a3}{%
-           family={Administration},
-           familyi={A\bibinitperiod},
-           given={The\bibnamedelimb Norwegian\bibnamedelimb Public\bibnamedelima Roads},
-           giveni={T\bibinitperiod\bibinitdelim N\bibinitperiod\bibinitdelim P\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
-      }
-      \strng{namehash}{8266fbacd195ad043ec8d19526d6f3a3}
-      \strng{fullhash}{8266fbacd195ad043ec8d19526d6f3a3}
-      \strng{bibnamehash}{8266fbacd195ad043ec8d19526d6f3a3}
-      \strng{authorbibnamehash}{8266fbacd195ad043ec8d19526d6f3a3}
-      \strng{authornamehash}{8266fbacd195ad043ec8d19526d6f3a3}
-      \strng{authorfullhash}{8266fbacd195ad043ec8d19526d6f3a3}
-      \field{labelalpha}{Adm18}
-      \field{sortinit}{1}
-      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{Open data, API for developers}
-      \field{year}{2018}
-      \verb{urlraw}
-      \verb 'https://www.vegvesen.no/en/the+npra/about-the-npra/open-data'
-      \endverb
-      \verb{url}
-      \verb 'https://www.vegvesen.no/en/the+npra/about-the-npra/open-data'
-      \endverb
-    \endentry
-  \enddatalist
-\endrefsection
-\endinput
+\bibitem{niph}
+T.~N.~I. of~Public~Health, ``Norwegian institute of public health,'' 2018.
 
+\bibitem{NorSySS}
+T.~N.~I. of~Public~Health, ``About the norwegian syndromic surveillance
+  system,'' 2018.
+
+\bibitem{spatiotemp_urban_sys}
+L.~O. Grottenberg, O.~Njå, E.~Tøssebro, G.~Braut, R.~Tønnessen, and G.~M.
+  Grøneng, ``Detecting flu outbreaks based on spatiotemporal information from
+  urban systems – designing a novel study,'' {\em Icwsm}, vol.~20, pp.~1--7,
+  2017.
+
+\bibitem{twitter_politic}
+S.~B. Elson, D.~Yeung, P.~Roshan, S.~R. Bohandy, and A.~Nader, {\em Using
+  social media to gauge Iranian public opinion and mood after the 2009
+  election}.
+\newblock Rand Corporation, 2012.
+
+\bibitem{twitter_flu_trends}
+H.~Achrekar, A.~Gandhe, R.~Lazarus, S.-H. Yu, and B.~Liu, ``Predicting flu
+  trends using twitter data,'' in {\em Computer Communications Workshops
+  (INFOCOM WKSHPS), 2011 IEEE Conference on}, pp.~702--707, IEEE, 2011.
+
+\bibitem{twitter_linguistics}
+J.~Eisenstein, B.~O'Connor, N.~A. Smith, and E.~P. Xing, ``A latent variable
+  model for geographic lexical variation,'' in {\em Proceedings of the 2010
+  Conference on Empirical Methods in Natural Language Processing},
+  pp.~1277--1287, Association for Computational Linguistics, 2010.
+
+\bibitem{twitter_earthQuake}
+T.~Sakaki, M.~Okazaki, and Y.~Matsuo, ``Earthquake shakes twitter users:
+  real-time event detection by social sensors,'' in {\em Proceedings of the
+  19th international conference on World wide web}, pp.~851--860, ACM, 2010.
+
+\bibitem{twitter_what_you_tweet}
+M.~J. Paul and M.~Dredze, ``You are what you tweet: Analyzing twitter for
+  public health.,'' {\em Icwsm}, vol.~20, pp.~265--272, 2011.
+
+\bibitem{fhi}
+T.~N.~I. of~Public~Health, ``Influenza information,'' 2018.
+
+\bibitem{vegvesenet}
+``The norwegian public roads administration: Open data, api for developers.''
+  https://www.vegvesen.no/en/the+npra/about-the-npra/open-data.
+\newblock Accessed: 2018-06-11.
+
+\end{thebibliography}

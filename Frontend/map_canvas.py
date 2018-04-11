@@ -45,6 +45,8 @@ class Map(tk.Canvas, tk.Tk):
 
         self.label.bind('<B1-Motion>', self.callback_drag)
         self.label.bind('<Button-1>', self.callback_click)
+        self.bind_all("<MouseWheel>", self.callback_wheel)
+        self.mousewheel_enabled = True # safeguard against excessive mousewheeling
         
         self.radiogroup = tk.Frame(self)
         self.radiovar = tk.IntVar()
@@ -62,8 +64,8 @@ class Map(tk.Canvas, tk.Tk):
         maptype_index = 0
         self.radiovar.set(maptype_index)
 
-        MARKERS_1 = markers # markers should be a list of lists: [[lat_a,_long_a],[lat_b,long_b],...[lat_z,long_z]]
-        
+        MARKERS_1 = markers # markers should be a list of lists: [[lat_a,_lon_a],[lat_b,lon_b],...[lat_z,lon_z]]
+
         self.goompy = GooMPy(WIDTH, HEIGHT, LATITUDE, LONGITUDE, ZOOM, MAPTYPE, MARKERS_1)
 
         self.restart()
@@ -73,7 +75,7 @@ class Map(tk.Canvas, tk.Tk):
         return button
 
     def reload(self):
-        self.coords = None
+        self.coords = 0, 0
         self.redraw()
         self['cursor']  = ''
 
@@ -89,7 +91,31 @@ class Map(tk.Canvas, tk.Tk):
     def callback_click(self, event):
         self.coords = event.x, event.y
 
+    def callback_wheel(self, event): # WIP
+        if self.mousewheel_enabled:
+            self.mousewheel_enabled = False
+            #print('self.mousewheel_enabled: ', self.mousewheel_enabled)
+            if 1 > int(-1*(event.delta/120)): sign = 1
+            else: sign = -1
+            #print('callback_wheel: ', self.coords[0], self.coords[1])
+            
+            newlevel = self.zoomlevel + sign # sign = 1 V -1
+            if newlevel > 0 and newlevel < 22:
+                self.zoomlevel = newlevel
+            
+            print(self.coords[0]-event.x, self.coords[1]-event.y)
+
+            self.goompy.move_zoom(self.coords[0]-event.x, self.coords[1]-event.y, self.zoomlevel)
+            self.image = self.goompy.getImage()
+            self.redraw()
+            #self.coords = event.x, event.y
+            self.coords = event.x, event.y
+            self.restart()
+            self.mousewheel_enabled = True
+            #print('self.mousewheel_enabled: ', self.mousewheel_enabled)
+
     def callback_drag(self, event):
+        #print('callback_drag: ', self.coords[0], self.coords[1])
         self.goompy.move(self.coords[0]-event.x, self.coords[1]-event.y)
         self.image = self.goompy.getImage()
         self.redraw()
@@ -116,7 +142,7 @@ class Map(tk.Canvas, tk.Tk):
 
     def zoom(self, sign):
         newlevel = self.zoomlevel + sign # sign = 1 V -1
-        if newlevel > 0 and newlevel < 22:
+        if newlevel > 0 and newlevel < 22: # acceptable levels are: [1, 2, ... , 21]
             self.zoomlevel = newlevel
             self.goompy.useZoom(newlevel)
             self.restart()

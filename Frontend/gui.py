@@ -1,12 +1,13 @@
 # !/usr/bin/python3
+import sys, os, time
 from tkinter import *
-from tkinter import messagebox
 import tkinter.ttk as ttk 
-import sys, os, time, threading
 import matplotlib
 import numpy as np
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
+import map_canvas
+import scrframe
 
 sys.path.append('../Backend') # appends the backend directory so we can use the modules there
 
@@ -16,28 +17,11 @@ from Kolumbus import kolumbus
 from NPRA import NPRA_weekly, NPRA_monthly
 from Twitter import twitter_analyzer
 
-import map_canvas
-import scrframe
-
-NIPH_ILI_graph = None
-ruter_graph = None
-NIPH_virus_graph = None
-kolumbus_graph = None
-twitter_graph = None
-NPRA_stavanger_graph = None
-NPRA_norway_graph = None
-NPRA_bergen_graph = None
-NPRA_oslo_graph = None
-map1 = None
-progress_var = None
-theLabel = None
-progressbar = None
-
 WINDOW_WIDTH, WINDOW_HEIGHT = 1366/1.2, 768/1.2 # (1366, 768) is the resolution of an average laptop.
 FIGURE_HEIGHT, TOOLBAR_HEIGHT = 610, 30
 COLOR1, COLOR2, COLOR3, COLOR4 = '#363636', '#F75C95', '#ffb1e6', '#fff7ff' # color theme : darker to lighter
 
-def helloCallBack(name):
+def toolbarCallBack(name):
     NIPH_ILI_graph.pack_forget()
     NIPH_virus_graph.pack_forget()
     ruter_graph.pack_forget()
@@ -77,7 +61,7 @@ def addButton(frame, name):
         activeforeground=COLOR1,
         highlightbackground='blue',
         highlightcolor='magenta',
-        command = lambda: helloCallBack(name))
+        command = lambda: toolbarCallBack(name))
     B.pack(side=TOP, padx=2, pady=2)
     return B
 
@@ -101,8 +85,6 @@ def statusbar(root):
 def plot_widget(root, figure):
     canvas = Canvas(root, background=COLOR4) # height is to ameliorate the flickering bug
     canvas.configure(height=FIGURE_HEIGHT + TOOLBAR_HEIGHT)
-    #canvas.pack(fill='both', expand=True)
-    #canvas.pack_forget()
     
     figure_canvas = FigureCanvasTkAgg(figure, master=canvas)
     figure_canvas.get_tk_widget().pack(fill='both', expand=False)
@@ -157,14 +139,6 @@ the_toolbar = toolbar(root)
 #statusbar(container)
 progress_bar(container)
 
-"""
-self.canvas = Canvas(...)
-self.canvas.bind_all("<MouseWheel>", self._on_mousewheel)
-...
-def _on_mousewheel(self, event):
-    self.canvas.yview_scroll(-1*(event.delta/120), "units")
-"""
-
 def data_frame1():
     # ---------------- Dataframe -------------------------------------------
     data_frame1 = scrframe.VerticalScrolledFrame(container)
@@ -206,7 +180,7 @@ def data_frame1():
     progress_var.set(9)
     root.update_idletasks()"""
 
-    global NIPH_ILI_graph
+    #global NIPH_ILI_graph
     NIPH_ILI_graph = plot_widget(graph1, NIPH_ILI_figure)
     global NIPH_virus_graph
     NIPH_virus_graph = plot_widget(graph1, NIPH_virus_figure)
@@ -226,8 +200,8 @@ def data_frame1():
     NPRA_oslo_graph = plot_widget(graph1, NPRA_oslo_figure)"""
 
     # default starting view
-    NIPH_ILI_graph.pack(fill='both', expand=False)
-    NIPH_virus_graph.pack(fill='both', expand=False)
+    #NIPH_ILI_graph.pack(fill='both', expand=False)
+    #NIPH_virus_graph.pack(fill='both', expand=False)
 
     markers = []
     markers.append([58.9362,5.5741])
@@ -236,7 +210,8 @@ def data_frame1():
 
     global map1
     map1 = map_canvas.Map(root, data_frame1.interior, markers) # creates a tkinter.Canvas
-    map1.pack_forget()
+    map1.pack(fill='both', expand=True)
+    #map1.pack_forget()
     
     theLabel.pack_forget()
     progressbar.pack_forget()
