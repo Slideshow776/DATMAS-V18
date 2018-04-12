@@ -17,10 +17,11 @@ along with this code.  If not, see <http://www.gnu.org/licenses/>.
 @edit: Sandra Moen, https://github.com/Slideshow776, winter/spring 2018
     Implemented:
         - Multithreading, grabbing tiles is now ~4x faster.
-        - Dragging the mouse changes latitude and longitude coordinates.
+        - Dragging the mouse using the method 'move' changes latitude and longitude coordinates.
         - Fixed a bug where maptype would give a completely different view.
         - Api key is now fetched from api_key.txt, which should be manually made containing a google static map api key.
         - Now support map markers as a list of lists: [[lat_a,_lon_a],[lat_b,lon_b],...[lat_z,lon_z]]
+        - Mousewheel zooming using the method 'move and zoom'.
 '''
 
 import math, sys, os, time, threading
@@ -178,67 +179,50 @@ class GooMPy(object):
     def getImage(self): return self.winimage # Returns the current image as a PIL.Image object.
     def getMarker_1(self): return self.markers_1
     
-    def move(self, dx, dy):
-        '''
-        Moves the view by the specified pixels dx, dy.
-        '''
+    def _set_lat_lon_with_deltas(self, dx, dy):
         w, h = _TILESIZE, _TILESIZE
         zoom = self.zoom
         lat = self.lat
         lng = self.lon
-        x, y = (w/2) + dx, (h/2) + dy*-1
+        x, y = (w/2) + dx, (h/2) + dy
 
         degreesPerPixelX = 360 / math.pow(2, zoom + 8)
         degreesPerPixelY = 360 / math.pow(2, zoom + 8) * math.cos(lat * math.pi / 180)
 
-        #print(self.lat)
         self.lat = lat + degreesPerPixelY * ( y - w / 2)
         self.lon = lng + degreesPerPixelX * ( x  - w / 2)
-        print(self.lat)
+        #print('lat, lon: ', self.lat, self.lon)
+
+    def move(self, dx, dy):
+        '''
+        Moves the view by the specified pixels dx, dy.
+        '''
+        self._set_lat_lon_with_deltas(dx, dy*-1)
+                
         self.leftx = self._constrain(self.leftx, dx, self.width)
         self.uppery = self._constrain(self.uppery, dy, self.height)
         self._update()
         #print("Moved: " + str(self.lat) + ", " + str(self.lon))
 
-    def move_zoom(self, dx, dy, zoom):
-        #self.move(dx, dy)
-        #self.useZoom(zoom)
-
+    def move_and_zoom(self, prex, prey, zoom):
         w, h = _TILESIZE, _TILESIZE
-        zoom = self.zoom
-        lat = self.lat
-        lng = self.lon
-        x, y = (w/2) + dx, (h/2) + dy*-1
+        dx = prex - (w/2) # lon, lat is origo, this ensures correct quadrant of deltas
+        dy = (h/2) - prey
 
-        degreesPerPixelX = 360 / math.pow(2, zoom + 8)
-        degreesPerPixelY = 360 / math.pow(2, zoom + 8) * math.cos(lat * math.pi / 180)
+        self._set_lat_lon_with_deltas(dx, dy)   
 
-        self.lat = lat + degreesPerPixelY * ( y - w / 2)
-        self.lon = lng + degreesPerPixelX * ( x  - w / 2)
-        
         self.leftx = self._constrain(self.leftx, dx, self.width)
         self.uppery = self._constrain(self.uppery, dy, self.height)
-        self._update()
-
-        self.zoom = zoom
-        #self.__init__(self, self.width, self.height, self.lat, self.lon, self.zoom, self.maptype)
-        self._fetch()
-        halfsize = int(self.bigimage.size[0] / 2)
-        self.leftx = halfsize
-        self.uppery = halfsize
-        self._update()
-
-
         
+        self.useZoom(zoom)
 
     def useMaptype(self, maptype):
         '''
         Uses the specified map type 'roadmap', 'terrain', 'satellite', or 'hybrid'.
         Map tiles are fetched as needed.
         '''
-
+                
         self.maptype = maptype
-        #self._fetch_and_update()
         self._fetch()
         halfsize = int(self.bigimage.size[0] / 2)
         self.leftx = halfsize
@@ -249,9 +233,9 @@ class GooMPy(object):
         '''
         Uses the specified zoom level 0 through 22.
         Map tiles are fetched as needed.
-        '''        
+        '''
+        
         self.zoom = zoom
-        #self.__init__(self, self.width, self.height, self.lat, self.lon, self.zoom, self.maptype)
         self._fetch()
         halfsize = int(self.bigimage.size[0] / 2)
         self.leftx = halfsize
@@ -273,7 +257,7 @@ class GooMPy(object):
         )
 
     def _update(self): 
-        self.winimage.paste(self.bigimage, (-self.leftx, -self.uppery))
+        self.winimage.paste(self.bigimage, (-int(self.leftx), -int(self.uppery)))
 
     def _constrain(self, oldval, diff, dimsize):
         newval = oldval + diff

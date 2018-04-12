@@ -17,7 +17,7 @@ from Kolumbus import kolumbus
 from NPRA import NPRA_weekly, NPRA_monthly
 from Twitter import twitter_analyzer
 
-WINDOW_WIDTH, WINDOW_HEIGHT = 1366/1.2, 768/1.2 # (1366, 768) is the resolution of an average laptop.
+WINDOW_WIDTH, WINDOW_HEIGHT = int(1366/1.2), int(768/1.2) # (1366, 768) is the resolution of an average laptop.
 FIGURE_HEIGHT, TOOLBAR_HEIGHT = 610, 30
 COLOR1, COLOR2, COLOR3, COLOR4 = '#363636', '#F75C95', '#ffb1e6', '#fff7ff' # color theme : darker to lighter
 
@@ -126,11 +126,21 @@ def progress_bar(root):
     )
     progressbar.pack()
 
+def poll_for_focus_between_map_and_graphs(root):
+    x,y = root.winfo_pointerxy()
+    widget = root.winfo_containing(x,y)
+    if widget:
+        if widget == the_map: map1.set_focus_here()
+        else: data_frame1.set_focus_here()
+    root.after(200, poll_for_focus_between_map_and_graphs, root)
+
 root = Tk()
 root.geometry("%dx%d" % (WINDOW_WIDTH, WINDOW_HEIGHT))
 root.wm_iconbitmap('sandra.ico')
 root.title("Automated collection of multi-source spatial information for emergency management")
 root.configure(background=COLOR1)
+
+poll_for_focus_between_map_and_graphs(root)
 
 container = Frame(root, bg=COLOR1)
 container.pack(side="right", fill='both', expand=True)
@@ -141,9 +151,11 @@ progress_bar(container)
 
 def data_frame1():
     # ---------------- Dataframe -------------------------------------------
+    global data_frame1
     data_frame1 = scrframe.VerticalScrolledFrame(container)
 
     graph1 = Frame(data_frame1.interior, bg=COLOR1)
+    graph1.focus_set()
     graph1.pack(fill='both', expand=True)
  
     global progress_var
@@ -200,8 +212,8 @@ def data_frame1():
     NPRA_oslo_graph = plot_widget(graph1, NPRA_oslo_figure)"""
 
     # default starting view
-    #NIPH_ILI_graph.pack(fill='both', expand=False)
-    #NIPH_virus_graph.pack(fill='both', expand=False)
+    NIPH_ILI_graph.pack(fill='both', expand=False)
+    NIPH_virus_graph.pack(fill='both', expand=False)
 
     markers = []
     markers.append([58.9362,5.5741])
@@ -217,6 +229,14 @@ def data_frame1():
     progressbar.pack_forget()
     data_frame1.pack(side=TOP, fill='both', expand=True)
 
+    global graphs
+    graphs = data_frame1.winfo_children()[1].winfo_children()[0].winfo_children()[0].winfo_children()[0].winfo_children()[0]
+    global the_map
+    the_map = map1.winfo_children()[0]
+
 root.after(1, data_frame1) # a little hack to make the window load properly before the other widgets
+
+
+
 
 root.mainloop()

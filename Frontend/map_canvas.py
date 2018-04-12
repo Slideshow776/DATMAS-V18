@@ -15,39 +15,43 @@ GNU General Public License for more details.
 You should have received a copy of the GNU Lesser General Public License 
 along with this code.  If not, see <http://www.gnu.org/licenses/>.
 
-----------------------------------------------------------------------------
-Edited by Sandra Moen:
-Added: Better zoom function, marker input as list, and rewrote this as a tkinter.Canvas
-Simply call module.name.Map(root, root_widget, markers) from main and a Goompy map will be drawn on a tkinter.Canvas.
-Fixed a bug with keybindings.
+@edit: Sandra Moen, https://github.com/Slideshow776, winter/spring 2018
+    Implemented: 
+        - Better zoom: Can now double click and use mousewheel
+        - Marker input as list
+        - Is now a tkinter.Canvas
+        - Fixed a bug with keybindings.
 '''
 
-import sys
+import sys, time
 if sys.version_info[0] == 2: import Tkinter as tk
 else: import tkinter as tk
 from PIL import ImageTk
 from goompy import GooMPy
 
-WIDTH, HEIGHT = 640, 640 # resolution of one tile
+WIDTH, HEIGHT = 1033, int(768/1.2)
 LATITUDE, LONGITUDE =  58.97, 5.7331 # Stavanger
 ZOOM = 12
 MAPTYPE = 'roadmap'
+
+def hello1():
+    print('hello1')
 
 class Map(tk.Canvas, tk.Tk):
     def __init__(self, root, widget, markers):
         self.root = root
         self.widget = widget
 
-        tk.Canvas.__init__(self, widget, bg='#363636', width=WIDTH, height=HEIGHT)
+        tk.Canvas.__init__(self, widget, bg='#fff7ff', width=WIDTH, height=HEIGHT)
         self.pack(fill='both', expand=True)
 
         self.label = tk.Label(self)
 
-        self.label.bind('<B1-Motion>', self.callback_drag)
-        self.label.bind('<Button-1>', self.callback_click)
-        self.bind_all("<MouseWheel>", self.callback_wheel)
-        self.mousewheel_enabled = True # safeguard against excessive mousewheeling
-        
+        self.label.bind('<B1-Motion>', self.drag)
+        self.label.bind('<Button-1>', self.click)
+        self.label.bind('<Double-Button-1>', self.move_and_zoom)
+        self.bind_all("<MouseWheel>", self.move_and_zoom)
+                
         self.radiogroup = tk.Frame(self)
         self.radiovar = tk.IntVar()
         self.maptypes = ['roadmap', 'terrain', 'satellite', 'hybrid']
@@ -70,6 +74,9 @@ class Map(tk.Canvas, tk.Tk):
 
         self.restart()
 
+    def set_focus_here(self):
+        self.bind_all("<MouseWheel>", self.move_and_zoom)
+
     def add_zoom_button(self, text, sign):
         button = tk.Button(self, text=text, width=1, command=lambda:self.zoom(sign))
         return button
@@ -88,34 +95,23 @@ class Map(tk.Canvas, tk.Tk):
         tk.Radiobutton(self.radiogroup, text=maptype, variable=self.radiovar, value=index, 
                 command=lambda:self.usemap(maptype)).grid(row=0, column=index)
 
-    def callback_click(self, event):
+    def click(self, event):
         self.coords = event.x, event.y
 
-    def callback_wheel(self, event): # WIP
-        if self.mousewheel_enabled:
-            self.mousewheel_enabled = False
-            #print('self.mousewheel_enabled: ', self.mousewheel_enabled)
-            if 1 > int(-1*(event.delta/120)): sign = 1
-            else: sign = -1
-            #print('callback_wheel: ', self.coords[0], self.coords[1])
-            
-            newlevel = self.zoomlevel + sign # sign = 1 V -1
-            if newlevel > 0 and newlevel < 22:
-                self.zoomlevel = newlevel
-            
-            print(self.coords[0]-event.x, self.coords[1]-event.y)
+    def move_and_zoom(self, event):
+        if 1 > int(-1*(event.delta/120)): sign = 1
+        else: sign = -1
+        newlevel = self.zoomlevel + sign # sign = 1 V -1
+        if newlevel > 0 and newlevel < 22:
+            self.zoomlevel = newlevel
 
-            self.goompy.move_zoom(self.coords[0]-event.x, self.coords[1]-event.y, self.zoomlevel)
-            self.image = self.goompy.getImage()
-            self.redraw()
-            #self.coords = event.x, event.y
-            self.coords = event.x, event.y
-            self.restart()
-            self.mousewheel_enabled = True
-            #print('self.mousewheel_enabled: ', self.mousewheel_enabled)
+        self.goompy.move_and_zoom(event.x, event.y, self.zoomlevel)
+        self.image = self.goompy.getImage()
+        self.redraw()
+        self.coords = event.x, event.y
+        self.restart()
 
-    def callback_drag(self, event):
-        #print('callback_drag: ', self.coords[0], self.coords[1])
+    def drag(self, event):
         self.goompy.move(self.coords[0]-event.x, self.coords[1]-event.y)
         self.image = self.goompy.getImage()
         self.redraw()
