@@ -31,14 +31,14 @@ from goompy import GooMPy
 
 WIDTH, HEIGHT = 1033, int(768/1.2)
 LATITUDE, LONGITUDE =  58.97, 5.7331 # Stavanger
-ZOOM = 12
+ZOOM, MAX_ZOOM_OUT_LEVEL, MAX_ZOOM_IN_LEVEL = 12, 4, 22
 MAPTYPE = 'roadmap'
 
 def hello1():
     print('hello1')
 
 class Map(tk.Canvas, tk.Tk):
-    def __init__(self, root, widget, markers):
+    def __init__(self, root, widget, coordinates):
         self.root = root
         self.widget = widget
 
@@ -68,9 +68,9 @@ class Map(tk.Canvas, tk.Tk):
         maptype_index = 0
         self.radiovar.set(maptype_index)
 
-        MARKERS_1 = markers # markers should be a list of lists: [[lat_a,_lon_a],[lat_b,lon_b],...[lat_z,lon_z]]
+        #MARKERS_1 = markers # markers should be a list of lists: [[lat_a,_lon_a],[lat_b,lon_b],...[lat_z,lon_z]]
 
-        self.goompy = GooMPy(WIDTH, HEIGHT, LATITUDE, LONGITUDE, ZOOM, MAPTYPE, MARKERS_1)
+        self.goompy = GooMPy(WIDTH, HEIGHT, LATITUDE, LONGITUDE, ZOOM, MAPTYPE, coordinates)
 
         self.restart()
 
@@ -102,7 +102,7 @@ class Map(tk.Canvas, tk.Tk):
         if 1 > int(-1*(event.delta/120)): sign = 1
         else: sign = -1
         newlevel = self.zoomlevel + sign # sign = 1 V -1
-        if newlevel > 0 and newlevel < 22:
+        if newlevel > MAX_ZOOM_OUT_LEVEL and newlevel < MAX_ZOOM_IN_LEVEL:
             self.zoomlevel = newlevel
 
         self.goompy.move_and_zoom(event.x, event.y, self.zoomlevel)
@@ -138,7 +138,7 @@ class Map(tk.Canvas, tk.Tk):
 
     def zoom(self, sign):
         newlevel = self.zoomlevel + sign # sign = 1 V -1
-        if newlevel > 0 and newlevel < 22: # acceptable levels are: [1, 2, ... , 21]
+        if newlevel > MAX_ZOOM_OUT_LEVEL and newlevel < MAX_ZOOM_IN_LEVEL: # acceptable levels are: [1, 2, ... , 21]
             self.zoomlevel = newlevel
             self.goompy.useZoom(newlevel)
             self.restart()

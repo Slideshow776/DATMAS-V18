@@ -1,25 +1,30 @@
 # !/usr/bin/python3
 import sys, os, time
+
 from tkinter import *
 import tkinter.ttk as ttk 
-import matplotlib
-import numpy as np
 
+import matplotlib, numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
-import map_canvas
-import scrframe
+
+import map_canvas, scrframe
 
 sys.path.append('../Backend') # appends the backend directory so we can use the modules there
+sys.path.append('../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets')
 
 from Ruter import ruter
 from NIPH import NIPH_ILS_graf, NIPH_virus_detections
 from Kolumbus import kolumbus
 from NPRA import NPRA_weekly, NPRA_monthly
 from Twitter import twitter_analyzer
+import NPRA_Traffic_Stations_load_data
 
 WINDOW_WIDTH, WINDOW_HEIGHT = int(1366/1.2), int(768/1.2) # (1366, 768) is the resolution of an average laptop.
 FIGURE_HEIGHT, TOOLBAR_HEIGHT = 610, 30
 COLOR1, COLOR2, COLOR3, COLOR4 = '#363636', '#F75C95', '#ffb1e6', '#fff7ff' # color theme : darker to lighter
+
+the_map = None
+#data_frame1 = None
 
 def toolbarCallBack(name):
     NIPH_ILI_graph.pack_forget()
@@ -50,23 +55,15 @@ def toolbarCallBack(name):
         map1.pack(fill='both', expand=True)
 
 def addButton(frame, name):
-    B = Button(
-        frame,
-        text = name,
-        width=10,
-        bg=COLOR3,
-        fg=COLOR1,
-        bd=3,
-        activebackground=COLOR3,
-        activeforeground=COLOR1,
-        highlightbackground='blue',
-        highlightcolor='magenta',
-        command = lambda: toolbarCallBack(name))
+    B = Button(frame, text = name, width=10, bg=COLOR3, fg=COLOR1, bd=3,
+        activebackground=COLOR3, activeforeground=COLOR1, 
+        command = lambda: toolbarCallBack(name)
+    )
     B.pack(side=TOP, padx=2, pady=2)
     return B
 
 def toolbar(root):
-    toolbar = Frame(root, bg=COLOR2) # hello-kitty pink
+    toolbar = Frame(root, bg=COLOR2)
     toolbar.pack(side='left', fill='both', expand=False)
 
     addButton(toolbar, "NPRA")
@@ -76,11 +73,6 @@ def toolbar(root):
     addButton(toolbar, "Twitter")
 
     return toolbar
-
-def statusbar(root):
-    status = Label(root, text="Idle...", bd=1, relief=SUNKEN, bg="white", anchor=W)
-    status.pack(side=BOTTOM, fill=X, expand=False)
-    #status.place(anchor=S, x=200, y=200)
 
 def plot_widget(root, figure):
     canvas = Canvas(root, background=COLOR4) # height is to ameliorate the flickering bug
@@ -127,6 +119,8 @@ def progress_bar(root):
     progressbar.pack()
 
 def poll_for_focus_between_map_and_graphs(root):
+    global data_frame1, the_map
+    global map1, data_frame1
     x,y = root.winfo_pointerxy()
     widget = root.winfo_containing(x,y)
     if widget:
@@ -134,33 +128,12 @@ def poll_for_focus_between_map_and_graphs(root):
         else: data_frame1.set_focus_here()
     root.after(200, poll_for_focus_between_map_and_graphs, root)
 
-root = Tk()
-root.geometry("%dx%d" % (WINDOW_WIDTH, WINDOW_HEIGHT))
-root.wm_iconbitmap('sandra.ico')
-root.title("Automated collection of multi-source spatial information for emergency management")
-root.configure(background=COLOR1)
-
-poll_for_focus_between_map_and_graphs(root)
-
-container = Frame(root, bg=COLOR1)
-container.pack(side="right", fill='both', expand=True)
-
-the_toolbar = toolbar(root)
-#statusbar(container)
-progress_bar(container)
-
-def data_frame1():
-    # ---------------- Dataframe -------------------------------------------
-    global data_frame1
-    data_frame1 = scrframe.VerticalScrolledFrame(container)
-
+def load_matplotlib_figures():
     graph1 = Frame(data_frame1.interior, bg=COLOR1)
     graph1.focus_set()
     graph1.pack(fill='both', expand=True)
- 
-    global progress_var
-    global theLabel
-    global progressbar
+
+    global progress_var, theLabel, progressbar
 
     progress_var.set(0)
     root.update_idletasks()
@@ -168,7 +141,7 @@ def data_frame1():
     progress_var.set(1)
     root.update_idletasks()
     NIPH_virus_figure = NIPH_virus_detections.NIPH_Virus().get_graph()
-    """progress_var.set(2)
+    progress_var.set(2)
     root.update_idletasks()
     Ruter_figure = ruter.Ruter('../Backend/Ruter/Antall påstigende per dag_Oslo_2015_2017.xlsx').get_graph()
     progress_var.set(3)
@@ -190,53 +163,72 @@ def data_frame1():
     root.update_idletasks()
     NPRA_oslo_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx').get_specific_graph_('oslo')
     progress_var.set(9)
-    root.update_idletasks()"""
+    root.update_idletasks()
 
-    #global NIPH_ILI_graph
+    global NIPH_ILI_graph, NIPH_virus_graph, ruter_graph, kolumbus_graph, twitter_graph, NPRA_stavanger_graph, NPRA_norway_graph, NPRA_bergen_graph, NPRA_oslo_graph
     NIPH_ILI_graph = plot_widget(graph1, NIPH_ILI_figure)
-    global NIPH_virus_graph
     NIPH_virus_graph = plot_widget(graph1, NIPH_virus_figure)
-    """global ruter_graph
     ruter_graph = plot_widget(graph1, Ruter_figure)
-    global kolumbus_graph
     kolumbus_graph = plot_widget(graph1, kolumbus_figure)
-    global twitter_graph
     twitter_graph = plot_widget(graph1, twitter_figure)
-    global NPRA_stavanger_graph
     NPRA_stavanger_graph = plot_widget(graph1, NPRA_stavanger_figure)
-    global NPRA_norway_graph
     NPRA_norway_graph = plot_widget(graph1, NPRA_norway_figure)
-    global NPRA_bergen_graph
     NPRA_bergen_graph = plot_widget(graph1, NPRA_bergen_figure)
-    global NPRA_oslo_graph
-    NPRA_oslo_graph = plot_widget(graph1, NPRA_oslo_figure)"""
+    NPRA_oslo_graph = plot_widget(graph1, NPRA_oslo_figure)
 
     # default starting view
     NIPH_ILI_graph.pack(fill='both', expand=False)
     NIPH_virus_graph.pack(fill='both', expand=False)
 
-    markers = []
+def load_map():
+
+    coordinates = NPRA_Traffic_Stations_load_data.get_all_coordinates(
+        '../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets/Stavanger/times nivå 1 STAVANGER.csv',
+        '../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets/Bergen/times nivå 1 BERGEN.csv',
+        '../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets/Oslo/times nivå 1 OSLO.csv',
+        )
+
+    """markers = []
     markers.append([58.9362,5.5741])
     markers.append([58.97,5.7331])
-    markers.append([58.939243,5.589634])
+    markers.append([58.939243,5.589634])"""
+
+    #print(markers)
 
     global map1
-    map1 = map_canvas.Map(root, data_frame1.interior, markers) # creates a tkinter.Canvas
-    map1.pack(fill='both', expand=True)
-    #map1.pack_forget()
-    
+    map1 = map_canvas.Map(root, data_frame1.interior, coordinates) # creates a tkinter.Canvas
+    #map1.pack(fill='both', expand=True)
+    map1.pack_forget()
+
+def data_frame1():
+    # ---------------- Dataframe -------------------------------------------
+    global data_frame1
+    data_frame1 = scrframe.VerticalScrolledFrame(container)
+
+    load_matplotlib_figures()   
     theLabel.pack_forget()
     progressbar.pack_forget()
     data_frame1.pack(side=TOP, fill='both', expand=True)
+    
+    load_map()
 
-    global graphs
+    global graphs, the_map # used for polling the scrollbar focus
     graphs = data_frame1.winfo_children()[1].winfo_children()[0].winfo_children()[0].winfo_children()[0].winfo_children()[0]
-    global the_map
     the_map = map1.winfo_children()[0]
 
+root = Tk()
+root.geometry("%dx%d" % (WINDOW_WIDTH, WINDOW_HEIGHT))
+root.wm_iconbitmap('sandra.ico')
+root.title("Automated collection of multi-source spatial information for emergency management")
+root.configure(background=COLOR1)
+
+poll_for_focus_between_map_and_graphs(root)
+
+container = Frame(root, bg=COLOR1)
+container.pack(side="right", fill='both', expand=True)
+
+the_toolbar = toolbar(root)
+progress_bar(container)
+
 root.after(1, data_frame1) # a little hack to make the window load properly before the other widgets
-
-
-
-
 root.mainloop()

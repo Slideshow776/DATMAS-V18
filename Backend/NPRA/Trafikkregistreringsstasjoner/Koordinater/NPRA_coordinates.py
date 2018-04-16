@@ -1,10 +1,8 @@
 # coding=utf8
 
-import sys
+import sys, datetime
 from openpyxl import load_workbook
-import matplotlib.pyplot as plt
-import numpy as np
-import datetime
+import matplotlib.pyplot as plt, numpy as np
 
 FILE_NAME = 'Koordinater.xlsx'
 

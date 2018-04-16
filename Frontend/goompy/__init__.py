@@ -20,7 +20,7 @@ along with this code.  If not, see <http://www.gnu.org/licenses/>.
         - Dragging the mouse using the method 'move' changes latitude and longitude coordinates.
         - Fixed a bug where maptype would give a completely different view.
         - Api key is now fetched from api_key.txt, which should be manually made containing a google static map api key.
-        - Now support map markers as a list of lists: [[lat_a,_lon_a],[lat_b,lon_b],...[lat_z,lon_z]]
+        - Now support map coordinates as a list of lists: [[lat_a,_lon_a],[lat_b,lon_b],...[lat_z,lon_z]]
         - Mousewheel zooming using the method 'move and zoom'.
 '''
 
@@ -50,7 +50,7 @@ def _new_image(width, height): return PIL.Image.new('RGB', (width, height))
 def _roundto(value, digits): return int(value * 10**digits) / 10.**digits
 def _pixels_to_degrees(pixels, zoom): return pixels * 2 ** (21 - zoom)
 
-def _grab_tile(lat, lon, zoom, maptype, markers_1, _TILESIZE, sleeptime): # This method was edited by Sandra Moen
+def _grab_tile(lat, lon, zoom, maptype, coordinates, _TILESIZE, sleeptime): # This method was edited by Sandra Moen
     urlbase = (
         "https://maps.googleapis.com/maps/api/staticmap?"
         "center=%f,%f"
@@ -66,8 +66,8 @@ def _grab_tile(lat, lon, zoom, maptype, markers_1, _TILESIZE, sleeptime): # This
         tile = PIL.Image.open(filename)
     else:
         url = urlbase % specs
-        for m in markers_1:
-            url += "&path=fillcolor:0xc92240bb%7Cweight:1%7Ccolor:0x000000ff%7Cenc:"+m
+        for c in coordinates:
+            url += "&path=fillcolor:0xc92240bb%7Cweight:1%7Ccolor:0x000000ff%7Cenc:"+c
         url += "&key=" + _KEY
         #print("Requesting image from google, URL: ", url)
         result = urlopen(url).read()
@@ -84,7 +84,7 @@ def _pix_to_lon(j, lonpix, ntiles, _TILESIZE, zoom):
 def _pix_to_lat(k, latpix, ntiles, _TILESIZE, zoom):
     return math.degrees(math.pi/2 - 2 * math.atan(math.exp(((latpix + _pixels_to_degrees((k-ntiles/2)*_TILESIZE, zoom)) - _EARTHPIX) / _pixrad))) 
 
-def fetchTiles(latitude, longitude, zoom, maptype, markers_1, radius_meters=None, default_ntiles=4):
+def fetchTiles(latitude, longitude, zoom, maptype, coordinates, radius_meters=None, default_ntiles=4):
     '''
     Fetches tiles from GoogleMaps at the specified coordinates, zoom level (0-22), and map type ('roadmap', 
     'terrain', 'satellite', or 'hybrid').  The value of radius_meters deteremines the number of tiles that will be 
@@ -109,9 +109,9 @@ def fetchTiles(latitude, longitude, zoom, maptype, markers_1, radius_meters=None
     bigsize = ntiles * _TILESIZE
     bigimage = _new_image(bigsize, bigsize)
 
-    def _thread_get_tile_and_put_in_bigimage(k, latpix, ntiles, _TILESIZE, zoom, lon, maptype, markers_1, _GRABRATE, j):
+    def _thread_get_tile_and_put_in_bigimage(k, latpix, ntiles, _TILESIZE, zoom, lon, maptype, coordinates, _GRABRATE, j):
         lat = _pix_to_lat(k, latpix, ntiles, _TILESIZE, zoom)
-        tile = _grab_tile(lat, lon, zoom, maptype, markers_1, _TILESIZE, 1./_GRABRATE)
+        tile = _grab_tile(lat, lon, zoom, maptype, coordinates, _TILESIZE, 1./_GRABRATE)
         bigimage.paste(tile, (j*_TILESIZE,k*_TILESIZE))
 
     threads = []
@@ -120,7 +120,7 @@ def fetchTiles(latitude, longitude, zoom, maptype, markers_1, radius_meters=None
         for k in range(ntiles):
             t = threading.Thread(
                 target=_thread_get_tile_and_put_in_bigimage,
-                args=(k, latpix, ntiles, _TILESIZE, zoom, lon, maptype, markers_1, _GRABRATE, j,))
+                args=(k, latpix, ntiles, _TILESIZE, zoom, lon, maptype, coordinates, _GRABRATE, j,))
             threads.append(t)
             t.start()
 
@@ -137,7 +137,7 @@ def fetchTiles(latitude, longitude, zoom, maptype, markers_1, radius_meters=None
 
 class GooMPy(object):
     def __init__(self, width, height, latitude, longitude, zoom,
-         maptype, markers_1, radius_meters=None, default_ntiles=4):
+         maptype, coordinates, radius_meters=None, default_ntiles=4):
         '''
         Creates a GooMPy object for specified display widthan and height at the specified coordinates,
         zoom level (0-22), and map type ('roadmap', 'terrain', 'satellite', or 'hybrid').
@@ -153,7 +153,7 @@ class GooMPy(object):
         self.zoom = zoom
         self.maptype = maptype
         self.radius_meters = radius_meters
-        self.markers_1 = markers_1
+        self.coordinates = coordinates
 
         self.winimage = _new_image(self.width, self.height)
 
@@ -165,19 +165,19 @@ class GooMPy(object):
 
         self._update()
 
-    def _drawCircle(self, markers, zoom, radius=3): # Low polygon circle (it's a diamond)
-        encodedCircledMarkers = []
+    def _drawCircle(self, coordinates, zoom, radius=3): # Low polygon circle (it's a diamond)
+        encodedCircledCoordinates = []
         radius = radius / (zoom*700)
-        for m in markers:
-            n = (m[0] + radius, m[1])
-            w = (m[0], m[1] - radius*2) # west and east coordinates needs to be doubled(?)
-            s = (m[0] - radius, m[1])
-            e = (m[0], m[1] + radius*2) # west and east coordinates needs to be doubled(?)
-            encodedCircledMarkers.append(polyline.encode([n, w, s, e, n])) # the extra n closes the loop drawn        
-        return encodedCircledMarkers
+        for c in coordinates:
+            n = (c[0] + radius, c[1])
+            w = (c[0], c[1] - radius*2) # west and east coordinates needs to be doubled(?)
+            s = (c[0] - radius, c[1])
+            e = (c[0], c[1] + radius*2) # west and east coordinates needs to be doubled(?)
+            encodedCircledCoordinates.append(polyline.encode([n, w, s, e, n])) # the extra n closes the loop drawn        
+        return encodedCircledCoordinates
 
     def getImage(self): return self.winimage # Returns the current image as a PIL.Image object.
-    def getMarker_1(self): return self.markers_1
+    def getCoordinates(self): return self.coordinates
     
     def _set_lat_lon_with_deltas(self, dx, dy):
         w, h = _TILESIZE, _TILESIZE
@@ -252,7 +252,7 @@ class GooMPy(object):
             self.lon,
             self.zoom,
             self.maptype,
-            self._drawCircle(self.markers_1, self.zoom),
+            self._drawCircle(self.coordinates, self.zoom),
             self.radius_meters
         )
 

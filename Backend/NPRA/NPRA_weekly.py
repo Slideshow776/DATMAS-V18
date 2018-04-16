@@ -103,7 +103,7 @@ class NPRA_weekly:
         figure.patch.set_facecolor('#fff7ff')
         return figure
 
-    def get_specific_graph_(self, user_input): # accepts: 'norway', 'bergen' and 'oslo'
+    def get_specific_graph_(self, user_input): # accepts: 'norway', 'bergen', 'stavanger' and 'oslo'
         self.user_input_places = user_input
         
         if self.user_input_places == 'norway':
