@@ -10,8 +10,8 @@ import datetime
 class Ruter:
     def __init__(self, filepath):
         self.filepath = filepath
-        dates, passengers = self._getData()
-        self._FIGURE = self._drawGraph(dates, passengers)
+        dates, self.passengers = self._getData()
+        self._FIGURE = self._drawGraph(dates, self.passengers)
 
     def _isDate(self, date):
         try:
@@ -20,7 +20,7 @@ class Ruter:
         except ValueError:
             return False
 
-    def _getData(self, ):
+    def _getData(self):
         workbook = load_workbook(self.filepath)
         worksheet = workbook['Antall påstigende per dag_Oslo']
 
@@ -73,8 +73,11 @@ class Ruter:
         figure.patch.set_facecolor('#fff7ff')
         return figure
 
-    def get_graph(self):
-        return self._FIGURE
+    def get_graph(self): return self._FIGURE
+    def get_y_2015(self): return self.passengers[0]
+    def get_y_2016(self): return self.passengers[1]
+    def get_y_2017(self): return self.passengers[2]
+    def get_y_2018(self): return self.passengers[3]
 
 def main():
     Ruter('./Antall påstigende per dag_Oslo_2015_2017.xlsx')

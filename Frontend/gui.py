@@ -75,8 +75,8 @@ def toolbar(root):
     return toolbar
 
 def plot_widget(root, figure):
-    canvas = Canvas(root, background=COLOR4) # height is to ameliorate the flickering bug
-    canvas.configure(height=FIGURE_HEIGHT + TOOLBAR_HEIGHT)
+    canvas = Canvas(root, background=COLOR4) 
+    canvas.configure(height=FIGURE_HEIGHT + TOOLBAR_HEIGHT) # height is to ameliorate the flickering bug
     
     figure_canvas = FigureCanvasTkAgg(figure, master=canvas)
     figure_canvas.get_tk_widget().pack(fill='both', expand=False)
@@ -119,8 +119,7 @@ def progress_bar(root):
     progressbar.pack()
 
 def poll_for_focus_between_map_and_graphs(root):
-    global data_frame1, the_map
-    global map1, data_frame1
+    global data_frame1, the_map, map1, data_frame1
     x,y = root.winfo_pointerxy()
     widget = root.winfo_containing(x,y)
     if widget:
@@ -181,19 +180,11 @@ def load_matplotlib_figures():
     NIPH_virus_graph.pack(fill='both', expand=False)
 
 def load_map():
-
     coordinates = NPRA_Traffic_Stations_load_data.get_all_coordinates(
         '../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets/Stavanger/times nivå 1 STAVANGER.csv',
         '../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets/Bergen/times nivå 1 BERGEN.csv',
         '../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets/Oslo/times nivå 1 OSLO.csv',
         )
-
-    """markers = []
-    markers.append([58.9362,5.5741])
-    markers.append([58.97,5.7331])
-    markers.append([58.939243,5.589634])"""
-
-    #print(markers)
 
     global map1
     map1 = map_canvas.Map(root, data_frame1.interior, coordinates) # creates a tkinter.Canvas
@@ -230,5 +221,5 @@ container.pack(side="right", fill='both', expand=True)
 the_toolbar = toolbar(root)
 progress_bar(container)
 
-root.after(1, data_frame1) # a little hack to make the window load properly before the other widgets
+root.after(1, data_frame1) # a little hack to make the window load properly before the data_frame1 widget
 root.mainloop()

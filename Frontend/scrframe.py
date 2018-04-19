@@ -2,7 +2,13 @@
 # -*- coding: utf-8 -*-
 from tkinter import *
 # @author: Eugene Bakin @ https://gist.github.com/EugeneBakin/76c8f9bcec5b390e45df
-# @edit: Sandra Moen, added mouse scrollwheel functions
+"""
+@edit: Sandra Moen, https://github.com/Slideshow776, winter/spring 2018
+    Implemented: 
+        - Mouse wheel scrolling
+        - Setting tkinter focus
+        - Better ability ti resize the frame 
+"""
 
 
 class VerticalScrolledFrame(Frame):
@@ -59,11 +65,14 @@ class VerticalScrolledFrame(Frame):
         self.canvas.bind('<Configure>', _configure_canvas)
     
     def _on_mousewheel(self, event):
-            self.canvas.yview_scroll(int(-1*(event.delta/120)), "units")
+        self.canvas.yview_scroll(int(-1*(event.delta/120)), "units")
 
     def set_focus_here(self):
         self.bind_all("<MouseWheel>", self._on_mousewheel)
-
+    
+    def resetView(self):
+        self.canvas.xview_moveto(0)
+        self.canvas.yview_moveto(0)
 
 if __name__ == "__main__":
     class SampleApp(Tk):

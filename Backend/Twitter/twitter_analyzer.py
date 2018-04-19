@@ -22,15 +22,15 @@ class Twitter:
             if not date_format in D: D[date_format] = 1
             else: D[date_format] = D[date_format] + 1
 
-        X, Y, ticks = [], [], []
+        self.X, self.Y, ticks = [], [], []
         for keys in D:
-            X.append(keys)
-            Y.append(D[keys])
+            self.X.append(keys)
+            self.Y.append(D[keys])
 
         for i in range(len(D)):
             ticks.append(i)
 
-        self._FIGURE = self.draw_graph(ticks, Y, X)
+        self._FIGURE = self.draw_graph(ticks, self.Y, self.X)
 
     def is_date(self, string):
         try: return time.strptime(string, '%a %b %d %H:%M:%S %z %Y')
@@ -60,8 +60,9 @@ class Twitter:
         figure.patch.set_facecolor('#fff7ff')
         return figure
 
-    def get_graph(self):
-        return self._FIGURE
+    def get_graph(self): return self._FIGURE
+    def get_Y(self): return self.Y
+    def get_X(self): return self.X
 
 def main():
     Twitter('./twitter_data.txt').get_graph()

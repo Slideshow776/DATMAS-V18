@@ -57,4 +57,14 @@ M.~J. Paul and M.~Dredze, ``You are what you tweet: Analyzing twitter for
   https://www.vegvesen.no/en/the+npra/about-the-npra/open-data.
 \newblock Accessed: 2018-06-11.
 
+\bibitem{goompy}
+``Interactive google maps for python, created by simon d. levy.''
+  https://github.com/simondlevy/GooMPy.
+\newblock Accessed: 2018-06-11.
+
+\bibitem{scrframe}
+``Tkinter scrollable frame, created by eugene bakin.''
+  https://github.com/simondlevy/GooMPy.
+\newblock Accessed: 2018-06-11.
+
 \end{thebibliography}

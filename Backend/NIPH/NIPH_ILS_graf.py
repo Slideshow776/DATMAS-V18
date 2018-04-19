@@ -6,8 +6,8 @@ import numpy as np
 class NIPH_ILI:
     def __init__(self, filepath):
         self.filepath = filepath
-        x, y = self.get_data()
-        self._FIGURE = self.draw_graph(x, y)
+        x, self.y_2016_2017 = self.get_data()
+        self._FIGURE = self.draw_graph(x, self.y_2016_2017)
 
     def get_data(self):
         wb2 = load_workbook(self.filepath)
@@ -39,8 +39,8 @@ class NIPH_ILI:
         figure.patch.set_facecolor('#fff7ff')
         return figure
     
-    def get_graph(self):
-        return self._FIGURE
+    def get_graph(self): return self._FIGURE
+    def get_season_16_17(self): return self.y_2016_2017
 
 def main():
     NIPH_ILI('./ILI_tall_2016_17.xlsx')

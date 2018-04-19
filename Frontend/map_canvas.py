@@ -34,9 +34,6 @@ LATITUDE, LONGITUDE =  58.97, 5.7331 # Stavanger
 ZOOM, MAX_ZOOM_OUT_LEVEL, MAX_ZOOM_IN_LEVEL = 12, 4, 22
 MAPTYPE = 'roadmap'
 
-def hello1():
-    print('hello1')
-
 class Map(tk.Canvas, tk.Tk):
     def __init__(self, root, widget, coordinates):
         self.root = root
