@@ -7,7 +7,7 @@ import tkinter.ttk as ttk
 import matplotlib, numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 
-import map_canvas, scrframe
+import map_canvas, scrframe, NIPH_frame
 
 sys.path.append('../Backend') # appends the backend directory so we can use the modules there
 sys.path.append('../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets')
@@ -27,8 +27,8 @@ the_map = None
 #data_frame1 = None
 
 def toolbarCallBack(name):
-    NIPH_ILI_graph.pack_forget()
-    NIPH_virus_graph.pack_forget()
+    #NIPH_ILI_graph.pack_forget()
+    #NIPH_virus_graph.pack_forget()
     ruter_graph.pack_forget()
     kolumbus_graph.pack_forget()
     twitter_graph.pack_forget()
@@ -37,9 +37,11 @@ def toolbarCallBack(name):
     NPRA_stavanger_graph.pack_forget()
     NPRA_oslo_graph.pack_forget()
     map1.pack_forget()
+    NIPH_frame1.pack_forget()
     if name == 'NIPH':
-        NIPH_ILI_graph.pack(fill='both', expand=True)
-        NIPH_virus_graph.pack(fill='both', expand=True)
+        NIPH_frame1.pack(fill='both', expand=True)
+        #NIPH_ILI_graph.pack(fill='both', expand=True)
+        #NIPH_virus_graph.pack(fill='both', expand=True)
     elif name == 'Ruter':
         ruter_graph.pack(fill='both', expand=True)
     elif name == 'Kolumbus':
@@ -96,7 +98,7 @@ def progress_bar(root):
     global theLabel
     global progressbar
     
-    PROGRESS_MAX, progress_var = 9, DoubleVar()
+    PROGRESS_MAX, progress_var = 8, DoubleVar()
     theLabel = Label(
         anchor=S,
         master=root,
@@ -132,14 +134,15 @@ def load_matplotlib_figures():
     graph1.focus_set()
     graph1.pack(fill='both', expand=True)
 
-    global progress_var, theLabel, progressbar
+    global progress_var, theLabel, progressbar, NIPH_frame1
 
     progress_var.set(0)
     root.update_idletasks()
-    NIPH_ILI_figure = NIPH_ILS_graf.NIPH_ILI('../Backend/NIPH/ILI_tall_2016_17.xlsx').get_graph()
-    progress_var.set(1)
-    root.update_idletasks()
-    NIPH_virus_figure = NIPH_virus_detections.NIPH_Virus().get_graph()
+    NIPH_frame1 = NIPH_frame.NIPH_frame(graph1)
+    #NIPH_ILI_figure = NIPH_ILS_graf.NIPH_ILI('../Backend/NIPH/ILI_tall_2016_17.xlsx').get_graph()
+    #progress_var.set(1)
+    #root.update_idletasks()
+    #NIPH_virus_figure = NIPH_virus_detections.NIPH_Virus().get_graph()
     progress_var.set(2)
     root.update_idletasks()
     Ruter_figure = ruter.Ruter('../Backend/Ruter/Antall påstigende per dag_Oslo_2015_2017.xlsx').get_graph()
@@ -165,8 +168,8 @@ def load_matplotlib_figures():
     root.update_idletasks()
 
     global NIPH_ILI_graph, NIPH_virus_graph, ruter_graph, kolumbus_graph, twitter_graph, NPRA_stavanger_graph, NPRA_norway_graph, NPRA_bergen_graph, NPRA_oslo_graph
-    NIPH_ILI_graph = plot_widget(graph1, NIPH_ILI_figure)
-    NIPH_virus_graph = plot_widget(graph1, NIPH_virus_figure)
+    #NIPH_ILI_graph = plot_widget(graph1, NIPH_ILI_figure)
+    #NIPH_virus_graph = plot_widget(graph1, NIPH_virus_figure)
     ruter_graph = plot_widget(graph1, Ruter_figure)
     kolumbus_graph = plot_widget(graph1, kolumbus_figure)
     twitter_graph = plot_widget(graph1, twitter_figure)
@@ -176,8 +179,9 @@ def load_matplotlib_figures():
     NPRA_oslo_graph = plot_widget(graph1, NPRA_oslo_figure)
 
     # default starting view
-    NIPH_ILI_graph.pack(fill='both', expand=False)
-    NIPH_virus_graph.pack(fill='both', expand=False)
+    NIPH_frame1.pack(fill='both', expand=True)
+    #NIPH_ILI_graph.pack(fill='both', expand=False)
+    #NIPH_virus_graph.pack(fill='both', expand=False)
 
 def load_map():
     coordinates = NPRA_Traffic_Stations_load_data.get_all_coordinates(

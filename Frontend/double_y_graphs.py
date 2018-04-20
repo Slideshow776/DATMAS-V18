@@ -1,4 +1,4 @@
-import sys, datetime, math
+import sys, datetime, math, random
 from openpyxl import load_workbook
 import matplotlib.pyplot as plt
 import numpy as np
@@ -131,10 +131,16 @@ class double_y_graph:
         for _ in range(len(weeks), 52): weeks.append(None) # if we don't have 52 values, add Nones so we get 52 values
         return weeks
 
-    def _double_y_graph(self, NIPH_type, y2, color1='#4286f4', color2='#872323'): # assumes common x-axis of 52 units (weeks)
+    def _double_y_graph(self, NIPH_type, y2, name1, name2, color1=None, color2=None): # assumes common x-axis of 52 units (weeks)
         if NIPH_type.lower() == 'virus': y1 = self.NIPH_virus_Y
         elif NIPH_type.lower() == 'ili': y1 = self.NIPH_ILI_Y
         y1, y2 = np.array(y1), np.array(y2)
+
+        COLORS = ['#5efa0c', '#33920e', '#f44def', '#0606fb', '#aaafda', '#977c46', '#d89fcb', '#5a5190', '#89a44d', '#a7b995', '#1efde2', '#e01235',
+                    '#b894d2', '#ee2fa3', '#a9540a', '#f32ebe', '#6c936d', '#945152', '#2380c4', '#437582', '#547417']
+        if not color1: color1 = COLORS[random.randrange(0, len(COLORS))]
+        if not color2: color2 = COLORS[random.randrange(0, len(COLORS))]
+        while(color1 == color2): color2 = COLORS[random.randrange(0, len(COLORS))]
 
         x = []
         for i in range(52): x.append(i)
@@ -144,7 +150,7 @@ class double_y_graph:
         plt.figure(3)
 
         ax1.plot(x, y1, color=color1)
-        ax1.set_ylabel('This is Y1', color=color1)
+        ax1.set_ylabel(name1, color=color1)
         ax1.tick_params('y', colors=color1)
         ax1.set_xticks(x)
         xticks_week40_til_week39 = ["40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39"]
@@ -152,7 +158,7 @@ class double_y_graph:
 
         ax2 = ax1.twinx()
         ax2.plot(x, y2, color=color2)
-        ax2.set_ylabel('This is Y2', color=color2)
+        ax2.set_ylabel(name2, color=color2)
         ax2.tick_params('y', colors=color2)
 
         fig.tight_layout()
@@ -164,7 +170,9 @@ def main():
     graphs.set_season('15/16')
     graphs._double_y_graph( # twitter example
         'virus',
-        graphs.get_kolumbus_seasons_weekly(2015, 2016)
+        graphs.get_kolumbus_seasons_weekly(2015, 2016),
+        'NIPH virus',
+        'Kolumbus'
     )
     plt.show()
 
