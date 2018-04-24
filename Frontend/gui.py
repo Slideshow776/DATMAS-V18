@@ -191,7 +191,7 @@ def load_map():
         )
 
     global map1
-    map1 = map_canvas.Map(root, data_frame1.interior, coordinates) # creates a tkinter.Canvas
+    map1 = map_canvas.Map(data_frame1.interior, coordinates, WINDOW_WIDTH, WINDOW_HEIGHT) # creates a tkinter.Canvas
     #map1.pack(fill='both', expand=True)
     map1.pack_forget()
 

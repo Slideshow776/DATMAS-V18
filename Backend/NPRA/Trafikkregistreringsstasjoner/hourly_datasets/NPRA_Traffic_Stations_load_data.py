@@ -105,6 +105,7 @@ def get_data_hourly(year, filename): # returns data in a list of 'Traffic_record
                         None
                     )
             )
+        print(stations[3].get_hour)
         return stations
     except: print('Error: Something went wrong loading the data from file or year')
 

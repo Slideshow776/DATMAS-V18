@@ -8,7 +8,13 @@ import NPRA_Traffic_Stations_load_data as NPRA_data
 
 def main():
     field1, field2 = [], []
-    for d in NPRA_data.get_data('2013'):
+    """coordinates = NPRA_data.get_all_coordinates(
+        NPRA_data.COORDINATES_STAVANGER_FILE_NAME,
+        NPRA_data.COORDINATES_BERGEN_FILE_NAME,
+        NPRA_data.COORDINATES_OSLO_FILE_NAME
+    )"""
+    for d in NPRA_data.get_data_hourly('2013',
+        NPRA_data.HOURLY_FILE_NAME):
         if d.get_field() == 1: field1.append(d.get_all())
         #elif d.get_field() == 2: field2.append(d.get_all())
     draw_graph(field1)
@@ -23,8 +29,7 @@ def draw_graph(data):
             x.append(i)
             y.append(data[i][3])
         x = np.array(x)
-
-        colors=["#FF0000", "#800000", "#FFFF00", "#808000", "#00FF00", "#008000", "#00FFFF", "#008080", "#0000FF", "#000080", "#FF00FF", "#800080", "#f58231", "#aaffc3"]
+        
         plt.plot(x, y)
         plt.xticks(x, ticks)
         plt.xticks(rotation=45)

@@ -29,17 +29,17 @@ else: import tkinter as tk
 from PIL import ImageTk
 from goompy import GooMPy
 
-WIDTH, HEIGHT = 1033, int(768/1.2)
+#WIDTH, HEIGHT = 1033, int(768/1.2)
 LATITUDE, LONGITUDE =  58.97, 5.7331 # Stavanger
 ZOOM, MAX_ZOOM_OUT_LEVEL, MAX_ZOOM_IN_LEVEL = 12, 4, 22
 MAPTYPE = 'roadmap'
 
 class Map(tk.Canvas, tk.Tk):
-    def __init__(self, root, widget, coordinates):
-        self.root = root
-        self.widget = widget
+    def __init__(self, root, coordinates, width, height):
+        self.WIDTH = width
+        self.HEIGHT = height
 
-        tk.Canvas.__init__(self, widget, bg='#fff7ff', width=WIDTH, height=HEIGHT)
+        tk.Canvas.__init__(self, root, bg='#fff7ff', width=self.WIDTH, height=self.HEIGHT)
         self.pack(fill='both', expand=True)
 
         self.label = tk.Label(self)
@@ -67,7 +67,7 @@ class Map(tk.Canvas, tk.Tk):
 
         #MARKERS_1 = markers # markers should be a list of lists: [[lat_a,_lon_a],[lat_b,lon_b],...[lat_z,lon_z]]
 
-        self.goompy = GooMPy(WIDTH, HEIGHT, LATITUDE, LONGITUDE, ZOOM, MAPTYPE, coordinates)
+        self.goompy = GooMPy(self.WIDTH, self.HEIGHT, LATITUDE, LONGITUDE, ZOOM, MAPTYPE, coordinates)
 
         self.restart()
 
@@ -119,7 +119,7 @@ class Map(tk.Canvas, tk.Tk):
         self.image_tk = ImageTk.PhotoImage(self.image)
         self.label['image'] = self.image_tk
 
-        self.label.place(x=0, y=0, width=WIDTH, height=HEIGHT) 
+        self.label.place(x=0, y=0, width=self.WIDTH, height=self.HEIGHT) 
 
         self.radiogroup.place(x=0,y=0)
 
