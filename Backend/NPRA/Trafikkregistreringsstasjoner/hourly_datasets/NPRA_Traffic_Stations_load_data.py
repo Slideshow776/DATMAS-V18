@@ -1,6 +1,7 @@
 # coding=utf8
 
 import sys, csv
+from datetime import datetime
 from openpyxl import load_workbook
 import matplotlib.pyplot as plt, numpy as np
 
@@ -91,21 +92,26 @@ def get_data_hourly(year, filename): # returns data in a list of 'Traffic_record
         
         startid = int(HOURLY_FILE_NAME.find('/') + 1)
         endid = int(HOURLY_FILE_NAME.find(' '))
-        id = HOURLY_FILE_NAME[startid:endid]        
-
-        for i in range(4, worksheet.max_row):
+        id = HOURLY_FILE_NAME[startid:endid]
+        
+        for i in range(7, worksheet.max_row):
+            hour = int(worksheet['B' + str(i)].value[:2])
+            if hour == 24: hour = 0
             stations.append(
-                    Traffic_recording_station(
-                        id,
-                        worksheet['A' + str(i)].value,
-                        worksheet['B' + str(i)].value,
-                        worksheet['C' + str(i)].value,
-                        worksheet['D' + str(i)].value,
-                        None,
-                        None
-                    )
+                Traffic_recording_station(
+                    id,
+                    datetime( # date
+                        int(worksheet['A' + str(i)].value[6:]),  # year
+                        int(worksheet['A' + str(i)].value[3:5]), # month
+                        int(worksheet['A' + str(i)].value[:2]),  # day
+                        hour
+                    ),
+                    int(worksheet['C' + str(i)].value), # field
+                    int(worksheet['D' + str(i)].value), # vehicles
+                    None,
+                    None
+                )
             )
-        print(stations[3].get_hour)
         return stations
     except: print('Error: Something went wrong loading the data from file or year')
 
@@ -120,10 +126,9 @@ def get_coordinates(filename):
         print('Error loading coordinates from ', filename)
 
 class Traffic_recording_station:
-    def __init__(self, id, date, hour, field, vehicles, longitude, latitude):
+    def __init__(self, id, date, field, vehicles, longitude, latitude):
         self.id = id                #               Int
-        self.date = date            # dd.mm.yyyy,   String
-        self.hour = hour            # hh:mm,        String
+        self.date = date            #               Datetime
         self.field = field          # 1 V 2,        Int
         self.vehicles = vehicles    # >= 0,         Int
         self.longitude = longitude  #               Float
@@ -131,7 +136,6 @@ class Traffic_recording_station:
 
     def set_id(self, id): self.id = id
     def set_date(self, date): self.date = date
-    def set_hour(self, hour): self.hour = hour
     def set_field(self, field): self.field = field
     def set_vehicles(self, vehicles): self.vehicles = vehicles
     def set_longitude(self, longitude): self.longitude = longitude
@@ -139,7 +143,6 @@ class Traffic_recording_station:
 
     def get_id(self): return self.id
     def get_date(self): return self.date
-    def get_hour(self): return self.hour
     def get_field(self): return self.field
     def get_vehicles(self): return self.vehicles
     def get_longitude(self): return self.longitude
@@ -149,7 +152,6 @@ class Traffic_recording_station:
             [
                 self.id,
                 self.date,
-                self.hour,
                 self.field,
                 self.vehicles,
                 self.longitude,
