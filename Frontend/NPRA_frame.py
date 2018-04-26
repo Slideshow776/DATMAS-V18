@@ -124,7 +124,7 @@ class NPRA_frame(Frame, Tk):
         elif month.lower() == 'november': return 10
         elif month.lower() == 'december': return 11
 
-    def _show_btn_callback(self): # TODO: remove print
+    def _show_btn_callback(self):
         hour_from, hour_to = int(self.hours_from_var.get()), int(self.hours_to_var.get())
         weekday_from, weekday_to = self._convert_weekday_to_number(self.weekdays_from_var.get()), self._convert_weekday_to_number(self.weekdays_to_var.get())
         month_from, month_to = self._convert_month_to_number(self.months_from_var.get()), self._convert_month_to_number(self.months_to_var.get())
@@ -137,7 +137,7 @@ class NPRA_frame(Frame, Tk):
         plt.gcf().clear()
         self.graph_graph.pack_forget()
         self.graph_graph = None
-        self.graph_figure = self.NPRA_traffic_Station.set_data('2013', self.filename, 1, hour_from, hour_to, weekday_from, weekday_to, month_from, month_to)
+        self.graph_figure = self.NPRA_traffic_Station.update_graph(2017, self.filename, 1, hour_from, hour_to, weekday_from, weekday_to, month_from, month_to)
         self.graph_graph = self._plot_widget(self.graph_frame, self.graph_figure)
         self.graph_graph.pack(side='bottom', fill='both', expand=True)
 

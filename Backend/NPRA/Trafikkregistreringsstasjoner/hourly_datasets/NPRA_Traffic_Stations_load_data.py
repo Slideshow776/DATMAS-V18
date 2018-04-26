@@ -1,6 +1,6 @@
 # coding=utf8
 
-import sys, csv
+import sys, csv, time
 from datetime import datetime
 from openpyxl import load_workbook
 import matplotlib.pyplot as plt, numpy as np
@@ -11,87 +11,59 @@ COORDINATES_BERGEN_FILE_NAME = 'Bergen/times nivå 1 BERGEN.csv'
 COORDINATES_OSLO_FILE_NAME = 'Oslo/times nivå 1 OSLO.csv'
 stavanger_stations, bergen_stations, oslo_stations = [], [], []
 
-def print_all():
-    liste = get_data_hourly('2013', HOURLY_FILE_NAME)
+def get_variance_of_data(year, filename, field, hour_from, hour_to, # weeksdays range from 0-6, 0 is monday
+         weekday_from, weekday_to, month_from, month_to):
 
-    #for d in get_data_hourly('2013', HOURLY_FILE_NAME):
-        #print(d.get_all())
-    print("\nYou ran the 'print_all' method, it prints all the data read from", HOURLY_FILE_NAME)
-
-def wip():
-    # d = {'dict1': {'foo': 1, 'bar': 2}, 'dict2': {'baz': 3, 'quux': 4}}
-    """
-    data = {
-        '2013': {
-            'field1': [], [], ...
-            'field2': [], [], ...
-            },
-        ...
-        }
-    """
-    data = {'2013': dict}
-    years = ['2013']#, '2014'] #, '2015', '2016', '2017']
-    for year in data.keys():
-        for d in get_data_hourly(year):
-            if d.get_field == 1: data[year]['field1'] = d.get_all
-            elif d.get_field == 2: data[year]['field2'] = d.get_all
+    time_start = time.time()
+    workbook = load_workbook(filename)
+    years = []
+    for sheet_year in workbook.sheetnames:
+        years.append(query_data(sheet_year, filename, field, hour_from, hour_to, # weeksdays range from 0-6, 0 is monday
+         weekday_from, weekday_to, month_from, month_to))
     
-    print("HEYO!: ", data.get('2013'))
+    # TODO: test her om i samme ukenummer, hvis så summer sammen ukedagene
+    
+    # --------------------------------------------------------------------
 
-def combine_hourly_and_coordinates():
-    data = get_data_hourly('2013', HOURLY_FILE_NAME)
-    coordinates = get_coordinates(COORDINATES_STAVANGER_FILE_NAME)
-    stations = get_data(data, coordinates)
-    for s in stations:
-        print(s.get_all())
+    test = []
+    for y in years:
+        dsum = 0
+        for d in y:
+            dsum += d.get_vehicles()
+        test.append(dsum)
+    var = np.var(test, ddof=1)
+    print(var)
+    print('time: ', time.time() - time_start)
+    return var
 
-def main():
-    #combine_hourly_and_coordinates()
-    print(
-        get_all_coordinates(
-            COORDINATES_STAVANGER_FILE_NAME,
-            COORDINATES_BERGEN_FILE_NAME,
-            COORDINATES_OSLO_FILE_NAME
-        )
-    )
+    
+    """print('test: ', workbook.worksheets[0])
+    print('test2: ', workbook.worksheets[len(workbook.worksheets)-1])
+    print('test3: ', workbook.sheetnames)
+    print('years in file: ', len(workbook.worksheets))"""
 
-def get_all_coordinates(stavanger, bergen, oslo):
-    stavanger_coordinates = get_coordinates(stavanger)
-    bergen_coordinates = get_coordinates(bergen)
-    oslo_coordinates = get_coordinates(oslo)
-    coordinates = []
-    coordinates.append(stavanger_coordinates)
-    coordinates.append(bergen_coordinates)
-    coordinates.append(oslo_coordinates)
+    #return np.var(np.array(vehicles), ddof=1)
 
-    pcoordinates = []
-    for c in coordinates:
-        for d in c:
-            pcoordinates.append(d[1:])
-
-    new_coords = []
-    for p in pcoordinates:
-        new_coords.append([float(p[0]), float(p[1])])
-
-    return new_coords
-
-def get_data(data, coordinates):
-    for d in data:
-        for c in coordinates:
-            if c[0] == d.get_id():
-                d.set_longitude(c[1])
-                d.set_latitude(c[2])
-                break
-    return data
+def query_data(year, filename, field, hour_from, hour_to, # weeksdays range from 0-6, 0 is monday
+         weekday_from, weekday_to, month_from, month_to):
+    query_results = []
+    for d in get_data_hourly(year, filename):
+        if (
+            d.get_field() == field and
+            hour_from <= d.get_date().hour <= hour_to and
+            weekday_from <= d.get_date().weekday() <= weekday_to and
+            month_from <= d.get_date().month <= month_to
+        ) : query_results.append(d)
+    return query_results
 
 def get_data_hourly(year, filename): # returns data in a list of 'Traffic_recording_station' objects
     try:
         workbook = load_workbook(filename)
-        worksheet = workbook[year]
+        worksheet = workbook[str(year)]
         stations = []
         
         startid = int(HOURLY_FILE_NAME.find('/') + 1)
-        endid = int(HOURLY_FILE_NAME.find(' '))
+        endid = int(HOURLY_FILE_NAME.find('20'))
         id = HOURLY_FILE_NAME[startid:endid]
         
         for i in range(7, worksheet.max_row):
@@ -115,7 +87,40 @@ def get_data_hourly(year, filename): # returns data in a list of 'Traffic_record
         return stations
     except: print('Error: Something went wrong loading the data from file or year')
 
-def get_coordinates(filename):
+def get_all_coordinates(stavanger, bergen, oslo):
+    coordinates = []
+    coordinates.append(_get_coordinates(stavanger))
+    coordinates.append(_get_coordinates(bergen))
+    coordinates.append(_get_coordinates(oslo))
+
+    pcoordinates = []
+    for c in coordinates:
+        for d in c:
+            pcoordinates.append(d[1:])
+
+    new_coords = []
+    for p in pcoordinates:
+        new_coords.append([float(p[0]), float(p[1])])
+
+    return new_coords
+
+def _print_all(year, filename):
+    for d in get_data_hourly(str(year), filename):
+        print(d.get_all())
+    print("\nYou ran the 'print_all' method, it prints all the data read from", HOURLY_FILE_NAME)
+
+def _combine_hourly_and_coordinates(year, filename):
+    data = get_data_hourly(str(year), filename)
+    coordinates = _get_coordinates(COORDINATES_STAVANGER_FILE_NAME)
+    for d in data:
+        for c in coordinates:
+            if c[0] == d.get_id():
+                d.set_longitude(c[1])
+                d.set_latitude(c[2])
+                break
+        print(d.get_all())
+
+def _get_coordinates(filename):
     try:
         with open(filename, 'r') as f:
             reader = csv.reader(f, delimiter=';')
@@ -158,6 +163,15 @@ class Traffic_recording_station:
                 self.latitude
             ]            
         )
+
+def main():
+    #data = get_data_hourly(2017, HOURLY_FILE_NAME)
+    print(get_variance_of_data(
+        2017, HOURLY_FILE_NAME, 1,  # year, filename, field
+        8, 8,                       # hour_from, hour_to
+        0, 0,                       # weekday_from, weekday_to
+        0, 3)                       # month_from, month_to
+    )
 
 if __name__ == '__main__':
     main()

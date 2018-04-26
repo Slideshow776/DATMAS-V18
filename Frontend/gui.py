@@ -168,8 +168,6 @@ def load_matplotlib_figures():
     root.update_idletasks()
 
     global NIPH_ILI_graph, NIPH_virus_graph, ruter_graph, kolumbus_graph, twitter_graph, NPRA_stavanger_graph, NPRA_norway_graph, NPRA_bergen_graph, NPRA_oslo_graph
-    #NIPH_ILI_graph = plot_widget(graph1, NIPH_ILI_figure)
-    #NIPH_virus_graph = plot_widget(graph1, NIPH_virus_figure)
     ruter_graph = plot_widget(graph1, Ruter_figure)
     kolumbus_graph = plot_widget(graph1, kolumbus_figure)
     twitter_graph = plot_widget(graph1, twitter_figure)
@@ -180,8 +178,6 @@ def load_matplotlib_figures():
 
     # default starting view
     NIPH_frame1.pack(fill='both', expand=True)
-    #NIPH_ILI_graph.pack(fill='both', expand=False)
-    #NIPH_virus_graph.pack(fill='both', expand=False)
 
 def load_map():
     coordinates = NPRA_Traffic_Stations_load_data.get_all_coordinates(

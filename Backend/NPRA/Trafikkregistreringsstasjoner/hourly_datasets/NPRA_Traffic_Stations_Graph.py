@@ -8,37 +8,34 @@ import NPRA_Traffic_Stations_load_data as NPRA_data
 
 class NPRA_Traffic_Stations_load_graph:
     def __init__(self, filename):
-        self._FIGURE = self.set_data('2013', filename, 1,
+        plt.tight_layout()
+        self.year = 2017
+        self._FIGURE = self.update_graph(self.year, filename, 1, 
                                         8, 9,   # hour_from, hour_to
                                         0, 4,   # weekday_from, weekday_to
-                                        0, 3)  # month_from, month_to
+                                        0, 3)   # month_from, month_to
 
-    def set_data(self, year, filename, field, hour_from, hour_to, # weeksdays range from 0-6, 0 is monday
+    def update_graph(self, year, filename, field, hour_from, hour_to, # weeksdays range from 0-6, 0 is monday
          weekday_from, weekday_to, month_from, month_to):   # months range from 0-11, 0 is january
-        data = NPRA_data.get_data_hourly(year, filename)
-        query_results = []
-        for d in data:
-            if (
-                d.get_field() == field and
-                hour_from <= d.get_date().hour <= hour_to and
-                weekday_from <= d.get_date().weekday() <= weekday_to and
-                month_from <= d.get_date().month <= month_to
-            ) : query_results.append(d.get_all())
+        self.year = year
+        query_results = NPRA_data.query_data(year, filename, field, hour_from, hour_to, # weeksdays range from 0-6, 0 is monday
+         weekday_from, weekday_to, month_from, month_to)
+        self.title = query_results[0].get_id() + '' + str(year)
         return self._draw_graph(query_results)
 
     def _draw_graph(self, data):
         plt.figure(111)
         ticks, x, y = [], [], []
         for i in range(len(data)):
-            ticks.append(data[i][1]) # 1 is place of date
+            ticks.append(data[i].get_date())
             x.append(i)
-            y.append(data[i][3]) # 3 is place of vehicles
+            y.append(data[i].get_vehicles())
         x = np.array(x)
         
         plt.plot(x, y)
         plt.xticks(x, ticks)
-        plt.xticks(rotation=45)
-        plt.title('HILLEVÅGTUNNELEN 2013')
+        plt.xticks(rotation=22.5)
+        plt.title(self.title)
         plt.ylabel("Traffic per hour")
         #plt.legend(loc='upper left')
         plt.grid(axis='y', linestyle='-')
