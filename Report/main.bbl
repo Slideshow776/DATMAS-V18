@@ -1,5 +1,11 @@
 \begin{thebibliography}{10}
 
+\bibitem{spatiotemp_urban_sys}
+L.~O. Grottenberg, O.~Njå, E.~Tøssebro, G.~Braut, R.~Tønnessen, and G.~M.
+  Grøneng, ``Detecting flu outbreaks based on spatiotemporal information from
+  urban systems – designing a novel study,'' {\em Icwsm}, vol.~20, pp.~1--7,
+  2017.
+
 \bibitem{fhi_sykdommer}
 ``The norwegian institute of public health: Influenza symptoms.''
   https://www.fhi.no/en/id/influensa/seasonal-influenza/influenza---fact-sheet-about-season/.
@@ -14,12 +20,6 @@
   surveillance system.''
   https://www.fhi.no/en/hn/statistics/NorSySS/about-the-norwegian-syndromic-surveillance-system/.
 \newblock Accessed: 2018-06-11.
-
-\bibitem{spatiotemp_urban_sys}
-L.~O. Grottenberg, O.~Njå, E.~Tøssebro, G.~Braut, R.~Tønnessen, and G.~M.
-  Grøneng, ``Detecting flu outbreaks based on spatiotemporal information from
-  urban systems – designing a novel study,'' {\em Icwsm}, vol.~20, pp.~1--7,
-  2017.
 
 \bibitem{twitter_politic}
 S.~B. Elson, D.~Yeung, P.~Roshan, S.~R. Bohandy, and A.~Nader, {\em Using
