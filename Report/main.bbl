@@ -11,6 +11,10 @@ L.~O. Grottenberg, O.~Njå, E.~Tøssebro, G.~Braut, R.~Tønnessen, and G.~M.
   https://www.fhi.no/en/id/influensa/seasonal-influenza/influenza---fact-sheet-about-season/.
 \newblock Accessed: 2018-06-11.
 
+\bibitem{potter2001history}
+C.~W. Potter, ``A history of influenza,'' {\em Journal of applied
+  microbiology}, vol.~91, no.~4, pp.~572--579, 2001.
+
 \bibitem{niph}
 ``The norwegian institute of public health.'' https://www.fhi.no/en/.
 \newblock Accessed: 2018-06-11.
@@ -46,6 +50,31 @@ T.~Sakaki, M.~Okazaki, and Y.~Matsuo, ``Earthquake shakes twitter users:
 \bibitem{twitter_what_you_tweet}
 M.~J. Paul and M.~Dredze, ``You are what you tweet: Analyzing twitter for
   public health.,'' {\em Icwsm}, vol.~20, pp.~265--272, 2011.
+
+\bibitem{de2015geographic}
+J.~P. De~Albuquerque, B.~Herfort, A.~Brenning, and A.~Zipf, ``A geographic
+  approach for combining social media and authoritative data towards
+  identifying useful information for disaster management,'' {\em International
+  Journal of Geographical Information Science}, vol.~29, no.~4, pp.~667--689,
+  2015.
+
+\bibitem{gonzalez2009framework}
+R.~A. Gonzalez and N.~Bharosa, ``A framework linking information quality
+  dimensions and coordination challenges during interagency crisis response,''
+  in {\em System Sciences, 2009. HICSS'09. 42nd Hawaii International Conference
+  on}, pp.~1--10, IEEE, 2009.
+
+\bibitem{shao2016forecasting}
+H.~Shao, K.~Hossain, H.~Wu, M.~Khan, A.~Vullikanti, B.~A. Prakash, M.~Marathe,
+  and N.~Ramakrishnan, ``Forecasting the flu: designing social network sensors
+  for epidemics,'' {\em arXiv preprint arXiv:1602.06866}, 2016.
+
+\bibitem{stein2012development}
+M.~L. Stein, J.~W. Rudge, R.~Coker, C.~van~der Weijden, R.~Krumkamp,
+  P.~Hanvoravongchai, I.~Chavez, W.~Putthasri, B.~Phommasack, W.~Adisasmito,
+  {\em et~al.}, ``Development of a resource modelling tool to support decision
+  makers in pandemic influenza preparedness: The asiaflucap simulator,'' {\em
+  BMC public health}, vol.~12, no.~1, p.~870, 2012.
 
 \bibitem{fhi}
 ``The norwegian institute of public health: Influenza information.''
