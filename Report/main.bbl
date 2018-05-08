@@ -91,6 +91,11 @@ M.~L. Stein, J.~W. Rudge, R.~Coker, C.~van~der Weijden, R.~Krumkamp,
   https://github.com/simondlevy/GooMPy.
 \newblock Accessed: 2018-06-11.
 
+\bibitem{googleSM}
+``Google static maps api.''
+  https://developers.google.com/maps/documentation/maps-static/intro.
+\newblock Accessed: 2018-05-08.
+
 \bibitem{scrframe}
 ``Tkinter scrollable frame, created by eugene bakin.''
   https://github.com/simondlevy/GooMPy.

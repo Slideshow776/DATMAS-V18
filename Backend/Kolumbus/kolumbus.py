@@ -1,6 +1,6 @@
 """
     Shows a graph of total number of tickets sold by Kolumbus in the years 2015-2017 by monthly basis.
-    Data is hardcoded because it was provided to me by a .PNG file (yes I know ...)
+    Data is hardcoded because it was provided by two .PNG files (yes, I know ...).
 
     @author Sandra Moen
 """

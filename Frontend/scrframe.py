@@ -7,7 +7,7 @@ from tkinter import *
     Implemented: 
         - Mouse wheel scrolling
         - Setting tkinter focus
-        - Better ability ti resize the frame 
+        - Better ability to resize the frame 
 """
 
 

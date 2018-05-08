@@ -11,16 +11,20 @@
 \contentsline {figure}{\numberline {4.5}{\ignorespaces Oslo traffic 2002-2015}}{21}
 \contentsline {figure}{\numberline {4.6}{\ignorespaces Weekly data of the city of Bergen}}{22}
 \contentsline {figure}{\numberline {4.7}{\ignorespaces Weekly data of the city of Oslo}}{23}
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Weekly data of the city of Stavanger}}{23}
-\contentsline {figure}{\numberline {4.9}{\ignorespaces Geospatial bounds of Bergen}}{24}
-\contentsline {figure}{\numberline {4.10}{\ignorespaces Geospatial bounds of Oslo}}{25}
-\contentsline {figure}{\numberline {4.11}{\ignorespaces Geospatial bounds of Stavanger}}{26}
-\contentsline {figure}{\numberline {4.12}{\ignorespaces Geospatial hourly bounds of Bergen}}{27}
-\contentsline {figure}{\numberline {4.13}{\ignorespaces Geospatial hourly bounds of Oslo}}{28}
-\contentsline {figure}{\numberline {4.14}{\ignorespaces Geospatial hourly bounds of Stavanger}}{28}
-\contentsline {figure}{\numberline {4.15}{\ignorespaces Tweets concerning ILS of 2018}}{29}
-\contentsline {figure}{\numberline {4.16}{\ignorespaces Monthly passenger travel with Kolumbus}}{29}
-\contentsline {figure}{\numberline {4.17}{\ignorespaces Daily tickets sold with Ruter, the year of 2015 does not contain metro services}}{30}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Weekly data of the city of Stavanger}}{24}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Geospatial bounds of Bergen. The green circles show where the traffic registration stations are, and the number reveals how many there are in that general area.}}{25}
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Geospatial bounds of Oslo. The green circles show where the traffic registration stations are, and the number reveals how many there are in that general area.}}{26}
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Geospatial bounds of Stavanger. The green circles show where the traffic registration stations are, and the number reveals how many there are in that general area.}}{27}
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Geospatial hourly bounds of Bergen}}{28}
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Geospatial hourly bounds of Oslo}}{29}
+\contentsline {figure}{\numberline {4.14}{\ignorespaces Geospatial hourly bounds of Stavanger}}{29}
+\contentsline {figure}{\numberline {4.15}{\ignorespaces Tweets concerning ILS of 2018}}{30}
+\contentsline {figure}{\numberline {4.16}{\ignorespaces Monthly passenger travel with Kolumbus}}{30}
+\contentsline {figure}{\numberline {4.17}{\ignorespaces Daily tickets sold with Ruter, the year of 2015 does not contain Oslo's underground train service passenger data}}{31}
+\contentsline {figure}{\numberline {4.18}{\ignorespaces The GUI}}{31}
+\contentsline {figure}{\numberline {4.19}{\ignorespaces A Goompy implementation of Google's static map API}}{32}
+\contentsline {figure}{\numberline {4.20}{\ignorespaces NIPH comparing buttons panel}}{32}
+\contentsline {figure}{\numberline {4.21}{\ignorespaces NPRA query buttons panel}}{33}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

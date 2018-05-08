@@ -7,7 +7,7 @@ import tkinter.ttk as ttk
 import matplotlib, numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 
-import map_canvas, scrframe, NIPH_frame
+import map_canvas, scrframe, NIPH_frame, NPRA_frame
 
 sys.path.append('../Backend') # appends the backend directory so we can use the modules there
 sys.path.append('../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets')
@@ -38,6 +38,7 @@ def toolbarCallBack(name):
     NPRA_oslo_graph.pack_forget()
     map1.pack_forget()
     NIPH_frame1.pack_forget()
+    NPRA_frame1.pack_forget()
     if name == 'NIPH':
         NIPH_frame1.pack(fill='both', expand=True)
         #NIPH_ILI_graph.pack(fill='both', expand=True)
@@ -47,6 +48,7 @@ def toolbarCallBack(name):
     elif name == 'Kolumbus':
         kolumbus_graph.pack(fill='both', expand=True)
     elif name == 'NPRA':
+        NPRA_frame1.pack(fill='both', expand=True)
         NPRA_norway_graph.pack(fill='both', expand=True)
         NPRA_bergen_graph.pack(fill='both', expand=True)
         NPRA_stavanger_graph.pack(fill='both', expand=True)
@@ -98,7 +100,7 @@ def progress_bar(root):
     global theLabel
     global progressbar
     
-    PROGRESS_MAX, progress_var = 8, DoubleVar()
+    PROGRESS_MAX, progress_var = 9, DoubleVar()
     theLabel = Label(
         anchor=S,
         master=root,
@@ -134,38 +136,42 @@ def load_matplotlib_figures():
     graph1.focus_set()
     graph1.pack(fill='both', expand=True)
 
-    global progress_var, theLabel, progressbar, NIPH_frame1
-
+    global progress_var, theLabel, progressbar, NIPH_frame1, NPRA_frame1
+    
+    NIPH_frame1 = NIPH_frame.NIPH_frame(graph1)
     progress_var.set(0)
     root.update_idletasks()
-    NIPH_frame1 = NIPH_frame.NIPH_frame(graph1)
     #NIPH_ILI_figure = NIPH_ILS_graf.NIPH_ILI('../Backend/NIPH/ILI_tall_2016_17.xlsx').get_graph()
     #progress_var.set(1)
     #root.update_idletasks()
     #NIPH_virus_figure = NIPH_virus_detections.NIPH_Virus().get_graph()
-    progress_var.set(2)
+    progress_var.set(1)
     root.update_idletasks()
     Ruter_figure = ruter.Ruter('../Backend/Ruter/Antall påstigende per dag_Oslo_2015_2017.xlsx').get_graph()
-    progress_var.set(3)
+    progress_var.set(2)
     root.update_idletasks()
     kolumbus_figure = kolumbus.Kolumbus().get_graph()
-    progress_var.set(4)
+    progress_var.set(3)
     root.update_idletasks()
     twitter_figure = twitter_analyzer.Twitter('../Backend/Twitter/twitter_data.txt').get_graph()
+    progress_var.set(4)
+    root.update_idletasks()
+    NPRA_frame1 = NPRA_frame.NPRA_frame(graph1, WINDOW_WIDTH, WINDOW_HEIGHT)
+    NPRA_frame1.pack_forget()
     progress_var.set(5)
     root.update_idletasks()
-    NPRA_stavanger_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx').get_specific_graph_('stavanger')
+    NPRA_norway_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx').get_specific_graph_('norway')
     progress_var.set(6)
     root.update_idletasks()
-    NPRA_norway_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx').get_specific_graph_('norway')
+    NPRA_bergen_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx').get_specific_graph_('bergen')
     progress_var.set(7)
     root.update_idletasks()
-    NPRA_bergen_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx').get_specific_graph_('bergen')
+    NPRA_oslo_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx').get_specific_graph_('oslo')
     progress_var.set(8)
     root.update_idletasks()
-    NPRA_oslo_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx').get_specific_graph_('oslo')
+    NPRA_stavanger_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx').get_specific_graph_('stavanger')
     progress_var.set(9)
-    root.update_idletasks()
+    root.update_idletasks()  
 
     global NIPH_ILI_graph, NIPH_virus_graph, ruter_graph, kolumbus_graph, twitter_graph, NPRA_stavanger_graph, NPRA_norway_graph, NPRA_bergen_graph, NPRA_oslo_graph
     ruter_graph = plot_widget(graph1, Ruter_figure)
@@ -213,7 +219,7 @@ root.wm_iconbitmap('sandra.ico')
 root.title("Automated collection of multi-source spatial information for emergency management")
 root.configure(background=COLOR1)
 
-poll_for_focus_between_map_and_graphs(root)
+#poll_for_focus_between_map_and_graphs(root)
 
 container = Frame(root, bg=COLOR1)
 container.pack(side="right", fill='both', expand=True)

@@ -13,7 +13,9 @@ FIGURE_HEIGHT, TOOLBAR_HEIGHT = 610, 30
 class NPRA_frame(Frame, Tk):
     def __init__(self, root, width, height):
 
-        self.graph_frame = Frame(root, width=int(width*(2/3)), height=height, bg='#ff9900') # orange
+        Frame.__init__(self, root, bg=COLOR4)
+
+        self.graph_frame = Frame(self, width=int(width*(2/3)), height=height, bg='#ff9900') # orange
         self.graph_frame.pack(side='right', fill='both', expand=True)
 
         # Controls
@@ -40,7 +42,7 @@ class NPRA_frame(Frame, Tk):
             '../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets/Bergen/times nivå 1 BERGEN.csv',
             '../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets/Oslo/times nivå 1 OSLO.csv',
             )
-        map1 = map_canvas.Map(root, coordinates, width=int(width*(1/3)), height=height)
+        map1 = map_canvas.Map(self, coordinates, width=int(width*(1/3)), height=height)
         map1.pack(side='left', expand=False)
 
     def _plot_widget(self, root, figure):
@@ -160,6 +162,8 @@ class NPRA_frame(Frame, Tk):
                 command= lambda item=item: self._single_dropdown_menu_callback([name, item]))
             menubutton.grid(row=row, column=column)
 
+    def get_frame(self): return self.graph_frame
+
 def main():
     root = Tk()
     WINDOW_WIDTH, WINDOW_HEIGHT = int(1366/1.2), int(768/1.2) # (1366, 768) is the resolution of an average laptop.
@@ -168,7 +172,7 @@ def main():
     root.title("NPRA frame test")
     root.configure(background='#000000') # black
     
-    NPRA_frame(root, WINDOW_WIDTH, WINDOW_HEIGHT)
+    NPRA_frame(root, WINDOW_WIDTH, WINDOW_HEIGHT).pack(expand=True, fill='both')
     
     root.mainloop()
 
