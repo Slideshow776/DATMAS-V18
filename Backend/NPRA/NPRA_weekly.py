@@ -15,7 +15,7 @@ import numpy as np
 
 
 class NPRA_weekly:
-    def __init__(self, filepath):
+    def __init__(self, filepath, legend=True):
         self.filepath = filepath
         self.NUMBER_OF_WEEKS_IN_YEAR, self.years = 52, [2013, 2014, 2015, 2016, 2017]
         self.worksheets = []
@@ -35,7 +35,7 @@ class NPRA_weekly:
                     for week in range(self.NUMBER_OF_WEEKS_IN_YEAR):
                         total_years[year - self.years[0]][week] += data_years[year - self.years[0]][week]
         
-        self._FIGURE = self.drawGraph(self.years, total_years)
+        self._FIGURE = self.drawGraph(self.years, total_years, legend)
 
     def getWorksheetUserEnteredCommands(self):
         if len(sys.argv) > 1:
@@ -63,7 +63,7 @@ class NPRA_weekly:
 
     # Input: a single year (int), ws (worksheet)
     # Output: list of total number of traffic for 52 weeks of the year (int[])
-    def getData(self, year, ws, week_start=0, week_end=None): 
+    def getData(self, year, ws, week_start=0, week_end=None,): 
         if not week_end: week_end = self.NUMBER_OF_WEEKS_IN_YEAR
         weeks = [0] * self.NUMBER_OF_WEEKS_IN_YEAR
         for i in range(1, ws.max_row):
@@ -80,7 +80,7 @@ class NPRA_weekly:
                         weeks[j] += int(ws[chr(66) + chr(65) + str(i)].value)
         return weeks
 
-    def drawGraph(self, years, data): # Input: List of years (String[]). Each year contain a total amount of traffic data per week
+    def drawGraph(self, years, data, legend=True): # Input: List of years (String[]). Each year contain a total amount of traffic data per week
         if self.user_input_places == 'norway': plt.figure(7)
         elif self.user_input_places == 'oslo': plt.figure(8)
         elif self.user_input_places == 'bergen': plt.figure(9)
@@ -94,7 +94,8 @@ class NPRA_weekly:
         colors=["#FF0000", "#800000", "#FFFF00", "#808000", "#00FF00", "#008000", "#00FFFF", "#008080", "#0000FF", "#000080", "#FF00FF", "#800080", "#f58231", "#aaffc3"]
         for i in range(0, len(years)):
             y = np.array(data[i])
-            label = years[i]
+            label = str(years[i])
+            if not legend: label = '_' + str(label)
             plt.plot(x, y, label=label, color=colors[i])
 
         plt.xticks(x, ticks)
@@ -111,7 +112,7 @@ class NPRA_weekly:
         figure.patch.set_facecolor('#fff7ff')
         return figure
 
-    def get_specific_graph_(self, user_input_places): # accepts: 'norway', 'bergen', 'stavanger' and 'oslo'
+    def get_specific_graph_(self, user_input_places, legend=True): # accepts: 'norway', 'bergen', 'stavanger' and 'oslo'
         self.user_input_places = user_input_places
         
         if self.user_input_places == 'norway':
@@ -128,7 +129,7 @@ class NPRA_weekly:
             for year in self.years:
                 total_years.append(self.getData(year, worksheet))
 
-        return self.drawGraph(self.years, total_years)
+        return self.drawGraph(self.years, total_years, legend)
 
     def get_graph(self):
         return self._FIGURE

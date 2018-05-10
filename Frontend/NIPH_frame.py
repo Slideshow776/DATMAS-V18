@@ -29,7 +29,7 @@ class NIPH_frame(Frame, Tk):
         self.graph_frame.pack(fill='both', expand=False)
 
         NIPH_ili_figure = NIPH_ILS_graf.NIPH_ILI('../Backend/NIPH/ILI_tall_2016_17.xlsx').get_graph() # only season 16/17
-        NIPH_virus_figure = NIPH_virus_detections.NIPH_Virus().get_graph()
+        NIPH_virus_figure = NIPH_virus_detections.NIPH_Virus(False).get_graph()
 
         self.NIPH_ili_graph = self._plot_widget(self.graph_frame, NIPH_ili_figure)
         self.NIPH_virus_graph = self._plot_widget(self.graph_frame, NIPH_virus_figure)

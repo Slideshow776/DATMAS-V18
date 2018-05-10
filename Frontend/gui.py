@@ -4,6 +4,7 @@ import sys, os, time
 from tkinter import *
 import tkinter.ttk as ttk 
 
+import matplotlib.pyplot as plt
 import matplotlib, numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 
@@ -19,14 +20,17 @@ from NPRA import NPRA_weekly, NPRA_monthly
 from Twitter import twitter_analyzer
 import NPRA_Traffic_Stations_load_data
 
-WINDOW_WIDTH, WINDOW_HEIGHT = int(1366/1.2), int(768/1.2) # (1366, 768) is the resolution of an average laptop.
 FIGURE_HEIGHT, TOOLBAR_HEIGHT = 610, 30
 COLOR1, COLOR2, COLOR3, COLOR4 = '#363636', '#F75C95', '#ffb1e6', '#fff7ff' # color theme : darker to lighter
+BUTTONS_PANEL_WIDTH = 200
 
+POLL_FREQUENCY = 200 # in millisecond
 the_map = None
 #data_frame1 = None
 
 def toolbarCallBack(name):
+    global data_frame1
+    data_frame1.resetView()
     #NIPH_ILI_graph.pack_forget()
     #NIPH_virus_graph.pack_forget()
     ruter_graph.pack_forget()
@@ -53,10 +57,10 @@ def toolbarCallBack(name):
         NPRA_bergen_graph.pack(fill='both', expand=True)
         NPRA_stavanger_graph.pack(fill='both', expand=True)
         NPRA_oslo_graph.pack(fill='both', expand=True)
-        map1.pack(fill='both', expand=True)
+        map1.pack(fill='both', expand=True, side='right')
     elif name == 'Twitter':
         twitter_graph.pack(fill='both', expand=True)
-        map1.pack(fill='both', expand=True)
+        map1.pack(fill='both', expand=True, side='right')
 
 def addButton(frame, name):
     B = Button(frame, text = name, width=10, bg=COLOR3, fg=COLOR1, bd=3,
@@ -123,13 +127,14 @@ def progress_bar(root):
     progressbar.pack()
 
 def poll_for_focus_between_map_and_graphs(root):
-    global data_frame1, the_map, map1, data_frame1
+    global data_frame1, the_map, map1, data_frame1, NPRA_frame1
     x,y = root.winfo_pointerxy()
     widget = root.winfo_containing(x,y)
     if widget:
         if widget == the_map: map1.set_focus_here()
+        elif widget == NPRA_frame1.get_map_label(): NPRA_frame1.get_map().set_focus_here()
         else: data_frame1.set_focus_here()
-    root.after(200, poll_for_focus_between_map_and_graphs, root)
+    root.after(POLL_FREQUENCY, poll_for_focus_between_map_and_graphs, root)
 
 def load_matplotlib_figures():
     graph1 = Frame(data_frame1.interior, bg=COLOR1)
@@ -156,20 +161,20 @@ def load_matplotlib_figures():
     twitter_figure = twitter_analyzer.Twitter('../Backend/Twitter/twitter_data.txt').get_graph()
     progress_var.set(4)
     root.update_idletasks()
-    NPRA_frame1 = NPRA_frame.NPRA_frame(graph1, WINDOW_WIDTH, WINDOW_HEIGHT)
+    NPRA_frame1 = NPRA_frame.NPRA_frame(graph1, WINDOW_WIDTH-BUTTONS_PANEL_WIDTH, WINDOW_HEIGHT)
     NPRA_frame1.pack_forget()
     progress_var.set(5)
     root.update_idletasks()
-    NPRA_norway_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx').get_specific_graph_('norway')
+    NPRA_norway_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx').get_specific_graph_('norway', False)
     progress_var.set(6)
     root.update_idletasks()
-    NPRA_bergen_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx').get_specific_graph_('bergen')
+    NPRA_bergen_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx', False).get_specific_graph_('bergen')
     progress_var.set(7)
     root.update_idletasks()
-    NPRA_oslo_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx').get_specific_graph_('oslo')
+    NPRA_oslo_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx', False).get_specific_graph_('oslo')
     progress_var.set(8)
     root.update_idletasks()
-    NPRA_stavanger_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx').get_specific_graph_('stavanger')
+    NPRA_stavanger_figure = NPRA_weekly.NPRA_weekly('../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx', False).get_specific_graph_('stavanger')
     progress_var.set(9)
     root.update_idletasks()  
 
@@ -184,6 +189,8 @@ def load_matplotlib_figures():
 
     # default starting view
     NIPH_frame1.pack(fill='both', expand=True)
+    
+    poll_for_focus_between_map_and_graphs(root)
 
 def load_map():
     coordinates = NPRA_Traffic_Stations_load_data.get_all_coordinates(
@@ -193,14 +200,13 @@ def load_map():
         )
 
     global map1
-    map1 = map_canvas.Map(data_frame1.interior, coordinates, WINDOW_WIDTH, WINDOW_HEIGHT) # creates a tkinter.Canvas
+    map1 = map_canvas.Map(data_frame1.interior, coordinates, WINDOW_WIDTH-BUTTONS_PANEL_WIDTH, WINDOW_HEIGHT) # creates a tkinter.Canvas
     #map1.pack(fill='both', expand=True)
     map1.pack_forget()
 
-def data_frame1():
+def data_frame():
     # ---------------- Dataframe -------------------------------------------
     global data_frame1
-    data_frame1 = scrframe.VerticalScrolledFrame(container)
 
     load_matplotlib_figures()   
     theLabel.pack_forget()
@@ -214,18 +220,20 @@ def data_frame1():
     the_map = map1.winfo_children()[0]
 
 root = Tk()
+WINDOW_WIDTH = int(root.winfo_screenwidth() / 1.2)
+WINDOW_HEIGHT = int(root.winfo_screenheight() / 1.2)
 root.geometry("%dx%d" % (WINDOW_WIDTH, WINDOW_HEIGHT))
 root.wm_iconbitmap('sandra.ico')
 root.title("Automated collection of multi-source spatial information for emergency management")
 root.configure(background=COLOR1)
 
-#poll_for_focus_between_map_and_graphs(root)
-
 container = Frame(root, bg=COLOR1)
 container.pack(side="right", fill='both', expand=True)
+
+data_frame1 = scrframe.VerticalScrolledFrame(container)
 
 the_toolbar = toolbar(root)
 progress_bar(container)
 
-root.after(1, data_frame1) # a little hack to make the window load properly before the data_frame1 widget
+root.after(1, data_frame) # a little hack to make the window load properly before the data_frame1 widget
 root.mainloop()

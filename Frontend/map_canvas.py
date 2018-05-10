@@ -40,7 +40,7 @@ class Map(tk.Canvas, tk.Tk):
         self.HEIGHT = height
 
         tk.Canvas.__init__(self, root, bg='#fff7ff', width=self.WIDTH, height=self.HEIGHT)
-        self.pack(fill='both', expand=True)
+        self.pack(fill='both', expand=True, side='right')
 
         self.label = tk.Label(self)
 
@@ -119,7 +119,8 @@ class Map(tk.Canvas, tk.Tk):
         self.image_tk = ImageTk.PhotoImage(self.image)
         self.label['image'] = self.image_tk
 
-        self.label.place(x=0, y=0, width=self.WIDTH, height=self.HEIGHT) 
+        self.label.pack(side='right', expand=True, fill='both')
+        #self.label.place(x=0, y=0, width=self.WIDTH, height=self.HEIGHT) 
 
         self.radiogroup.place(x=0,y=0)
 

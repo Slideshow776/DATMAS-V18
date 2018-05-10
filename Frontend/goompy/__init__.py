@@ -60,22 +60,22 @@ def _grab_tile(lat, lon, zoom, maptype, coordinates, _TILESIZE, sleeptime): # Th
         "&format=jpg"
         )    
     specs = lat, lon, zoom, maptype, _TILESIZE, _TILESIZE
-    filename = 'mapscache/' + ('%f_%f_%d_%s_%d_%d' % specs) + '.jpg'
+    #filename = 'mapscache/' + ('%f_%f_%d_%s_%d_%d' % specs) + '.jpg'
 
-    if os.path.isfile(filename):
-        tile = PIL.Image.open(filename)
-    else:
-        url = urlbase % specs
-        for c in coordinates:
-            url += "&path=fillcolor:0xc92240bb%7Cweight:1%7Ccolor:0x000000ff%7Cenc:"+c
-        url += "&key=" + _KEY
-        #print("Requesting image from google, URL: ", url)
-        result = urlopen(url).read()
-        #print("Google result: ", result)
-        tile = PIL.Image.open(BytesIO(result))
-        if not os.path.exists('mapscache'): os.mkdir('mapscache')
-        tile.save(filename)
-        #time.sleep(sleeptime) # Choke back speed to avoid maxing out limit
+    #if os.path.isfile(filename):
+        #tile = PIL.Image.open(filename)
+    #else:
+    url = urlbase % specs
+    for c in coordinates:
+        url += "&path=fillcolor:0xc92240bb%7Cweight:1%7Ccolor:0x000000ff%7Cenc:"+c
+    url += "&key=" + _KEY
+    #print("Requesting image from google, URL: ", url)
+    result = urlopen(url).read()
+    #print("Google result: ", result)
+    tile = PIL.Image.open(BytesIO(result))
+    #if not os.path.exists('mapscache'): os.mkdir('mapscache')
+    #tile.save(filename)
+    #time.sleep(sleeptime) # Choke back speed to avoid maxing out limit
     return tile
 
 def _pix_to_lon(j, lonpix, ntiles, _TILESIZE, zoom):

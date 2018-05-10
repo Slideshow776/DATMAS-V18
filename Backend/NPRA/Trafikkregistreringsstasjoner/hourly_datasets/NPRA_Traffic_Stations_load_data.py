@@ -52,8 +52,9 @@ def query_data(year, filename, field, hour_from, hour_to, # weeksdays range from
             d.get_field() == field and
             hour_from <= d.get_date().hour <= hour_to and
             weekday_from <= d.get_date().weekday() <= weekday_to and
-            month_from <= d.get_date().month <= month_to
+            month_from <= d.get_date().month-1 <= month_to
         ) : query_results.append(d)
+    if not query_results: print("Error: query result in NPRA_Traffic_Stations_load_data.py is empy! ", query_results)
     return query_results
 
 def get_data_hourly(year, filename): # returns data in a list of 'Traffic_recording_station' objects

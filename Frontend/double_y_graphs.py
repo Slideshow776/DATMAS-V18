@@ -2,6 +2,7 @@ import sys, datetime, math, random
 from openpyxl import load_workbook
 import matplotlib.pyplot as plt
 import numpy as np
+from collections import OrderedDict
 
 sys.path.append('../Backend')
 from Ruter import ruter
@@ -145,10 +146,9 @@ class double_y_graph:
         x = []
         for i in range(52): x.append(i)
         x = np.array(x)
-
+        
         fig, ax1 = plt.subplots()
         plt.figure(3)
-
         ax1.plot(x, y1, color=color1)
         ax1.set_ylabel(name1, color=color1)
         ax1.tick_params('y', colors=color1)

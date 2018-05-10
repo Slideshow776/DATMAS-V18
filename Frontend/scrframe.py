@@ -16,6 +16,7 @@ class VerticalScrolledFrame(Frame):
     * Use the 'interior' attribute to place widgets inside the scrollable frame
     * Construct and pack/place/grid normally
     * This frame only allows vertical scrolling
+    * Reset view is now in it's own public callable function
     """
 
     def __init__(self, parent):
@@ -32,8 +33,7 @@ class VerticalScrolledFrame(Frame):
         self.bind_all("<MouseWheel>", self._on_mousewheel)
 
         # reset the view
-        self.canvas.xview_moveto(0)
-        self.canvas.yview_moveto(0)
+        self.resetView()
 
         # create a frame inside the canvas which will be scrolled with it
         self.interior = interior = Frame(self.canvas)
