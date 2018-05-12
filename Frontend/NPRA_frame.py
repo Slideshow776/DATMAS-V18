@@ -26,9 +26,9 @@ class NPRA_frame(Frame, Tk):
         self._months_frame(control_frame, 1, 3)
         show_btn = Button(control_frame, text="Show", command=self._show_btn_callback,
         bg=COLOR1, fg=COLOR3, activebackground=COLOR1, activeforeground=COLOR4)
-        show_btn.grid(row=1, column=5)
         self._radio_buttons_init(control_frame)
-        self.error = Label(control_frame, text='Error: Invalid request', bg=COLOR4, fg='#ff0000')
+        show_btn.grid(row=1, column=5)
+        self.error = Label(control_frame, text='Error: Invalid request', bg=COLOR4, fg='#ff0000') # red
 
         # Graph
         self.filename = '../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets/Stavanger/1100009 HILLEVÅGTUNNELEN 2013-2017.xlsx'
@@ -50,14 +50,16 @@ class NPRA_frame(Frame, Tk):
         self.years = [2017]
 
     def _radio_buttons_init(self, root):
+        frame = Frame(root, bg='#ff6a22')
         years = [2017, 2016, 2015, 2014, 2013]
         for year in years:
-            check_button = Checkbutton(root, text=year, variable=year, bg=COLOR1, fg=COLOR3,
-                selectcolor='#191919', activebackground=COLOR1, activeforeground=COLOR3, #black-grey
+            check_button = Checkbutton(frame, text=year, variable=year, bg=COLOR1, fg=COLOR3,
+                selectcolor='#121212', activebackground=COLOR1, activeforeground=COLOR3, #black-grey
                 command=lambda year=year: self._checkbox_callback(year))
-            check_button.grid(row=2018-year, column=4)
+            check_button.pack()#check_button.grid(row=2018-year, column=4)
             if year == 2017: check_button.select()
-
+        frame.grid(row=1, column=4)
+    
     def _plot_widget(self, root, figure):
         canvas = Canvas(root, background=COLOR4)
         

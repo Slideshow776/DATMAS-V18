@@ -1,6 +1,6 @@
 # coding=utf8
 
-import sys, csv, time
+import sys, csv, time, random
 from datetime import datetime
 from openpyxl import load_workbook
 import matplotlib.pyplot as plt, numpy as np
@@ -35,14 +35,13 @@ def get_variance_of_data(year, filename, field, hour_from, hour_to, # weeksdays 
     print(var)
     print('time: ', time.time() - time_start)
     return var
-
     
-    """print('test: ', workbook.worksheets[0])
+    """
+    print('test: ', workbook.worksheets[0])
     print('test2: ', workbook.worksheets[len(workbook.worksheets)-1])
     print('test3: ', workbook.sheetnames)
-    print('years in file: ', len(workbook.worksheets))"""
-
-    #return np.var(np.array(vehicles), ddof=1)
+    print('years in file: ', len(workbook.worksheets))
+    """
 
 def query_data(year, filename, field, hour_from, hour_to, # weeksdays range from 0-6, 0 is monday
          weekday_from, weekday_to, month_from, month_to):
@@ -52,7 +51,7 @@ def query_data(year, filename, field, hour_from, hour_to, # weeksdays range from
             d.get_field() == field and
             hour_from <= d.get_date().hour <= hour_to and
             weekday_from <= d.get_date().weekday() <= weekday_to and
-            month_from <= d.get_date().month-1 <= month_to
+            month_from <= d.get_date().month-1 <= month_to # -1 offset, datetime ranges from 1-12
         ) : query_results.append(d)
     if not query_results: print("Error: query result in NPRA_Traffic_Stations_load_data.py is empy! ", query_results)
     return query_results
@@ -101,7 +100,9 @@ def get_all_coordinates(stavanger, bergen, oslo):
 
     new_coords = []
     for p in pcoordinates:
-        new_coords.append([float(p[0]), float(p[1])])
+        size = random.uniform(.00001, .0004)
+        color = hex(random.randint(0, 16777215))[2:].upper() # 16777215 = 16^6 = #FFFFFF
+        new_coords.append([float(p[0]), float(p[1]), size, color])
 
     return new_coords
 
@@ -167,11 +168,20 @@ class Traffic_recording_station:
 
 def main():
     #data = get_data_hourly(2017, HOURLY_FILE_NAME)
+    """
     print(get_variance_of_data(
         2017, HOURLY_FILE_NAME, 1,  # year, filename, field
         8, 8,                       # hour_from, hour_to
         0, 0,                       # weekday_from, weekday_to
-        0, 3)                       # month_from, month_to
+        0, 0)                       # month_from, month_to
+    )
+    """
+    print(
+        get_all_coordinates(
+            COORDINATES_STAVANGER_FILE_NAME,
+            COORDINATES_BERGEN_FILE_NAME,
+            COORDINATES_OSLO_FILE_NAME
+        )
     )
 
 if __name__ == '__main__':

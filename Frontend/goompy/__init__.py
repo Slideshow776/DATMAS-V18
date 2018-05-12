@@ -20,7 +20,7 @@ along with this code.  If not, see <http://www.gnu.org/licenses/>.
         - Dragging the mouse using the method 'move' changes latitude and longitude coordinates.
         - Fixed a bug where maptype would give a completely different view.
         - Api key is now fetched from api_key.txt, which should be manually made containing a google static map api key.
-        - Now support map coordinates as a list of lists: [[lat_a,_lon_a],[lat_b,lon_b],...[lat_z,lon_z]]
+        - Now support map coordinates as a list of lists: [[lat_a,_lon_a, size_a, #color_a],[lat_b,lon_b, size_b, #color_b],...[lat_z,lon_z, size_z, #color_z]]
         - Mousewheel zooming using the method 'move and zoom'.
 '''
 
@@ -66,8 +66,9 @@ def _grab_tile(lat, lon, zoom, maptype, coordinates, _TILESIZE, sleeptime): # Th
         #tile = PIL.Image.open(filename)
     #else:
     url = urlbase % specs
-    for c in coordinates:
-        url += "&path=fillcolor:0xc92240bb%7Cweight:1%7Ccolor:0x000000ff%7Cenc:"+c
+    for i in range(len(coordinates[0])):
+        # TODO: apply color based on c[2]'s variance variable, 'c92240' is the color part ...
+        url += "&path=fillcolor:0x" + coordinates[1][i] + "bb%7Cweight:1%7Ccolor:0x000000ff%7Cenc:"+coordinates[0][i]
     url += "&key=" + _KEY
     #print("Requesting image from google, URL: ", url)
     result = urlopen(url).read()
@@ -165,16 +166,20 @@ class GooMPy(object):
 
         self._update()
 
-    def _drawCircle(self, coordinates, zoom, radius=3): # Low polygon circle (it's a diamond)
+    def _drawCircle(self, coordinates, zoom, radius=.0003): # Low polygon circle (it's a diamond)
         encodedCircledCoordinates = []
-        radius = radius / (zoom*700)
+        color_coordinates = []
+        radius = radius * (1/zoom*zoom)
         for c in coordinates:
+            radius += c[2]
             n = (c[0] + radius, c[1])
             w = (c[0], c[1] - radius*2) # west and east coordinates needs to be doubled(?)
             s = (c[0] - radius, c[1])
             e = (c[0], c[1] + radius*2) # west and east coordinates needs to be doubled(?)
-            encodedCircledCoordinates.append(polyline.encode([n, w, s, e, n])) # the extra n closes the loop drawn        
-        return encodedCircledCoordinates
+            radius -= c[2]
+            encodedCircledCoordinates.append(polyline.encode([n, w, s, e, n])) # the extra n closes the loop drawn
+            color_coordinates.append(c[3])
+        return [encodedCircledCoordinates, color_coordinates]
 
     def getImage(self): return self.winimage # Returns the current image as a PIL.Image object.
     def getCoordinates(self): return self.coordinates
