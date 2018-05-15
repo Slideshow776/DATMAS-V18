@@ -198,11 +198,8 @@ def load_map():
         '../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets/Bergen/times nivå 1 BERGEN.csv',
         '../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets/Oslo/times nivå 1 OSLO.csv',
         )
-
-    print(coordinates)
-
     global map1
-    map1 = map_canvas.Map(data_frame1.interior, coordinates, WINDOW_WIDTH-BUTTONS_PANEL_WIDTH, WINDOW_HEIGHT) # creates a tkinter.Canvas
+    map1 = map_canvas.Map(data_frame1.interior, WINDOW_WIDTH-BUTTONS_PANEL_WIDTH, WINDOW_HEIGHT, coordinates) # creates a tkinter.Canvas
     #map1.pack(fill='both', expand=True)
     map1.pack_forget()
 

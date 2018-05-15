@@ -12,8 +12,13 @@
 from twitter import Twitter, OAuth
 
 # Twitter initialization
-FILE = open("keys.txt", "r") # Loading keys from hidden textfile, in order to protect private keys from misuse
-KEYS = FILE.readlines()
+try:
+    FILE = open("keys.txt", "r") # Loading keys from hidden textfile, in order to protect private keys from misuse
+    KEYS = FILE.readlines()
+    if not KEYS: print("Error: could not get api key from keys.txt. Twitter module will not work, please read Backend/Twitter/README.md")
+except:
+    KEYS = None
+    print("Error: could not open keys.txt. Twitter module will not work, please read Backend/Twitter/README.md")
 ACCESS_TOKEN = KEYS[0].strip()
 ACCESS_SECRET = KEYS[1].strip()
 CONSUMER_KEY = KEYS[2].strip()

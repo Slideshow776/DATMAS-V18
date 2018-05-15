@@ -35,7 +35,7 @@ ZOOM, MAX_ZOOM_OUT_LEVEL, MAX_ZOOM_IN_LEVEL = 12, 4, 22
 MAPTYPE = 'roadmap'
 
 class Map(tk.Canvas, tk.Tk):
-    def __init__(self, root, coordinates, width, height):
+    def __init__(self, root, width, height, coordinates=None,):
         self.WIDTH = width
         self.HEIGHT = height
 

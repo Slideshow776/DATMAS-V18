@@ -44,7 +44,7 @@ class NPRA_frame(Frame, Tk):
             '../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets/Bergen/times nivå 1 BERGEN.csv',
             '../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets/Oslo/times nivå 1 OSLO.csv',
             )
-        self.map1 = map_canvas.Map(self, coordinates, width=int(width*(1/3)), height=height)
+        self.map1 = map_canvas.Map(self, width=int(width*(1/3)), height=height, coordinates=coordinates) #coordinates)
         self.map1.pack(side='left', expand=False)
         
         self.years = [2017]

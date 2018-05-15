@@ -20,7 +20,8 @@ along with this code.  If not, see <http://www.gnu.org/licenses/>.
         - Dragging the mouse using the method 'move' changes latitude and longitude coordinates.
         - Fixed a bug where maptype would give a completely different view.
         - Api key is now fetched from api_key.txt, which should be manually made containing a google static map api key.
-        - Now support map coordinates as a list of lists: [[lat_a,_lon_a, size_a, #color_a],[lat_b,lon_b, size_b, #color_b],...[lat_z,lon_z, size_z, #color_z]]
+        - Now support optional map coordinates as a list of lists: [[lat_a,_lon_a, size_a, color_a],[lat_b,lon_b, size_b, #color_b],...[lat_z,lon_z, size_z, #color_z]].
+          Size is a float, colors should be a number between 0, 16^6, without the '#' character.
         - Mousewheel zooming using the method 'move and zoom'.
 '''
 
@@ -36,9 +37,10 @@ urlopen = urllib.request.urlopen
 try:
     FILE = open("api_key.txt", "r") # Loading keys from hidden textfile, in order to protect private keys from misuse
     _KEY = FILE.readlines()[0]
-    if not _KEY: print("Error: could not read api key from api_key.txt")
-except: 
-    print("Error: could not open api_keys.txt")
+    if not _KEY: print("Error: could not get api key from api_key.txt. Map will not work, please read Frontend/README.md")
+except:
+    _KEY = None
+    print("Error: could not open api_keys.txt. Map will not work, please read Frontend/README.md")
 
 _EARTHPIX = 268435456  # Number of pixels in half the earth's circumference at zoom = 21
 _DEGREE_PRECISION = 4  # Number of decimal places for rounding coordinates
@@ -66,9 +68,10 @@ def _grab_tile(lat, lon, zoom, maptype, coordinates, _TILESIZE, sleeptime): # Th
         #tile = PIL.Image.open(filename)
     #else:
     url = urlbase % specs
-    for i in range(len(coordinates[0])):
-        # TODO: apply color based on c[2]'s variance variable, 'c92240' is the color part ...
-        url += "&path=fillcolor:0x" + coordinates[1][i] + "bb%7Cweight:1%7Ccolor:0x000000ff%7Cenc:"+coordinates[0][i]
+    if coordinates[0]:
+        for i in range(len(coordinates[0])):
+            # TODO: apply color based on c[2]'s variance variable, 'c92240' is the color part ...
+            url += "&path=fillcolor:0x" + coordinates[1][i] + "bb%7Cweight:1%7Ccolor:0x000000cc%7Cenc:"+coordinates[0][i]
     url += "&key=" + _KEY
     #print("Requesting image from google, URL: ", url)
     result = urlopen(url).read()
@@ -154,7 +157,10 @@ class GooMPy(object):
         self.zoom = zoom
         self.maptype = maptype
         self.radius_meters = radius_meters
-        self.coordinates = coordinates
+        if coordinates: self.coordinates = coordinates
+        else: self.coordinates = None        
+
+        self._get_visible_coordinates(self.zoom)
 
         self.winimage = _new_image(self.width, self.height)
 
@@ -167,9 +173,13 @@ class GooMPy(object):
         self._update()
 
     def _drawCircle(self, coordinates, zoom, radius=.0003): # Low polygon circle (it's a diamond)
+        if not coordinates: return [None, None]
         encodedCircledCoordinates = []
         color_coordinates = []
-        radius = radius * (1/zoom*zoom)
+        if zoom >= 14: radius *= 1/zoom             # 22-14
+        elif zoom >= 10: radius *= (1/(zoom/30))    # 13-10
+        elif zoom >= 7: radius *= zoom*7            # 9-7
+        elif zoom >= 5: radius *= zoom*100          # 6-1
         for c in coordinates:
             radius += c[2]
             n = (c[0] + radius, c[1])
@@ -182,8 +192,27 @@ class GooMPy(object):
         return [encodedCircledCoordinates, color_coordinates]
 
     def getImage(self): return self.winimage # Returns the current image as a PIL.Image object.
-    def getCoordinates(self): return self.coordinates
     
+    def getCoordinates(self): 
+        if self.coordinates: return self.coordinates
+        else: print('Error: No coordinates found.')
+    
+    def _get_visible_coordinates(self, zoom):
+        w, h = _TILESIZE, _TILESIZE
+        print(_TILESIZE)    
+        x, y = (w), (h)
+        lat = self.lat
+        lng = self.lon
+
+        degreesPerPixelX = 360 / math.pow(2, zoom + 8)
+        degreesPerPixelY = 360 / math.pow(2, zoom + 8) * math.cos(lat * math.pi / 180)
+
+        nw = lat + degreesPerPixelY * ( y - w / 2), lng + degreesPerPixelX * ( x  - w / 2)
+        print(nw)
+
+        #for i in range(len(coordinates)):
+            #print(coordinates[i][0], coordinates[i][1])
+
     def _set_lat_lon_with_deltas(self, dx, dy):
         w, h = _TILESIZE, _TILESIZE
         zoom = self.zoom
