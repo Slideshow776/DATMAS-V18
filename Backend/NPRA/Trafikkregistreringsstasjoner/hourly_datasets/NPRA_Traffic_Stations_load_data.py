@@ -99,7 +99,7 @@ def get_all_coordinates(stavanger, bergen, oslo):
             pcoordinates.append(d[1:])
 
     new_coords = []
-    for p in pcoordinates:
+    for p in pcoordinates: # inject random size and random colors
         size = random.uniform(.00001, .0004)
         color = hex(random.randint(0, 16777215))[2:].upper() # 16777215 = 16^6 = #FFFFFF
         new_coords.append([float(p[0]), float(p[1]), size, color])

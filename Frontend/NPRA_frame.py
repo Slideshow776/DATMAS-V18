@@ -1,4 +1,5 @@
 import sys
+from tkinter import filedialog
 from tkinter import *
 import matplotlib.pyplot as plt
 sys.path.append('../Backend') # appends the backend directory so we can use the modules there
@@ -19,16 +20,25 @@ class NPRA_frame(Frame, Tk):
         self.graph_frame.pack(side='right', fill='both', expand=True)
 
         # Controls
-        control_frame = Frame(self.graph_frame, bg=COLOR4)
-        control_frame.pack(side='top', fill='x', expand=False)
-        self._hours_frame(control_frame, 1, 1)
-        self._weekdays_frame(control_frame, 1, 2)
-        self._months_frame(control_frame, 1, 3)
-        show_btn = Button(control_frame, text="Show", command=self._show_btn_callback,
-        bg=COLOR1, fg=COLOR3, activebackground=COLOR1, activeforeground=COLOR4)
-        self._radio_buttons_init(control_frame)
+        self.control_frame = Frame(self.graph_frame, bg=COLOR4)
+        self.control_frame.pack(side='top', fill='x', expand=False)        
+        self._hours_frame(self.control_frame, 1, 1)
+        self._weekdays_frame(self.control_frame, 1, 2)
+        self._months_frame(self.control_frame, 1, 3)
+        
+        show_btn = Button(self.control_frame, text='Show', command=self._show_btn_callback,
+            bg=COLOR1, fg=COLOR3, activebackground=COLOR1, activeforeground=COLOR4)
+        self._radio_buttons_init(self.control_frame)
         show_btn.grid(row=1, column=5)
-        self.error = Label(control_frame, text='Error: Invalid request', bg=COLOR4, fg='#ff0000') # red
+        
+        save_btn = Button(self.control_frame, text='Save', command=self._save_btn_callback,
+            bg=COLOR1, fg=COLOR3, activebackground=COLOR1, activeforeground=COLOR4)
+        save_btn.grid(row=1, column=6)
+        
+        self.v = StringVar()
+        self.v.set('')
+        self.error = Label(self.control_frame, textvariable=self.v, bg=COLOR4, fg='#ff0000', width=15, padx=10)
+        self.error.grid(row=1, column=7) # red
 
         # Graph
         self.filename = '../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets/Stavanger/1100009 HILLEVÅGTUNNELEN 2013-2017.xlsx'
@@ -47,6 +57,7 @@ class NPRA_frame(Frame, Tk):
         self.map1 = map_canvas.Map(self, width=int(width*(1/3)), height=height, coordinates=coordinates) #coordinates)
         self.map1.pack(side='left', expand=False)
         
+        self.query_data = []
         self.years = [2017]
 
     def _radio_buttons_init(self, root):
@@ -145,6 +156,23 @@ class NPRA_frame(Frame, Tk):
         if year in self.years: self.years.remove(year)
         else: self.years.append(year)
 
+    def _save_btn_callback(self):
+        save_to_url =  filedialog.asksaveasfilename(
+            initialdir = "/", title = "Save As", filetypes = (("csv files","*.csv"),("all files","*.*"))
+        )
+        save_to_url += '.csv'
+        f = open(save_to_url, "w")
+        f.write('year,month,day,hour,vehicles\n')
+        for i in range(len(self.query_data)): # for how many years there are
+            for j in range(len(self.query_data[i])): # for how many items in that year
+                f.write(
+                    str(self.query_data[i][j][0])+','+
+                    str(self.query_data[i][j][1])+','+
+                    str(self.query_data[i][j][2])+','+
+                    str(self.query_data[i][j][3])+','+
+                    str(self.query_data[i][j][4])+'\n'
+                )
+
     def _show_btn_callback(self):
         hour_from, hour_to = int(self.hours_from_var.get()), int(self.hours_to_var.get())
         weekday_from, weekday_to = self._convert_weekday_to_number(self.weekdays_from_var.get()), self._convert_weekday_to_number(self.weekdays_to_var.get())
@@ -152,18 +180,25 @@ class NPRA_frame(Frame, Tk):
         #specs = [hour_from, hour_to, weekday_from, weekday_to, month_from, month_to]
         #print(specs)
         if (hour_from > hour_to or weekday_from > weekday_to or month_from > month_to or not self.years): 
-            self.error.grid(row=1, column=6)
+            self.error.configure(fg='red')
+            self.v.set('Error, invalid request!')
             return
-        self.error.grid_forget() # set_data(self, year, filename, field, hour_from, hour_to, # weeksdays range from 0-6, 0 is monday
+        self.error.configure(fg='orange')
+        self.v.set('Loading, please wait ...')
+        self.control_frame.update_idletasks()
+
         plt.gcf().clear()
         self.graph_graph.pack_forget()
         self.graph_graph = None
         self.graph_figure = None
         self.NPRA_traffic_Station.clear_graph()
+        self.query_data = []
         for year in self.years:
-            self.graph_figure = self.NPRA_traffic_Station.update_graph(year, self.filename, 1, hour_from, hour_to, weekday_from, weekday_to, month_from, month_to)
+            self.graph_figure, temp = self.NPRA_traffic_Station.update_graph(year, self.filename, 1, hour_from, hour_to, weekday_from, weekday_to, month_from, month_to)
+            self.query_data.append(temp)
         self.graph_graph = self._plot_widget(self.graph_frame, self.graph_figure)
-        self.graph_graph.pack(side='bottom', fill='both', expand=True)
+        self.graph_graph.pack(side='bottom', fill='both', expand=True)        
+        self.v.set('')
 
     def _single_dropdown_menu_callback(self, value):
         if value[0] == 'Hours from': self.hours_from_var.set(value[1])

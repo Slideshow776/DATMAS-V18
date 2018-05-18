@@ -10,7 +10,7 @@ class NPRA_Traffic_Stations_load_graph:
     def __init__(self, filename, years=[2017]):
         plt.tight_layout()
         for year in years:
-            self._FIGURE = self.update_graph(year, filename, 1, 
+            self._FIGURE, _ = self.update_graph(year, filename, 1, 
                                             8, 8,   # hour_from, hour_to        default: 8, 9
                                             0, 0,   # weekday_from, weekday_to  default: 0, 4
                                             0, 11)  # month_from, month_to      default: 0, 3 
@@ -21,7 +21,18 @@ class NPRA_Traffic_Stations_load_graph:
         query_results = NPRA_data.query_data(year, filename, field, hour_from, hour_to, # weeksdays range from 0-6, 0 is monday
          weekday_from, weekday_to, month_from, month_to)
         self.title = query_results[0].get_id()
-        return self._draw_graph(query_results, year)
+        temp = []
+        for i in range(len(query_results)):
+            temp.append(
+                [
+                query_results[i].get_date().year,
+                query_results[i].get_date().month,
+                query_results[i].get_date().day,
+                query_results[i].get_date().hour,
+                query_results[i].get_vehicles()
+                ]
+            )
+        return self._draw_graph(query_results, year), temp
 
     def _draw_graph(self, data, year):
         plt.figure(111)

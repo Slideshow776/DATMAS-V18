@@ -67,16 +67,6 @@ M.~L. Stein, J.~W. Rudge, R.~Coker, C.~van~der Weijden, R.~Krumkamp,
   makers in pandemic influenza preparedness: The asiaflucap simulator,'' {\em
   BMC public health}, vol.~12, no.~1, p.~870, 2012.
 
-\bibitem{fhi}
-``The norwegian institute of public health: Influenza information.''
-  https://fhi.no/en/id/influensa/seasonal-influenza/.
-\newblock Accessed: 2018-06-11.
-
-\bibitem{vegvesenet}
-``The norwegian public roads administration: Open data, api for developers.''
-  https://www.vegvesen.no/en/the+npra/about-the-npra/open-data.
-\newblock Accessed: 2018-06-11.
-
 \bibitem{goompy}
 ``Interactive google maps for python, created by simon d. levy.''
   https://github.com/simondlevy/GooMPy.
@@ -86,6 +76,16 @@ M.~L. Stein, J.~W. Rudge, R.~Coker, C.~van~der Weijden, R.~Krumkamp,
 ``Google static maps api.''
   https://developers.google.com/maps/documentation/maps-static/intro.
 \newblock Accessed: 2018-05-08.
+
+\bibitem{fhi}
+``The norwegian institute of public health: Influenza information.''
+  https://fhi.no/en/id/influensa/seasonal-influenza/.
+\newblock Accessed: 2018-06-11.
+
+\bibitem{vegvesenet}
+``The norwegian public roads administration: Open data, api for developers.''
+  https://www.vegvesen.no/en/the+npra/about-the-npra/open-data.
+\newblock Accessed: 2018-06-11.
 
 \bibitem{scrframe}
 ``Tkinter scrollable frame, created by eugene bakin.''

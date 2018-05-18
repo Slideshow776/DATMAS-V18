@@ -18,7 +18,7 @@ along with this code.  If not, see <http://www.gnu.org/licenses/>.
 @edit: Sandra Moen, https://github.com/Slideshow776, winter/spring 2018
     Implemented: 
         - Better zoom: Can now double click and use mousewheel
-        - Marker input as list
+        - Coordination input as list
         - Is now a tkinter.Canvas
         - Fixed a bug with keybindings.
 '''

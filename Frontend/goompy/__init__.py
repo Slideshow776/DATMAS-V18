@@ -160,7 +160,7 @@ class GooMPy(object):
         if coordinates: self.coordinates = coordinates
         else: self.coordinates = None        
 
-        self._get_visible_coordinates(self.zoom)
+        #self._get_visible_coordinates(self.zoom)
 
         self.winimage = _new_image(self.width, self.height)
 

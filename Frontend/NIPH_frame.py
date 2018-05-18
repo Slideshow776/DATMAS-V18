@@ -21,8 +21,8 @@ FIGURE_HEIGHT, TOOLBAR_HEIGHT = 581, 30
 class NIPH_frame(Frame, Tk):
     def __init__(self, root):
         self.pixel = PhotoImage(width=1, height=2) # mad hack to force pixel sizing, this makes the buttons appear with same width and height
-        Frame.__init__(self, root, bg=COLOR4)
         
+        Frame.__init__(self, root, bg=COLOR4)
         self.button_frame = Frame(self, bg=COLOR4)
         self.button_frame.pack(side='top', fill='x', expand=False)
         self.graph_frame = Frame(self, bg=COLOR4)
@@ -47,7 +47,20 @@ class NIPH_frame(Frame, Tk):
         
         self.graphs = double_y_graphs.double_y_graph()
         self._init_dropdowns()
+
+        self.v = StringVar()
+        self.label = Label(self.button_frame, textvariable=self.v, fg='orange', bg=COLOR4).pack(side='left')
+        self.v.set('')
+        self.label_isVisible = False
     
+    def _toggle_label(self):
+        if self.label_isVisible:
+            self.v.set('')
+            self.label_isVisible = False
+        else:
+            self.v.set('Loading, please wait ...')
+            self.label_isVisible = True
+
     def _init_dropdowns(self):
         self.label = Label(self.button_frame, text='Compare with: ', bg=COLOR4)
         self.label.pack(side='left')
@@ -144,8 +157,11 @@ class NIPH_frame(Frame, Tk):
         return canvas
 
     def _buttonCallBack(self, name):
+        self._toggle_label()
+        self.button_frame.update_idletasks()
         if name == 'None': self._NIPH()
         elif name == 'Twitter': self._twitter()
+        self._toggle_label()
 
     def _addButton(self, root, name):
         B = Button(root, text = name, image=self.pixel, width=68, height=21, bg=COLOR1, fg=COLOR3, bd=BORDERWIDTH,
@@ -162,9 +178,12 @@ class NIPH_frame(Frame, Tk):
         return start_year, end_year
 
     def _single_dropdown_menu_callback(self, value):
+        self._toggle_label()
+        self.button_frame.update_idletasks()
         start_year, end_year = self._value_check(value)
         if value[0] == 'Ruter': self._ruter(start_year, end_year)
         elif value[0] == 'Kolumbus': self._kolumbus(start_year, end_year)
+        self._toggle_label()
 
     def _single_dropdown_menu(self, root, name, items):
         var = StringVar()
@@ -178,9 +197,12 @@ class NIPH_frame(Frame, Tk):
         menubutton.pack(side='left')
 
     def _double_dropdown_callback(self, value):
+        self._toggle_label()
+        self.button_frame.update_idletasks()
         start_year, end_year = self._value_check(value)
         if value[0].lower() == 'all of norway': value[0] = 'Norway'
         self._NPRA(start_year, end_year, value[0])
+        self._toggle_label()
 
     def _double_dropdown_menu(self, root, name, items):
         var = StringVar(value=name)

@@ -1,16 +1,13 @@
-This chapter describes how the use of the different datasets were implemented and presented. The structure and functions are divided into the backend, which governs collection and manipulation of data, and the frontend which presents the data in a graphical user interface (GUI).
+This chapter describes how the use of the different datasets were implemented and presented. The program is divided into two: The backend and the frontend. The structure and functions are provided by the backend, which governs collection and manipulation of data, and the frontend presents the data in a graphical user interface (GUI) using graphs and maps.
 
 \section{The Backend}
-The thesis is divided into two: The backend and the frontend. The backend is responsible for providing the frontend all the data and deeper functions it needs to visualize and administrate data to show in graphs. The backend is partitioned into modules based on each data source available. Each module may also be run individually for testing and easy viewing purposes. The Twitter module is unique as it requires 4 application programming interface (API) keys to work properly. The instructions for this set-up is found in the README.md file in the twitter module's directory.
-
-
-
+The backend is responsible for providing the frontend all the data and deeper functions it needs to visualize and administrate data to be show in graphs. The backend is partitioned into modules based on each dataset available. Each module may also be run individually for testing and easy viewing purposes. The Twitter module is unique as it requires 4 application programming interface (API) keys to work properly. The instructions for this set-up is found in the file README.md in the twitter module's directory.
 
 
 
 
 \subsection{The Norwegian Institute of Public Health}
-There are two different sets of data, which is divided into the separate modules of NIPH\_ILS.py and NIPH\_virus\_detections.py located in the same directory, and they show influenza-like illnesses (ILI) and hospitalized viral observations, it was a simple job to plot them in a graph using Python's matplotlib library. Figure \ref{fig:infstat} show the three last seasons of influenza in regards to observed viral infections. The plotting was done manually as NPIH only provides the data in reports that are in pdf files on their official website\cite{fhi}.
+There are two different sets of data, which is divided into the separate modules of NIPH\_ILS.py and NIPH\_virus\_detections.py located in the same directory, and they show influenza-like illnesses (ILI) and hospitalized viral observations. They both extract data and then draw a graph using Python's matplotlib library, the graphs can be seen by running the modules individually or in the frontend main program frontend/gui.py's appropriate viewport. Figure \ref{fig:infstat} show the three last seasons of influenza in regards to observed viral infections. The plotting was done manually as NIPH only provides viral observational data in reports that are in pdf files on their official website\cite{fhi}.
 
 \begin{figure}[h]
 \includegraphics[width=16cm]{influenza_15_till_18}
@@ -48,7 +45,8 @@ From the .xlsx files provided by the NPRA, simple graphs were created in python 
 \label{fig:anualtotal}
 \end{figure}
 
-Also derived from this dataset is the annual traffic of the two cities of Bergen and Oslo, which are cities of interest. Figure \ref{fig:anualbergen} shows the traffic in Bergen, and figure \ref{fig:anualoslo} show the traffic in Oslo.
+Also derived from this dataset is the annual traffic of the two cities of Bergen and Oslo, which are cities of interest.
+%Figure \ref{fig:anualbergen} shows the traffic in Bergen, and figure \ref{fig:anualoslo} show the traffic in Oslo.
 
 \begin{figure}[ht]
 \includegraphics[width=16cm]{xml_02_15_annual_bergen}
@@ -63,7 +61,7 @@ Also derived from this dataset is the annual traffic of the two cities of Bergen
 \caption{Oslo traffic 2002-2015}
 \label{fig:anualoslo}
 \end{figure}
-The dataset is in an XML file structure, a module named NPRA\_monthly.py was created that reads through all rows and collects the relevant columns into an array using Python's openpyxl module and then draws a graph using Python's matplotlib module. For the annual graph, every month of every year was collected. For the towns of Bergen and Oslo the correct roads were identified and then every year of every month of those roads was collected, loaded into an array and then drawn as a graph. The separate text files 'Bergen places.txt' and 'Oslo places.txt' is to make it easy to edit should these roads change in the future. This module when run individually accepts one command argument from the user, either cities of Oslo or Bergen may be provided to specify interest, if no argument is given the annual graph will show. The problem of using these datasets is that the data is an average calculation of monthly traffic, this is too coarse for comparison against the influenza data as they are on a weekly basis.
+The dataset is in an XML file structure, a module named NPRA\_monthly.py was created that reads through all rows and collects the relevant columns into an array using Python's openpyxl module and then draws a graph using Python's matplotlib module. For the annual graph, every month of every year was collected. For the towns of Bergen and Oslo the correct roads were identified and then every year of every month of those roads was collected, loaded into an array and then drawn as a graph. The separate text files 'Bergen places.txt' and 'Oslo places.txt' is to make it easy to edit should these roads change in the future. This module when run individually accepts one command argument from the user, either cities of Oslo or Bergen may be provided to specify interest, if no argument is given the annual graph will show. The problem of using these datasets is that the data is an average calculation of monthly traffic, meaning the temporal bounds are too coarse for comparison against the influenza data which in turn is on a weekly basis. For these reasons no figures of this dataset are shown in this thesis, they are however available as modules and in the frontend's main program in the programming project.
 
 For the weekly datasets a set of traffic registration stations was needed to define the temporal bounds of each area of interest. Defined are the towns of Oslo, Stavanger, and Bergen, as well as the whole of Norway on a level 1 basis. The level 1 registrations are continuous throughout the year on an hourly basis and is exactly what this thesis requires. The module NPRA\_weekly.py captures these functions and also provides the user with command arguments if run individually. The commands are the cities of Bergen, Stavanger or Oslo, if no commands are given the annual graph of the whole of Norway will be drawn instead.
 
@@ -135,9 +133,6 @@ The last NPRA dataset acquired was raw hourly data from a defined subset of all 
 \label{fig:hboundsstavanger}
 \end{figure}
 
-\newpage\newpage
-
-
 
 
 
@@ -202,12 +197,10 @@ The data provided by Ruter was in a .xlsx file and could easily be read, extract
 
 
 \section{The Frontend}
-The thesis is divided into two: The backend and the frontend. The frontend is responsible for visualizing the data provided by the backend. It does so by mounting a graphical user interface (GUI) that provides everything the user needs from this thesis. The GUI uses other frontend modules described in the following subchapters.
-
-
+The thesis's program is divided into two: The backend and the frontend. The frontend is responsible for visualizing the data provided by the backend. It does so by mounting a graphical user interface (GUI) that provides everything the user needs from this thesis. The GUI uses other frontend modules described in the following subchapters.
 
 \subsection{The GUI}
-The file gui.py is the main program. It mounts the GUI with help from  backend modules, the file map\_canvas.py, and the file scrframe.py. The GUI is created using Python's standard Tkinter module, and it provides the means of a basic window creation with all the other usual GUI necessities available. 
+The file gui.py is the main program. It mounts the GUI with help from backend modules and the frontend modules such as the file map\_canvas.py, the file scrframe.py, the file double\_y\_graphs.py, the file NIPH\_frame.py and the file NPRA\_frame.py . The GUI is created using Python's standard Tkinter module, and it provides the means of a basic window creation with all the other usual GUI necessities available. 
 
 The GUI module itself is structured in two parts: The buttons frame and the data frame. The buttons frame produces a menu and simply makes available buttons to be clicked upon showing the different graphs for the respective datasets from the backend. The data frames show the graphs and if needed a map, visualizing the data from the backend. The backend takes time to load, to make this experience more user-friendly a progress bar is shown progressing relative to the loading sequence. Upon completion, the NPIH data is shown as a standard view. The user may use the mouse wheel to scroll up and down the view and click the buttons to change datasets. 
 
@@ -225,19 +218,9 @@ Figure \ref{fig:the_gui} shows the GUI.
 
 
 \subsection{The Map}
-The file map\_canvas.py provides the GUI a Goompy\cite{goompy} map on a Tkinter canvas. This file is also from the Goompy project, but is heavily modified to serve the purpose of this thesis. The file launches a Google static API map on a Tkinter canvas and provides basic Google map functions and user input. The functions edited by the author of the thesis is: better zooming capabilities, coordination markers, ability to focus on the map by will and some minor bug fixes.
+The file map\_canvas.py provides the GUI a Goompy\cite{goompy} map on a Tkinter canvas, as described in chapter 2. This file is also from the Goompy project, but is heavily modified to serve the purpose of this thesis. The file launches a Google static API map on a Tkinter canvas and provides basic Google map functions and user input. The functions edited for this thesis is: better zooming capabilities, coordination markers with individual colors and sizes, ability to focus on the map by will and some other minor bug fixes.
 
-\subsubsection{Goompy}
-Goompy\cite{goompy} is an open Github project and provides an interactive Google static map\cite{googleSM} for Python, it is created by Simon D. Levy.
-The core Goompy file is found in the file /Frontend/goompy/\_\_init\_\_.py. This was heavily edited to provide the necessary functions of this thesis. The edit includes: Multithreading the fetching of Google static map images thus making Goompy about 4 times faster, dragging now changes latitude and longitude based on x and y position of the map to better help zooming functions, having the API key fetched from a separate text file such to hide this from misuse by other developers, support of optional map coordinates to be plotted directly in the Google static map API, using and drawing a list of coordinates as a diamond-shaped polygon with individual colors and sizes and using the mouse wheel to zoom in and out. Goompy requires a Google static map API key in order to work properly, users are asked to create the file Frontend/api\_keys.txt and paste the key there as described by the file Frontend/README.md. The original project saved the Google map images in a cache so that fetching a specific map with a familiar geolocation would be instantaneous instead of fetching them again from the Google server, this however was a violation of the terms of agreement and that function was removed from this thesis. Caching resources is a good way to quickly get often used functions, although the new implementation changes latitude and longitude often, as it allows this change, this is no longer a good strategy, for these two reasons the caching was removed.
-Figure \ref{fig:the_goompy} shows the Goompy map.
 
-\begin{figure}[ht]
-\includegraphics[width=16cm]{goompy}
-\centering
-\caption{A Goompy implementation of Google's static map API}
-\label{fig:the_goompy}
-\end{figure}
 
 
 
@@ -249,8 +232,7 @@ Creating a functional scrollbar that responds to mouse click and mouse wheel eve
 
 
 \subsection{NIPH dataframe}
-The NIPH dataframe was further extended with functionalities that allows for comparison of the NIPH data with all the other datasets at the different influenza seasons available. The frontend module NIPH\_frame.py was created to be implemented by the file GUI.py and the file double\_y\_graphs.py provides the neccassary algorithms. Both files may be run individually for testing purposes. The comparison functions work in the way that the user selects a dataset to compare with by clicking a button in the top border. A drop-down menu will be produced giving the choices of cities and influenza seasons. Two graphs will then be drawn sharing the same x-axis but having different y-axis. This makes for easy comparison and querying the data in order to find possible correlations.
-Figure \ref{fig:NIPH_compare} shows the NIPH comparing buttons panel.
+The GUI module is structured in two parts: The buttons frame and the data frame, data frames visualize information from the backend. The NIPH data frame was further extended with the functionalities that allows for comparison of the NIPH data with all the other datasets at the different influenza seasons available. The frontend module NIPH\_frame.py was created to be implemented by the main file GUI.py and the file double\_y\_graphs.py provides the necessary supportive algorithms. Both files may be run individually for testing purposes. The comparison functions work in the way that the user selects a dataset to compare with by clicking a button in the top border. A drop-down menu will be produced giving the choices of cities and influenza seasons. Two graphs will then be drawn sharing the same x-axis but having different y-axes. This makes for easy comparison and querying the data in order to find possible correlations. Figure \ref{fig:NIPH_compare} shows the NIPH comparing buttons panel.
 
 \begin{figure}[ht]
 \includegraphics[width=16cm]{NIPH_compare}
