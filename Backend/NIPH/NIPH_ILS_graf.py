@@ -5,12 +5,11 @@ import numpy as np
 
 class NIPH_ILI:
     def __init__(self, filepath):
-        self.filepath = filepath
-        x, self.y_2016_2017 = self.get_data()
+        x, self.y_2016_2017 = self.get_data(filepath)
         self._FIGURE = self.draw_graph(x, self.y_2016_2017)
 
-    def get_data(self):
-        wb2 = load_workbook(self.filepath)
+    def get_data(self, filepath):
+        wb2 = load_workbook(filepath)
         ws = wb2['ILI_tall_2016_17']
 
         x, y = [], []

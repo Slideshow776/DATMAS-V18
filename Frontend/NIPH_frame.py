@@ -12,7 +12,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolb
 import double_y_graphs
 
 sys.path.append('../Backend') # appends the backend directory so we can use the modules there
-from NIPH import NIPH_ILS_graf, NIPH_virus_detections
+from NIPH import NIPH_ILS_graf, NIPH_virus_detections, ILI_oslo_bergen
 
 COLOR1, COLOR2, COLOR3, COLOR4 = '#363636', '#F75C95', '#ffb1e6', '#fff7ff' # color theme : darker to lighter
 BUTTON_WIDTH, BUTTON_HEIGHT, BORDERWIDTH = 10, 0, 3
@@ -28,12 +28,28 @@ class NIPH_frame(Frame, Tk):
         self.graph_frame = Frame(self, bg=COLOR4)
         self.graph_frame.pack(fill='both', expand=False)
 
-        NIPH_ili_figure = NIPH_ILS_graf.NIPH_ILI('../Backend/NIPH/ILI_tall_2016_17.xlsx').get_graph() # only season 16/17
+        #NIPH_ili_figure = NIPH_ILS_graf.NIPH_ILI('../Backend/NIPH/ILI_tall_2016_17.xlsx').get_graph() # only season 16/17
+        ili_oslo_bergen = ILI_oslo_bergen.NIPH_ILI_oslo_bergen(
+            r'C:\Users\Slideshow\Dropbox\School\DATMAS-V18\fra Lars\Sykdomspuls\InfluensaOsloPerDag20180430_2015_2018.txt',
+            r'C:\Users\Slideshow\Dropbox\School\DATMAS-V18\fra Lars\Sykdomspuls\InfluensaBergenPerDag_20180430_2015_2018.txt'
+        )
+        NIPH_ili_oslo_figure = ili_oslo_bergen.get_graph_oslo()
+        NIPH_ili_oslo_15_16_data = ili_oslo_bergen.get_oslo_season_15_16()
+        NIPH_ili_oslo_16_17_data = ili_oslo_bergen.get_oslo_season_16_17()
+        NIPH_ili_oslo_17_18_data = ili_oslo_bergen.get_oslo_season_17_18()
+
+        NIPH_ili_bergen_figure = ili_oslo_bergen.get_graph_bergen()
+        NIPH_ili_bergen_15_16_data = ili_oslo_bergen.get_bergen_season_15_16()
+        NIPH_ili_bergen_16_17_data = ili_oslo_bergen.get_bergen_season_16_17()
+        NIPH_ili_bergen_17_18_data = ili_oslo_bergen.get_bergen_season_17_18()
+
         NIPH_virus_figure = NIPH_virus_detections.NIPH_Virus(False).get_graph()
 
-        self.NIPH_ili_graph = self._plot_widget(self.graph_frame, NIPH_ili_figure)
+        self.NIPH_ili_oslo_graph = self._plot_widget(self.graph_frame, NIPH_ili_oslo_figure)
+        self.NIPH_ili_bergen_graph = self._plot_widget(self.graph_frame, NIPH_ili_bergen_figure)
+        #self.NIPH_ili_graph = self._plot_widget(self.graph_frame, NIPH_ili_figure)
         self.NIPH_virus_graph = self._plot_widget(self.graph_frame, NIPH_virus_figure)
-
+        
         self.kolumbus_ili_figure = None
         self.NPRA_ili_figure = None
 
@@ -119,8 +135,10 @@ class NIPH_frame(Frame, Tk):
 
     def _NIPH(self):
         self._forget_all_graphs()
-        self.NIPH_ili_graph.pack(fill='both', expand=True)
-        self.NIPH_virus_graph.pack(fill='both', expand=True)
+        #self.NIPH_ili_graph.pack(fill='both', expand=True)
+        #self.NIPH_ili_oslo_graph.pack(fill='both', expand=True)
+        #self.NIPH_ili_bergen_graph.pack(fill='both', expand=True)
+        #self.NIPH_virus_graph.pack(fill='both', expand=True)
 
     def _forget_all_graphs(self):
         self.kolumbus_ili_graph.pack_forget()
@@ -130,8 +148,10 @@ class NIPH_frame(Frame, Tk):
         self.NPRA_virus_graph.pack_forget()
         self.ruter_virus_graph.pack_forget()
         self.ruter_ili_graph.pack_forget()
-        self.NIPH_ili_graph.pack_forget()
+        #self.NIPH_ili_graph.pack_forget()
         self.NIPH_virus_graph.pack_forget()
+        self.NIPH_ili_oslo_graph.pack_forget()
+        self.NIPH_ili_bergen_graph.pack_forget()
 
     def _set_graph_season(self, start_year):
         if start_year == 2015: self.graphs.set_season('15/16')
