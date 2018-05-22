@@ -27,36 +27,6 @@ class NIPH_ILI_oslo_bergen:
                 year[d[0].timetuple().tm_yday] = d
         return year
 
-    def _get_first_part(self, data, query_year): # first part is week 40-52
-        the_year = self._get_data_year(data, query_year)
-        index = self._find_first_valid_day_of_week_40(the_year)
-
-        part = []
-        for i in range(len(the_year)):
-            if i >= index:
-                part.append(the_year[i])
-        return part
-
-    def _get_second_part(self, data, query_year): # second part is week 1-39
-        the_year = self._get_data_year(data, query_year)
-        index = self._find_first_valid_day_of_week_40(the_year)
-
-        part = []
-        for i in range(len(the_year)):
-            if i < index:
-                part.append(the_year[i])
-        return part
-
-    def _find_first_valid_day_of_week_40(self, year):
-        index = 0
-        for i in range(len(year)):
-            try: 
-                if year[i][0].isocalendar()[1] == 40:
-                    index = i
-            except:
-                pass
-        return index
-
     def get_data(self, filepath): # retruns ILI seasons, week40-week40
         with open(filepath) as f: 
             lines = f.readlines()
@@ -72,14 +42,22 @@ class NIPH_ILI_oslo_bergen:
                 except: pass
             data.append([date, _sum])
 
-        season_14_15 = self._get_second_part(data, 2015)
-        season_15_16 = self._get_first_part(data, 2015) + self._get_second_part(data, 2016)
-        season_16_17 = self._get_first_part(data, 2016) + self._get_second_part(data, 2017)
-        season_17_18 = self._get_first_part(data, 2017) + self._get_second_part(data, 2018)
+        year_2015, year_2016, year_2017, year_2018 = [None]*366, [None]*366, [None]*366, [None]*366
+        for d in data:
+            if 2015 == d[0].year and d[0].isocalendar()[1] < 52:
+                year_2015[d[0].timetuple().tm_yday] = d[1]
+            elif 2016 == d[0].year and d[0].isocalendar()[1] < 52:
+                year_2016[d[0].timetuple().tm_yday] = d[1]
+            elif 2017 == d[0].year and d[0].isocalendar()[1] < 52:
+                year_2017[d[0].timetuple().tm_yday] = d[1]
+            elif 2018 == d[0].year and d[0].isocalendar()[1] < 52:
+                year_2018[d[0].timetuple().tm_yday] = d[1]
 
-        for i in range(len(season_14_15)):
-            try: print(season_14_15[i][1])
-            except: pass
+        season_14_15, season_15_16, season_16_17, season_17_18 = [None]*366, [None]*366, [None]*366, [None]*366
+        season_14_15 = [None]*(366-(366-273)) + year_2015[273:]
+        season_15_16 = year_2015[:273] + year_2016[273:]
+        season_16_17 = year_2016[:273] + year_2017[273:]
+        season_17_18 = year_2017[:273] + year_2018[273:]
 
         return [season_14_15, season_15_16, season_16_17, season_17_18]
 
@@ -88,22 +66,16 @@ class NIPH_ILI_oslo_bergen:
         x, ticks = [], [] # in order to get the correct x axis...
         for i in range(92, 366): ticks.append(i) # week 40 starts on about day 274
         for i in range(1, 92): ticks.append(i)
-        print(ticks)
-        for i in range(365): x.append(i)
+        for i in range(366): x.append(i)
         plt.xticks(ticks, x)
         plt.xticks(rotation=45)
 
         label = ["2014/2015", "2015/2016", "2016/2017", "2017/2018"]
         if not legend: # choose not to have duplicate labels with legend = False
             for i in range(len(label)): label[i] = '_' + label[i]
-        
-        temp = []
+                    
         for j in range(len(data)):
-            for i in range(365):
-                try: temp.append(data[j][i][1]) 
-                except: temp.append(None) # TODO: this is just wrong ...
-            plt.plot(x, temp, label=label[j])
-            temp = []
+            plt.plot(x, data[j], label=label[j])
         
         plt.title('Influenza seasons' + title)
         plt.xlabel("Day of year")

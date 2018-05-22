@@ -132,7 +132,7 @@ class double_y_graph:
         for _ in range(len(weeks), 52): weeks.append(None) # if we don't have 52 values, add Nones so we get 52 values
         return weeks
 
-    def _double_y_graph(self, NIPH_type, y2, name1, name2, color1=None, color2=None): # assumes common x-axis of 52 units (weeks)
+    def _double_y_graph_weekly(self, NIPH_type, y2, name1, name2, color1=None, color2=None): # assumes common x-axis of 52 units (weeks)
         if NIPH_type.lower() == 'virus': y1 = self.NIPH_virus_Y
         elif NIPH_type.lower() == 'ili': y1 = self.NIPH_ILI_Y
         y1, y2 = np.array(y1), np.array(y2)
@@ -168,7 +168,7 @@ class double_y_graph:
 def main():    
     graphs = double_y_graph()
     graphs.set_season('15/16')
-    graphs._double_y_graph( # twitter example
+    graphs._double_y_graph_weekly( # twitter example
         'virus',
         graphs.get_kolumbus_seasons_weekly(2015, 2016),
         'NIPH virus',

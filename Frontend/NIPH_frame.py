@@ -28,7 +28,7 @@ class NIPH_frame(Frame, Tk):
         self.graph_frame = Frame(self, bg=COLOR4)
         self.graph_frame.pack(fill='both', expand=False)
 
-        #NIPH_ili_figure = NIPH_ILS_graf.NIPH_ILI('../Backend/NIPH/ILI_tall_2016_17.xlsx').get_graph() # only season 16/17
+        NIPH_ili_figure = NIPH_ILS_graf.NIPH_ILI('../Backend/NIPH/ILI_tall_2016_17.xlsx').get_graph() # only season 16/17
         ili_oslo_bergen = ILI_oslo_bergen.NIPH_ILI_oslo_bergen(
             r'C:\Users\Slideshow\Dropbox\School\DATMAS-V18\fra Lars\Sykdomspuls\InfluensaOsloPerDag20180430_2015_2018.txt',
             r'C:\Users\Slideshow\Dropbox\School\DATMAS-V18\fra Lars\Sykdomspuls\InfluensaBergenPerDag_20180430_2015_2018.txt'
@@ -47,7 +47,7 @@ class NIPH_frame(Frame, Tk):
 
         self.NIPH_ili_oslo_graph = self._plot_widget(self.graph_frame, NIPH_ili_oslo_figure)
         self.NIPH_ili_bergen_graph = self._plot_widget(self.graph_frame, NIPH_ili_bergen_figure)
-        #self.NIPH_ili_graph = self._plot_widget(self.graph_frame, NIPH_ili_figure)
+        self.NIPH_ili_graph = self._plot_widget(self.graph_frame, NIPH_ili_figure)
         self.NIPH_virus_graph = self._plot_widget(self.graph_frame, NIPH_virus_figure)
         
         self.kolumbus_ili_figure = None
@@ -94,10 +94,10 @@ class NIPH_frame(Frame, Tk):
         self._forget_all_graphs()
         self._set_graph_season(start_year)
         if start_year == 2016:
-            ruter_ili_figure = self.graphs._double_y_graph('ili', self.graphs.get_ruter_seasons_weekly(start_year, end_year), 'NIPH ILI', 'RUTER')
+            ruter_ili_figure = self.graphs._double_y_graph_weekly('ili', self.graphs.get_ruter_seasons_weekly(start_year, end_year), 'NIPH ILI', 'RUTER')
             self.ruter_ili_graph = self._plot_widget(self.graph_frame, ruter_ili_figure)
             self.ruter_ili_graph.pack(fill='both', expand=True)
-        ruter_virus_figure = self.graphs._double_y_graph('virus', self.graphs.get_ruter_seasons_weekly(start_year, end_year), 'NIPH Virus', 'RUTER')
+        ruter_virus_figure = self.graphs._double_y_graph_weekly('virus', self.graphs.get_ruter_seasons_weekly(start_year, end_year), 'NIPH Virus', 'RUTER')
         self.ruter_virus_graph = self._plot_widget(self.graph_frame, ruter_virus_figure)
         self.ruter_virus_graph.pack(fill='both', expand=True)
 
@@ -106,17 +106,17 @@ class NIPH_frame(Frame, Tk):
         self._set_graph_season(start_year)
         if start_year == 2016:
             if not self.NPRA_ili_figure:
-                self.NPRA_ili_figure = self.graphs._double_y_graph('ili', self.graphs.get_NPRA_seasons_weekly(start_year, end_year, city), 'NIPH ILI', 'NPRA')
+                self.NPRA_ili_figure = self.graphs._double_y_graph_weekly('ili', self.graphs.get_NPRA_seasons_weekly(start_year, end_year, city), 'NIPH ILI', 'NPRA')
                 self.NPRA_ili_graph = self._plot_widget(self.graph_frame, self.NPRA_ili_figure)
             self.NPRA_ili_graph.pack(fill='both', expand=True)
-        NPRA_virus_figure = self.graphs._double_y_graph('virus', self.graphs.get_NPRA_seasons_weekly(start_year, end_year, city), 'NIPH Virus', 'NPRA')
+        NPRA_virus_figure = self.graphs._double_y_graph_weekly('virus', self.graphs.get_NPRA_seasons_weekly(start_year, end_year, city), 'NIPH Virus', 'NPRA')
         self.NPRA_virus_graph = self._plot_widget(self.graph_frame, NPRA_virus_figure)
         self.NPRA_virus_graph.pack(fill='both', expand=True)
 
     def _twitter(self):
         self._forget_all_graphs()
         self._set_graph_season(2017)
-        twitter_virus_figure = self.graphs._double_y_graph('virus', self.graphs.get_twitter_seasons_weekly(), 'NIPH Virus', 'Twitter')
+        twitter_virus_figure = self.graphs._double_y_graph_weekly('virus', self.graphs.get_twitter_seasons_weekly(), 'NIPH Virus', 'Twitter')
         self.twitter_virus_graph = self._plot_widget(self.graph_frame, twitter_virus_figure)
         self.twitter_virus_graph.pack(fill='both', expand=True)
 
@@ -125,20 +125,20 @@ class NIPH_frame(Frame, Tk):
         self._set_graph_season(start_year)
         if start_year == 2016:
             if not self.kolumbus_ili_figure:
-                self.kolumbus_ili_figure = self.graphs._double_y_graph('ili', self.graphs.get_kolumbus_seasons_weekly(start_year, end_year), 'NIPH ILI', 'Kolumbus')
+                self.kolumbus_ili_figure = self.graphs._double_y_graph_weekly('ili', self.graphs.get_kolumbus_seasons_weekly(start_year, end_year), 'NIPH ILI', 'Kolumbus')
                 self.kolumbus_ili_graph = self._plot_widget(self.graph_frame, self.kolumbus_ili_figure)
             self.kolumbus_ili_graph.pack(fill='both', expand=True)
 
-        self.kolumbus_virus_figure = self.graphs._double_y_graph('virus', self.graphs.get_kolumbus_seasons_weekly(start_year, end_year), 'NIPH Virus', 'Kolumbus')
+        self.kolumbus_virus_figure = self.graphs._double_y_graph_weekly_weekly('virus', self.graphs.get_kolumbus_seasons_weekly(start_year, end_year), 'NIPH Virus', 'Kolumbus')
         self.kolumbus_virus_graph = self._plot_widget(self.graph_frame, self.kolumbus_virus_figure)
         self.kolumbus_virus_graph.pack(fill='both', expand=True)
 
     def _NIPH(self):
         self._forget_all_graphs()
-        #self.NIPH_ili_graph.pack(fill='both', expand=True)
-        #self.NIPH_ili_oslo_graph.pack(fill='both', expand=True)
-        #self.NIPH_ili_bergen_graph.pack(fill='both', expand=True)
-        #self.NIPH_virus_graph.pack(fill='both', expand=True)
+        self.NIPH_ili_graph.pack(fill='both', expand=True)
+        self.NIPH_ili_oslo_graph.pack(fill='both', expand=True)
+        self.NIPH_ili_bergen_graph.pack(fill='both', expand=True)
+        self.NIPH_virus_graph.pack(fill='both', expand=True)
 
     def _forget_all_graphs(self):
         self.kolumbus_ili_graph.pack_forget()
@@ -148,7 +148,7 @@ class NIPH_frame(Frame, Tk):
         self.NPRA_virus_graph.pack_forget()
         self.ruter_virus_graph.pack_forget()
         self.ruter_ili_graph.pack_forget()
-        #self.NIPH_ili_graph.pack_forget()
+        self.NIPH_ili_graph.pack_forget()
         self.NIPH_virus_graph.pack_forget()
         self.NIPH_ili_oslo_graph.pack_forget()
         self.NIPH_ili_bergen_graph.pack_forget()
