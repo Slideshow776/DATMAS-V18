@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import matplotlib, numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 
-import map_canvas, scrframe, NIPH_frame, NPRA_frame
+import map_canvas, scrframe, NIPH_frame, NPRA_frame, constants
 
 sys.path.append('../Backend') # appends the backend directory so we can use the modules there
 sys.path.append('../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets')
@@ -21,7 +21,6 @@ from Twitter import twitter_analyzer
 import NPRA_Traffic_Stations_load_data
 
 FIGURE_HEIGHT, TOOLBAR_HEIGHT = 610, 30
-COLOR1, COLOR2, COLOR3, COLOR4 = '#363636', '#F75C95', '#ffb1e6', '#fff7ff' # color theme : darker to lighter
 BUTTONS_PANEL_WIDTH = 200
 
 POLL_FREQUENCY = 200 # in millisecond
@@ -63,15 +62,15 @@ def toolbarCallBack(name):
         map1.pack(fill='both', expand=True, side='right')
 
 def addButton(frame, name):
-    B = Button(frame, text = name, width=10, bg=COLOR3, fg=COLOR1, bd=3,
-        activebackground=COLOR3, activeforeground=COLOR1, 
+    B = Button(frame, text = name, width=10, bg=constants.COLOR_THEME[2], fg=constants.COLOR_THEME[0], bd=3,
+        activebackground=constants.COLOR_THEME[2], activeforeground=constants.COLOR_THEME[0], 
         command = lambda: toolbarCallBack(name)
     )
     B.pack(side=TOP, padx=2, pady=2)
     return B
 
 def toolbar(root):
-    toolbar = Frame(root, bg=COLOR2)
+    toolbar = Frame(root, bg=constants.COLOR_THEME[1])
     toolbar.pack(side='left', fill='both', expand=False)
 
     addButton(toolbar, "NPRA")
@@ -83,7 +82,7 @@ def toolbar(root):
     return toolbar
 
 def plot_widget(root, figure):
-    canvas = Canvas(root, background=COLOR4) 
+    canvas = Canvas(root, background=constants.COLOR_THEME[3]) 
     canvas.configure(height=FIGURE_HEIGHT + TOOLBAR_HEIGHT) # height is to ameliorate the flickering bug
     
     figure_canvas = FigureCanvasTkAgg(figure, master=canvas)
@@ -94,7 +93,7 @@ def plot_widget(root, figure):
 
     toolbar = NavigationToolbar2TkAgg(figure_canvas, canvas)
     toolbar.pack(side=BOTTOM, fill=Y, expand=False)
-    toolbar.configure(background=COLOR4)
+    toolbar.configure(background=constants.COLOR_THEME[3])
     toolbar.update()
         
     return canvas
@@ -110,14 +109,14 @@ def progress_bar(root):
         master=root,
         text="LOADING",
         height=int(WINDOW_HEIGHT/32),
-        background=COLOR1,
-        foreground=COLOR2
+        background=constants.COLOR_THEME[0],
+        foreground=constants.COLOR_THEME[1]
     )
     theLabel.pack(side=TOP)
 
     style = ttk.Style() 
     style.theme_use('default') 
-    style.configure("black.Horizontal.TProgressbar", background=COLOR3)
+    style.configure("black.Horizontal.TProgressbar", background=constants.COLOR_THEME[2])
     progressbar = ttk.Progressbar(
         root,
         variable=progress_var,
@@ -137,7 +136,7 @@ def poll_for_focus_between_map_and_graphs(root):
     root.after(POLL_FREQUENCY, poll_for_focus_between_map_and_graphs, root)
 
 def load_matplotlib_figures():
-    graph1 = Frame(data_frame1.interior, bg=COLOR1)
+    graph1 = Frame(data_frame1.interior, bg=constants.COLOR_THEME[0])
     graph1.focus_set()
     graph1.pack(fill='both', expand=True)
 
@@ -224,9 +223,9 @@ WINDOW_HEIGHT = int(root.winfo_screenheight() / 1.2)
 root.geometry("%dx%d" % (WINDOW_WIDTH, WINDOW_HEIGHT))
 root.wm_iconbitmap('sandra.ico')
 root.title("Automated collection of multi-source spatial information for emergency management")
-root.configure(background=COLOR1)
+root.configure(background=constants.COLOR_THEME[0])
 
-container = Frame(root, bg=COLOR1)
+container = Frame(root, bg=constants.COLOR_THEME[0])
 container.pack(side="right", fill='both', expand=True)
 
 data_frame1 = scrframe.VerticalScrolledFrame(container)

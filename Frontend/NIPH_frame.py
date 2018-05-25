@@ -9,12 +9,11 @@ import sys
 from tkinter import *
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 
-import double_y_graphs
+import double_y_graphs, constants
 
 sys.path.append('../Backend') # appends the backend directory so we can use the modules there
 from NIPH import NIPH_ILS_graf, NIPH_virus_detections, ILI_oslo_bergen
 
-COLOR1, COLOR2, COLOR3, COLOR4 = '#363636', '#F75C95', '#ffb1e6', '#fff7ff' # color theme : darker to lighter
 BUTTON_WIDTH, BUTTON_HEIGHT, BORDERWIDTH = 10, 0, 3
 FIGURE_HEIGHT, TOOLBAR_HEIGHT = 581, 30
 
@@ -22,10 +21,10 @@ class NIPH_frame(Frame, Tk):
     def __init__(self, root):
         self.pixel = PhotoImage(width=1, height=2) # mad hack to force pixel sizing, this makes the buttons appear with same width and height
         
-        Frame.__init__(self, root, bg=COLOR4)
-        self.button_frame = Frame(self, bg=COLOR4)
+        Frame.__init__(self, root, bg=constants.COLOR_THEME[3])
+        self.button_frame = Frame(self, bg=constants.COLOR_THEME[3])
         self.button_frame.pack(side='top', fill='x', expand=False)
-        self.graph_frame = Frame(self, bg=COLOR4)
+        self.graph_frame = Frame(self, bg=constants.COLOR_THEME[3])
         self.graph_frame.pack(fill='both', expand=False)
 
         NIPH_ili_figure = NIPH_ILS_graf.NIPH_ILI('../Backend/NIPH/ILI_tall_2016_17.xlsx').get_graph() # only season 16/17
@@ -65,7 +64,7 @@ class NIPH_frame(Frame, Tk):
         self._init_dropdowns()
 
         self.v = StringVar()
-        self.label = Label(self.button_frame, textvariable=self.v, fg='orange', bg=COLOR4).pack(side='left')
+        self.label = Label(self.button_frame, textvariable=self.v, fg='orange', bg=constants.COLOR_THEME[3]).pack(side='left')
         self.v.set('')
         self.label_isVisible = False
     
@@ -78,7 +77,7 @@ class NIPH_frame(Frame, Tk):
             self.label_isVisible = True
 
     def _init_dropdowns(self):
-        self.label = Label(self.button_frame, text='Compare with: ', bg=COLOR4)
+        self.label = Label(self.button_frame, text='Compare with: ', bg=constants.COLOR_THEME[3])
         self.label.pack(side='left')
         self._addButton(self.button_frame, 'None')       
         NPRA_items = (["Oslo", "15/16", "16/17"], ["Stavanger", "15/16", "16/17"],
@@ -159,7 +158,7 @@ class NIPH_frame(Frame, Tk):
         elif start_year == 2017: self.graphs.set_season('17/18')
 
     def _plot_widget(self, root, figure):
-        canvas = Canvas(root, background=COLOR4) 
+        canvas = Canvas(root, background=constants.COLOR_THEME[3]) 
         canvas.configure(height=FIGURE_HEIGHT + TOOLBAR_HEIGHT) # height is to ameliorate the flickering bug
         canvas.pack(fill='both', expand=False)
 
@@ -171,7 +170,7 @@ class NIPH_frame(Frame, Tk):
 
         toolbar = NavigationToolbar2TkAgg(figure_canvas, canvas)
         toolbar.pack(side=BOTTOM, fill=Y, expand=False)
-        toolbar.configure(background=COLOR4)
+        toolbar.configure(background=constants.COLOR_THEME[3])
         toolbar.update()
 
         return canvas
@@ -184,8 +183,8 @@ class NIPH_frame(Frame, Tk):
         self._toggle_label()
 
     def _addButton(self, root, name):
-        B = Button(root, text = name, image=self.pixel, width=68, height=21, bg=COLOR1, fg=COLOR3, bd=BORDERWIDTH,
-            activebackground=COLOR1, activeforeground=COLOR3, compound="c", padx=0, pady=0,
+        B = Button(root, text = name, image=self.pixel, width=68, height=21, bg=constants.COLOR_THEME[0], fg=constants.COLOR_THEME[2], bd=BORDERWIDTH,
+            activebackground=constants.COLOR_THEME[0], activeforeground=constants.COLOR_THEME[2], compound="c", padx=0, pady=0,
             command = lambda: self._buttonCallBack(name)
         )
         B.pack(side='left')
@@ -207,9 +206,9 @@ class NIPH_frame(Frame, Tk):
 
     def _single_dropdown_menu(self, root, name, items):
         var = StringVar()
-        menubutton = Menubutton(root, text=name, borderwidth=BORDERWIDTH, relief="raised", indicatoron=False, bg=COLOR1,
-                        fg=COLOR3, activebackground=COLOR1, activeforeground=COLOR4, width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
-        menu = Menu(menubutton, tearoff=False, bg=COLOR1, fg=COLOR3, activebackground=COLOR1, activeforeground=COLOR4)
+        menubutton = Menubutton(root, text=name, borderwidth=BORDERWIDTH, relief="raised", indicatoron=False, bg=constants.COLOR_THEME[0],
+                        fg=constants.COLOR_THEME[2], activebackground=constants.COLOR_THEME[0], activeforeground=constants.COLOR_THEME[3], width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
+        menu = Menu(menubutton, tearoff=False, bg=constants.COLOR_THEME[0], fg=constants.COLOR_THEME[2], activebackground=constants.COLOR_THEME[0], activeforeground=constants.COLOR_THEME[3])
         menubutton.configure(menu=menu)
         for item in items:
             menu.add_radiobutton(label=item, variable=var, value=item,
@@ -227,12 +226,12 @@ class NIPH_frame(Frame, Tk):
     def _double_dropdown_menu(self, root, name, items):
         var = StringVar(value=name)
         menubutton = Menubutton(root, textvariable=var, indicatoron=False, borderwidth=BORDERWIDTH, relief="raised",
-                        bg=COLOR1, fg=COLOR3, activebackground=COLOR1, activeforeground=COLOR4, width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
-        main_menu = Menu(menubutton, tearoff=False, bg=COLOR1, fg=COLOR3, activebackground=COLOR1, activeforeground=COLOR4)
+                        bg=constants.COLOR_THEME[0], fg=constants.COLOR_THEME[2], activebackground=constants.COLOR_THEME[0], activeforeground=constants.COLOR_THEME[3], width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
+        main_menu = Menu(menubutton, tearoff=False, bg=constants.COLOR_THEME[0], fg=constants.COLOR_THEME[2], activebackground=constants.COLOR_THEME[0], activeforeground=constants.COLOR_THEME[3])
         menubutton.configure(menu=main_menu)
         
         for item in range(len(items)):
-            menu = Menu(main_menu, tearoff=False, bg=COLOR1, fg=COLOR3, activebackground=COLOR1, activeforeground=COLOR4)
+            menu = Menu(main_menu, tearoff=False, bg=constants.COLOR_THEME[0], fg=constants.COLOR_THEME[2], activebackground=constants.COLOR_THEME[0], activeforeground=constants.COLOR_THEME[3])
             main_menu.add_cascade(label=items[item][0], menu=menu)
             for value in items[item][1:]:
                 menu.add_radiobutton(value=value, label=value, variable=value,

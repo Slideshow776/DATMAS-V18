@@ -3,6 +3,7 @@ from openpyxl import load_workbook
 import matplotlib.pyplot as plt
 import numpy as np
 from collections import OrderedDict
+import constants
 
 sys.path.append('../Backend')
 from Ruter import ruter
@@ -136,12 +137,10 @@ class double_y_graph:
         if NIPH_type.lower() == 'virus': y1 = self.NIPH_virus_Y
         elif NIPH_type.lower() == 'ili': y1 = self.NIPH_ILI_Y
         y1, y2 = np.array(y1), np.array(y2)
-
-        COLORS = ['#5efa0c', '#33920e', '#f44def', '#0606fb', '#aaafda', '#977c46', '#d89fcb', '#5a5190', '#89a44d', '#a7b995', '#1efde2', '#e01235',
-                    '#b894d2', '#ee2fa3', '#a9540a', '#f32ebe', '#6c936d', '#945152', '#2380c4', '#437582', '#547417']
-        if not color1: color1 = COLORS[random.randrange(0, len(COLORS))]
-        if not color2: color2 = COLORS[random.randrange(0, len(COLORS))]
-        while(color1 == color2): color2 = COLORS[random.randrange(0, len(COLORS))]
+        
+        if not color1: color1 = constants.COLOR_FOR_GRAPHS[random.randrange(0, len(constants.COLOR_FOR_GRAPHS))]
+        if not color2: color2 = constants.COLOR_FOR_GRAPHS[random.randrange(0, len(constants.COLOR_FOR_GRAPHS))]
+        while(color1 == color2): color2 = constants.COLOR_FOR_GRAPHS[random.randrange(0, len(constants.COLOR_FOR_GRAPHS))]
 
         x = []
         for i in range(52): x.append(i)

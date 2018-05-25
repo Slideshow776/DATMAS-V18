@@ -6,9 +6,47 @@ L.~O. Grottenberg, O.~Njå, E.~Tøssebro, G.~Braut, R.~Tønnessen, and G.~M.
   urban systems – designing a novel study,'' {\em Icwsm}, vol.~20, pp.~1--7,
   2017.
 
+\bibitem{who2017}
+``Pandemic influenza risk management: A who guide to inform and harmonize
+  national and international pandemic preparedness and response.''
+  http://www.who.int/influenza/preparedness/pandemic/influenza\_risk\_management\_update2017/en/.
+\newblock Accessed: 2018-05-23.
+
+\bibitem{iuliano2017estimates}
+A.~D. Iuliano, K.~M. Roguski, H.~H. Chang, D.~J. Muscatello, R.~Palekar,
+  S.~Tempia, C.~Cohen, J.~M. Gran, D.~Schanzer, B.~J. Cowling, {\em et~al.},
+  ``Estimates of global seasonal influenza-associated respiratory mortality: a
+  modelling study,'' {\em The Lancet}, 2017.
+
 \bibitem{niph}
 ``The norwegian institute of public health.'' https://www.fhi.no/en/.
 \newblock Accessed: 2018-06-11.
+
+\bibitem{poletto2013human}
+C.~Poletto, M.~Tizzoni, and V.~Colizza, ``Human mobility and time spent at
+  destination: impact on spatial epidemic spreading,'' {\em Journal of
+  theoretical biology}, vol.~338, pp.~41--58, 2013.
+
+\bibitem{wibisono2008non}
+T.~Wibisono, D.~M. Aleman, and B.~Schwartz, ``A non-homogeneous approach to
+  simulating the spread of disease in a pandemic outbreak,'' in {\em Simulation
+  Conference, 2008. WSC 2008. Winter}, pp.~2941--2941, IEEE, 2008.
+
+\bibitem{yang2017characterizing}
+B.~Yang, H.~Pei, H.~Chen, J.~Liu, and S.~Xia, ``Characterizing and discovering
+  spatiotemporal social contact patterns for healthcare,'' {\em IEEE
+  transactions on pattern analysis and machine intelligence}, vol.~39, no.~8,
+  pp.~1532--1546, 2017.
+
+\bibitem{robertson2017towards}
+C.~Robertson, ``Towards a geocomputational landscape epidemiology:
+  surveillance, modelling, and interventions,'' {\em GeoJournal}, vol.~82,
+  no.~2, pp.~397--414, 2017.
+
+\bibitem{enduri2018dynamics}
+M.~K. Enduri and S.~Jolad, ``Dynamics of dengue disease with human and vector
+  mobility,'' {\em Spatial and spatio-temporal epidemiology}, vol.~25,
+  pp.~57--66, 2018.
 
 \bibitem{NorSySS}
 ``The norwegian institute of public health: About the norwegian syndromic
@@ -54,6 +92,12 @@ R.~A. Gonzalez and N.~Bharosa, ``A framework linking information quality
   dimensions and coordination challenges during interagency crisis response,''
   in {\em System Sciences, 2009. HICSS'09. 42nd Hawaii International Conference
   on}, pp.~1--10, IEEE, 2009.
+
+\bibitem{resch2018combining}
+B.~Resch, F.~Usl{\"a}nder, and C.~Havas, ``Combining machine-learning topic
+  models and spatiotemporal analysis of social media data for disaster
+  footprint and damage assessment,'' {\em Cartography and Geographic
+  Information Science}, vol.~45, no.~4, pp.~362--376, 2018.
 
 \bibitem{shao2016forecasting}
 H.~Shao, K.~Hossain, H.~Wu, M.~Khan, A.~Vullikanti, B.~A. Prakash, M.~Marathe,

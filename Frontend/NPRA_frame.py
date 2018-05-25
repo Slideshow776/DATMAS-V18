@@ -6,38 +6,38 @@ sys.path.append('../Backend') # appends the backend directory so we can use the 
 sys.path.append('../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets')
 import map_canvas, NPRA_Traffic_Stations_load_data, NPRA_Traffic_Stations_Graph
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
+import constants
 
-COLOR1, COLOR2, COLOR3, COLOR4 = '#363636', '#F75C95', '#ffb1e6', '#fff7ff' # color theme : darker to lighter
 BUTTON_WIDTH, BUTTON_HEIGHT, BORDERWIDTH = 12, 0, 3
 FIGURE_HEIGHT, TOOLBAR_HEIGHT = 610, 30
 
 class NPRA_frame(Frame, Tk):
     def __init__(self, root, width, height):
 
-        Frame.__init__(self, root, bg=COLOR4)
+        Frame.__init__(self, root, bg=constants.COLOR_THEME[3])
 
         self.graph_frame = Frame(self, width=int(width*(2/3)), height=height, bg='#ff9900') # orange
         self.graph_frame.pack(side='right', fill='both', expand=True)
 
         # Controls
-        self.control_frame = Frame(self.graph_frame, bg=COLOR4)
+        self.control_frame = Frame(self.graph_frame, bg=constants.COLOR_THEME[3])
         self.control_frame.pack(side='top', fill='x', expand=False)        
         self._hours_frame(self.control_frame, 1, 1)
         self._weekdays_frame(self.control_frame, 1, 2)
         self._months_frame(self.control_frame, 1, 3)
         
         show_btn = Button(self.control_frame, text='Show', command=self._show_btn_callback,
-            bg=COLOR1, fg=COLOR3, activebackground=COLOR1, activeforeground=COLOR4)
+            bg=constants.COLOR_THEME[0], fg=constants.COLOR_THEME[2], activebackground=constants.COLOR_THEME[0], activeforeground=constants.COLOR_THEME[3])
         self._radio_buttons_init(self.control_frame)
         show_btn.grid(row=1, column=5)
         
         save_btn = Button(self.control_frame, text='Save', command=self._save_btn_callback,
-            bg=COLOR1, fg=COLOR3, activebackground=COLOR1, activeforeground=COLOR4)
+            bg=constants.COLOR_THEME[0], fg=constants.COLOR_THEME[2], activebackground=constants.COLOR_THEME[0], activeforeground=constants.COLOR_THEME[3])
         save_btn.grid(row=1, column=6)
         
         self.v = StringVar()
         self.v.set('')
-        self.error = Label(self.control_frame, textvariable=self.v, bg=COLOR4, fg='#ff0000', width=15, padx=10)
+        self.error = Label(self.control_frame, textvariable=self.v, bg=constants.COLOR_THEME[3], fg='#ff0000', width=15, padx=10)
         self.error.grid(row=1, column=7) # red
 
         # Graph
@@ -64,68 +64,68 @@ class NPRA_frame(Frame, Tk):
         frame = Frame(root, bg='#ff6a22')
         years = [2017, 2016, 2015, 2014, 2013]
         for year in years:
-            check_button = Checkbutton(frame, text=year, variable=year, bg=COLOR1, fg=COLOR3,
-                selectcolor='#121212', activebackground=COLOR1, activeforeground=COLOR3, #black-grey
+            check_button = Checkbutton(frame, text=year, variable=year, bg=constants.COLOR_THEME[0], fg=constants.COLOR_THEME[2],
+                selectcolor='#121212', activebackground=constants.COLOR_THEME[0], activeforeground=constants.COLOR_THEME[2], #black-grey
                 command=lambda year=year: self._checkbox_callback(year))
             check_button.pack()#check_button.grid(row=2018-year, column=4)
             if year == 2017: check_button.select()
         frame.grid(row=1, column=4)
     
     def _plot_widget(self, root, figure):
-        canvas = Canvas(root, background=COLOR4)
+        canvas = Canvas(root, background=constants.COLOR_THEME[3])
         
         figure_canvas = FigureCanvasTkAgg(figure, master=canvas)
         figure_canvas.get_tk_widget().pack(side='bottom', fill='both', expand=True)
 
         toolbar = NavigationToolbar2TkAgg(figure_canvas, canvas)
         toolbar.pack(side='top', fill=Y, expand=False)
-        toolbar.configure(background=COLOR4)
+        toolbar.configure(background=constants.COLOR_THEME[3])
         toolbar.update()
             
         return canvas
 
     def _months_frame(self, root, row=1, column=1):
-        months_frame = Frame(root, bg=COLOR4)
+        months_frame = Frame(root, bg=constants.COLOR_THEME[3])
         months = 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
         self._single_dropdown_menu(months_frame, 'Month from', months, 1, 1)
         self.months_from_var = StringVar()
         self.months_from_var.set('January')
-        self.months_from = Label(months_frame, bg=COLOR4, textvariable=self.months_from_var)
+        self.months_from = Label(months_frame, bg=constants.COLOR_THEME[3], textvariable=self.months_from_var)
         self.months_from.grid(row=2, column=1)
         self._single_dropdown_menu(months_frame, 'Month to', months, 1, 2)
         self.months_to_var = StringVar()
         self.months_to_var.set('March')
-        self.months_to = Label(months_frame, bg=COLOR4, textvariable=self.months_to_var)
+        self.months_to = Label(months_frame, bg=constants.COLOR_THEME[3], textvariable=self.months_to_var)
         self.months_to.grid(row=2, column=2)
         months_frame.grid(row=row, column=column)
 
     def _weekdays_frame(self, root, row=1, column=1):
-        weekdays_frame = Frame(root, bg=COLOR4)
+        weekdays_frame = Frame(root, bg=constants.COLOR_THEME[3])
         weekdays = 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
         self._single_dropdown_menu(weekdays_frame, 'Weekday from', weekdays, 1, 1)
         self.weekdays_from_var = StringVar()
         self.weekdays_from_var.set('Monday')
-        self.weekdays_from = Label(weekdays_frame, bg=COLOR4, textvariable=self.weekdays_from_var)
+        self.weekdays_from = Label(weekdays_frame, bg=constants.COLOR_THEME[3], textvariable=self.weekdays_from_var)
         self.weekdays_from.grid(row=2, column=1)
         self._single_dropdown_menu(weekdays_frame, 'Weekday to', weekdays, 1, 2)
         self.weekdays_to_var = StringVar()
         self.weekdays_to_var.set('Friday')
-        self.weekdays_to = Label(weekdays_frame, bg=COLOR4, textvariable=self.weekdays_to_var)
+        self.weekdays_to = Label(weekdays_frame, bg=constants.COLOR_THEME[3], textvariable=self.weekdays_to_var)
         self.weekdays_to.grid(row=2, column=2)
         weekdays_frame.grid(row=row, column=column)
 
     def _hours_frame(self, root, row=1, column=1):
-        hours_frame = Frame(root, bg=COLOR4)
+        hours_frame = Frame(root, bg=constants.COLOR_THEME[3])
         hours = '00', '01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 21, 22, 23
         self._single_dropdown_menu(hours_frame, 'Hours from', hours, 1, 1)
         self.hours_from_var = StringVar()
         self.hours_from_var.set('08')
-        self.hours_from = Label(hours_frame, bg=COLOR4, textvariable=self.hours_from_var)
+        self.hours_from = Label(hours_frame, bg=constants.COLOR_THEME[3], textvariable=self.hours_from_var)
         self.hours_from.grid(row=2, column=1)
         self._single_dropdown_menu(hours_frame, 'Hours to', hours, 1, 2)
         self.hours_to_var = StringVar()
         self.hours_to_var.set('09')
-        self.hours_to = Label(hours_frame, bg=COLOR4, textvariable=self.hours_to_var)
+        self.hours_to = Label(hours_frame, bg=constants.COLOR_THEME[3], textvariable=self.hours_to_var)
         self.hours_to.grid(row=2, column=2)
         hours_frame.grid(row=row, column=column)
     
@@ -210,9 +210,9 @@ class NPRA_frame(Frame, Tk):
 
     def _single_dropdown_menu(self, root, name, items, row=1, column=1):
             var = StringVar()
-            menubutton = Menubutton(root, text=name, borderwidth=BORDERWIDTH, relief="raised", indicatoron=False, bg=COLOR1,
-                            fg=COLOR3, activebackground=COLOR1, activeforeground=COLOR4, width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
-            menu = Menu(menubutton, tearoff=False, bg=COLOR1, fg=COLOR3, activebackground=COLOR1, activeforeground=COLOR4)
+            menubutton = Menubutton(root, text=name, borderwidth=BORDERWIDTH, relief="raised", indicatoron=False, bg=constants.COLOR_THEME[0],
+                            fg=constants.COLOR_THEME[2], activebackground=constants.COLOR_THEME[0], activeforeground=constants.COLOR_THEME[3], width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
+            menu = Menu(menubutton, tearoff=False, bg=constants.COLOR_THEME[0], fg=constants.COLOR_THEME[2], activebackground=constants.COLOR_THEME[0], activeforeground=constants.COLOR_THEME[3])
             menubutton.configure(menu=menu)
             for item in items:
                 menu.add_radiobutton(label=item, variable=var, value=item,
