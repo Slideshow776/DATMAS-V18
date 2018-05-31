@@ -1,2 +1,2 @@
 python twitter_searching.py
-python twitter_analyzer.py
+python twitter_analyser.py

@@ -3,7 +3,7 @@ from tkinter import filedialog
 from tkinter import *
 import matplotlib.pyplot as plt
 sys.path.append('../Backend') # appends the backend directory so we can use the modules there
-sys.path.append('../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets')
+sys.path.append('../Backend/NPRA/Traffic_registration_stations/hourly_datasets')
 import map_canvas, NPRA_Traffic_Stations_load_data, NPRA_Traffic_Stations_Graph
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 import constants
@@ -41,7 +41,7 @@ class NPRA_frame(Frame, Tk):
         self.error.grid(row=1, column=7) # red
 
         # Graph
-        self.filename = '../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets/Stavanger/1100009 HILLEVÅGTUNNELEN 2013-2017.xlsx'
+        self.filename = '../Backend/NPRA/Traffic_registration_stations/hourly_datasets/Stavanger/1100009 HILLEVÅGTUNNELEN 2013-2017.xlsx'
         self.years = [2017]
         self.NPRA_traffic_Station = NPRA_Traffic_Stations_Graph.NPRA_Traffic_Stations_load_graph(self.filename, self.years)
         self.graph_figure = self.NPRA_traffic_Station.get_graph()
@@ -50,9 +50,9 @@ class NPRA_frame(Frame, Tk):
 
         # Map
         coordinates = NPRA_Traffic_Stations_load_data.get_all_coordinates(
-            '../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets/Stavanger/times nivå 1 STAVANGER.csv',
-            '../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets/Bergen/times nivå 1 BERGEN.csv',
-            '../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets/Oslo/times nivå 1 OSLO.csv',
+            '../Backend/NPRA/Traffic_registration_stations/hourly_datasets/Stavanger/hourly_level_1_STAVANGER.csv',
+            '../Backend/NPRA/Traffic_registration_stations/hourly_datasets/Bergen/hourly_level_1_BERGEN.csv',
+            '../Backend/NPRA/Traffic_registration_stations/hourly_datasets/Oslo/hourly_level_1_OSLO.csv',
             )
         self.map1 = map_canvas.Map(self, width=int(width*(1/3)), height=height, coordinates=coordinates) #coordinates)
         self.map1.pack(side='left', expand=False)

@@ -7,18 +7,32 @@ import constants
 
 sys.path.append('../Backend')
 from Ruter import ruter
-from NIPH import NIPH_ILS_graf, NIPH_virus_detections
+from NIPH import NIPH_ILS_graph, NIPH_virus_detections, ILI_oslo_bergen
 from Kolumbus import kolumbus
 from NPRA import NPRA_weekly, NPRA_monthly
-from Twitter import twitter_analyzer
+from Twitter import twitter_analyser
 
 class double_y_graph:
     def __init__(self):
         # default season is 16/17
         self.NIPH_virus_Y = NIPH_virus_detections.NIPH_Virus().get_season_16_17() # [15_16, 16_17, 17_18]
         for _ in range(len(self.NIPH_virus_Y), 52): self.NIPH_virus_Y.append(None) # all graphs must have 52 units (weeks) on the x axis
-        self.NIPH_ILI_Y = NIPH_ILS_graf.NIPH_ILI('../Backend/NIPH/ILI_tall_2016_17.xlsx').get_season_16_17() # [16_17]
+        
+        self.NIPH_ILI_Y = NIPH_ILS_graph.NIPH_ILI('../Backend/NIPH/ILI_tall_2016_17.xlsx').get_season_16_17() # [16_17]
         for _ in range(len(self.NIPH_ILI_Y), 52): self.NIPH_ILI_Y.append(None) # all graphs must have 52 units (weeks) on the x axis
+        
+        self.NIPH_ILI_oslo_bergen_weekly = True
+        try:
+            NIPH_ILI_oslo_bergen_weekly = ILI_oslo_bergen.NIPH_ILI_oslo_bergen(
+                r'C:\Users\Slideshow\Dropbox\School\DATMAS-V18\fra Lars\Sykdomspuls\InfluensaOsloPerDag20180430_2015_2018.txt',
+                r'C:\Users\Slideshow\Dropbox\School\DATMAS-V18\fra Lars\Sykdomspuls\InfluensaBergenPerDag_20180430_2015_2018.txt',
+                True
+            )
+            self.NIPH_ILI_OSLO_DATA = NIPH_ILI_oslo_bergen_weekly.get_oslo_seasons_weekly()
+            self.NIPH_ILI_BERGEN_DATA = NIPH_ILI_oslo_bergen_weekly.get_bergen_seasons_weekly()
+            self.NIPH_ILI_OSLO_WEEKLY_Y = self.NIPH_ILI_OSLO_DATA[2]
+            self.NIPH_ILI_BERGEN_WEEKLY_Y = self.NIPH_ILI_BERGEN_DATA[2]
+        except: self.NIPH_ILI_oslo_bergen_weekly = None        
 
     def get_NPRA_seasons_weekly(self, year_start, year_end, city='Norway'):
         filename = '../Backend/NPRA/Ukestrafikk 2013-2017 utvalgte punkter Bergen - Stavanger - Oslo.xlsx'
@@ -49,17 +63,26 @@ class double_y_graph:
         if season == '15/16':
             self.NIPH_virus_Y = NIPH_virus_detections.NIPH_Virus().get_season_15_16() # [15_16, 16_17, 17_18]
             for _ in range(len(self.NIPH_virus_Y), 52): self.NIPH_virus_Y.append(None) # all graphs must have 52 units (weeks) on the x axis
+            if self.NIPH_ILI_oslo_bergen_weekly:
+                self.NIPH_ILI_OSLO_WEEKLY_Y = self.NIPH_ILI_OSLO_DATA[1]
+                self.NIPH_ILI_BERGEN_WEEKLY_Y = self.NIPH_ILI_BERGEN_DATA[1]
         elif season == '16/17':
             self.NIPH_virus_Y = NIPH_virus_detections.NIPH_Virus().get_season_16_17() # [15_16, 16_17, 17_18]
             for _ in range(len(self.NIPH_virus_Y), 52): self.NIPH_virus_Y.append(None) # all graphs must have 52 units (weeks) on the x axis
+            if self.NIPH_ILI_oslo_bergen_weekly:
+                self.NIPH_ILI_OSLO_WEEKLY_Y = self.NIPH_ILI_OSLO_DATA[2]
+                self.NIPH_ILI_BERGEN_WEEKLY_Y = self.NIPH_ILI_BERGEN_DATA[2]
         elif season == '17/18':
             self.NIPH_virus_Y = NIPH_virus_detections.NIPH_Virus().get_season_17_18() # [15_16, 16_17, 17_18]
             for _ in range(len(self.NIPH_virus_Y), 52): self.NIPH_virus_Y.append(None) # all graphs must have 52 units (weeks) on the x axis
+            if self.NIPH_ILI_oslo_bergen_weekly:
+                self.NIPH_ILI_OSLO_WEEKLY_Y = self.NIPH_ILI_OSLO_DATA[3]
+                self.NIPH_ILI_BERGEN_WEEKLY_Y = self.NIPH_ILI_BERGEN_DATA[3]
 
     def get_twitter_seasons_weekly(self):
         filename = '../Backend/Twitter/twitter_data.txt'
-        twitter_Y = twitter_analyzer.Twitter(filename).get_Y()
-        twitter_X = twitter_analyzer.Twitter(filename).get_X()
+        twitter_Y = twitter_analyser.Twitter(filename).get_Y()
+        twitter_X = twitter_analyser.Twitter(filename).get_X()
 
         weeks = [None]*52
         offset = 12 # NIPH graph starts from week 40, so we need to offset by 12 so we start on week 0
@@ -134,8 +157,12 @@ class double_y_graph:
         return weeks
 
     def _double_y_graph_weekly(self, NIPH_type, y2, name1, name2, color1=None, color2=None): # assumes common x-axis of 52 units (weeks)
+        plt.clf()
         if NIPH_type.lower() == 'virus': y1 = self.NIPH_virus_Y
         elif NIPH_type.lower() == 'ili': y1 = self.NIPH_ILI_Y
+        elif NIPH_type.lower() == 'ili_oslo' and self.NIPH_ILI_oslo_bergen_weekly: y1 = self.NIPH_ILI_OSLO_WEEKLY_Y
+        elif NIPH_type.lower() == 'ili_bergen' and self.NIPH_ILI_oslo_bergen_weekly: y1 = self.NIPH_ILI_BERGEN_WEEKLY_Y
+        else: return
         y1, y2 = np.array(y1), np.array(y2)
         
         if not color1: color1 = constants.COLOR_FOR_GRAPHS[random.randrange(0, len(constants.COLOR_FOR_GRAPHS))]
@@ -166,12 +193,22 @@ class double_y_graph:
 
 def main():    
     graphs = double_y_graph()
+    """
     graphs.set_season('15/16')
-    graphs._double_y_graph_weekly( # twitter example
+    graphs._double_y_graph_weekly( # Kolumbus example
         'virus',
         graphs.get_kolumbus_seasons_weekly(2015, 2016),
         'NIPH virus',
         'Kolumbus'
+    )
+    """
+    
+    graphs.set_season('17/18')
+    graphs._double_y_graph_weekly( # twitter example
+        'ili_oslo',
+        graphs.get_twitter_seasons_weekly(),
+        'NIPH ili_oslo',
+        'Twitter'
     )
     plt.show()
 

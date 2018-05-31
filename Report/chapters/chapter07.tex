@@ -1,5 +1,19 @@
-\section{TODO}
+This chapter presents possible future works and concludes this thesis.
 
 
-\subsection{Future works}
-svakheter, hvordan gjøre bedre? hva er mitt bidrag?
+\section{Future works}
+TODO: svakheter, hvordan gjøre bedre? hva er mitt bidrag?  \\
+
+The program to this thesis was created by one person alone without code supervision, therefore it contains some bugs and inefficient solutions. Ameliorating these algorithm requires more work than what is this thesis's time scope. One known negligent solution is the algorithms in the program of double\_y\_graphs.py where redundant calculations take place. Fixing this would make the program gui.py slightly faster and be more structural preferable. Another known bug is that the buttons panel disappear when the window size is not big enough.
+
+\subsection{Google static map}
+As discussed in the previous chapter clustering traffic registration stations would solve the maximum URL problem. When presented with a map that shows all of Norway instead of showing each traffic registration stations one could cluster them together by proximity, and when zooming in present an even more fine tuned clustering until the zoom level is sufficient enough to show all of the traffic registration stations. This is already a standard way of presenting spatial data as seen in the NPRA's 'vegkart'\cite{vegkart} when selecting multiple elements. Further standardizing colors and sizes would significantly save url length, the thought behind different sizes and colors was only intended on a very zoomed in level and is not necessarily needed when showing cluster. The url size problem would also completely vanish if taken a Node/Javascript approach instead. 
+
+\subsection{Database}
+At the very end of the time scope of this thesis it became obvious that the backend's data should have been implemented in some sort of a database in order to speed up the process of reading and extracting exact information. Data filtering is the process of refining data sets for relevant user information, different filters can be tailored for different needs. Filtering becomes particularly useful in the NPRA's hourly dataset, an example would be to filter out the different lanes available this would on average make the algorithm two times faster. In order to take advantage of data filtering and indexing the data would have to be implemented in a database. A possible more optimal solution would be to rewrite the entire project in Node/Javascript and mount the backend's data in a server.
+
+
+
+
+\section{Conclusion}
+much research, such wow ...

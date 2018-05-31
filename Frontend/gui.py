@@ -11,13 +11,13 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolb
 import map_canvas, scrframe, NIPH_frame, NPRA_frame, constants
 
 sys.path.append('../Backend') # appends the backend directory so we can use the modules there
-sys.path.append('../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets')
+sys.path.append('../Backend/NPRA/Traffic_registration_stations/hourly_datasets')
 
 from Ruter import ruter
-from NIPH import NIPH_ILS_graf, NIPH_virus_detections
+from NIPH import NIPH_ILS_graph, NIPH_virus_detections
 from Kolumbus import kolumbus
 from NPRA import NPRA_weekly, NPRA_monthly
-from Twitter import twitter_analyzer
+from Twitter import twitter_analyser
 import NPRA_Traffic_Stations_load_data
 
 FIGURE_HEIGHT, TOOLBAR_HEIGHT = 610, 30
@@ -157,7 +157,7 @@ def load_matplotlib_figures():
     kolumbus_figure = kolumbus.Kolumbus().get_graph()
     progress_var.set(3)
     root.update_idletasks()
-    twitter_figure = twitter_analyzer.Twitter('../Backend/Twitter/twitter_data.txt').get_graph()
+    twitter_figure = twitter_analyser.Twitter('../Backend/Twitter/twitter_data.txt').get_graph()
     progress_var.set(4)
     root.update_idletasks()
     NPRA_frame1 = NPRA_frame.NPRA_frame(graph1, WINDOW_WIDTH-BUTTONS_PANEL_WIDTH, WINDOW_HEIGHT)
@@ -193,9 +193,9 @@ def load_matplotlib_figures():
 
 def load_map():
     coordinates = NPRA_Traffic_Stations_load_data.get_all_coordinates(
-        '../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets/Stavanger/times nivå 1 STAVANGER.csv',
-        '../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets/Bergen/times nivå 1 BERGEN.csv',
-        '../Backend/NPRA/Trafikkregistreringsstasjoner/hourly_datasets/Oslo/times nivå 1 OSLO.csv',
+        '../Backend/NPRA/Traffic_registration_stations/hourly_datasets/Stavanger/hourly_level_1_STAVANGER.csv',
+        '../Backend/NPRA/Traffic_registration_stations/hourly_datasets/Bergen/hourly_level_1_BERGEN.csv',
+        '../Backend/NPRA/Traffic_registration_stations/hourly_datasets/Oslo/hourly_level_1_OSLO.csv',
         )
     global map1
     map1 = map_canvas.Map(data_frame1.interior, WINDOW_WIDTH-BUTTONS_PANEL_WIDTH, WINDOW_HEIGHT, coordinates) # creates a tkinter.Canvas
