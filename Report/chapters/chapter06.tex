@@ -20,8 +20,8 @@ The disadvantage with Python's module Matplotlib, which is used to draw graphs, 
 The advantage of Google static map is that it is a well implemented and established service with consistent qualitative measures. Google offers fewer road details than OpenStreetMap, and that serves this thesis perfectly as the visualization needed was simply showing locations of traffic registration stations and not necessarily other roads.
 The disadvantages with Google static map is that there are standard usage limits (which can simply be overcome with paying for more). Pixel resolution is set to a maximum of 640x640 pixels, and the free usage is limited to 25.000 map loads per 24 hours. These two limits are not really a problem: The pixel limit is overcome by simply requesting more map loads and then combining those to create as big a picture as desired, and the map loads limit is very high. On average Goompy does 4 map loads per zoom (thus creating a big map of 1280x1280 pixels) and 25.000 / 4 = 6250 zooms per 24 hours, average Norwegian working hours per day is 7.5 hours, this means that one would reach the limit if there are 6.250 / 7.5 / 60 = 13.9 zooms per second. This limit was never reached in testing and although it is a high limit if reached the map simply stops working for the remainder of the time to the next 24 hours. Perhaps the most severe limit Google static map have for the scope of this thesis is its maximum URL size of 8192 characters. Figure \ref{fig:google_url} show the programs URL that it sends to the Google map servers, containing a standard map and fifty-three traffic registration stations each with their individually different sizes and colors this surmounts to a total of 4.975 characters already, which is 60.7\% of the total allowed. 
 
-\begin{figure}[h]
-\includegraphics[width=12cm]{Google_static_map_URL}
+\begin{figure}[!htb]
+\includegraphics[width=11cm]{Google_static_map_URL}
 \centering
 \caption{Size of the programs Google static map URLs}
 \label{fig:google_url}
@@ -29,3 +29,17 @@ The disadvantages with Google static map is that there are standard usage limits
 
 Although the url have encoded polylines, which compresses the data, it is already quite long, Loading all of Norway's current 10.066 traffic registration stations using Google static map with this thesis's current algorithms is not feasible, although this could be solved by clustering the traffic registration stations together, and only loading what you actually can see on the map. This would require more Goompy modifications by somehow fetching only those traffic registration stations that are actually currently visible on the map.
 The program would still be considered modular and scalable with the chosen technologies and implemented algorithms, although better solutions may be applied. Further discussion of possible future works is described in the following chapter
+
+
+
+
+\section{Ethics}
+This potential technology presented is merely a utility information tool that could be used or misused. An example of exploit would be the Chinese Sesame 'Social credit system' program\cite{meissner2017china}\cite{china_botsman}\cite{china_wiki}, where a propaganda game rating citizens with 'Sesame credits' on their lives and judging them according to their 'trustworthiness' and 'social integrity' of their individual behaviour. Behaviour such as local and online purchases, real-time location, who friends and family are and what they do, the content of leisure and payment of bills. This mass surveillance tool uses big data analysis technology, and in contradiction to official intents acts as an oppressive system punishing its subjects. Examples of punishment are flight bans limiting movement, excluding parent's children from enrolling in private schools, slow internet access, exclusion from certain jobs, exclusion from hotel services, and forced registration on a public blacklist. The Sesame credit system also works for businesses in their own way.
+
+This thesis does not endorse or suggest oppressive mass surveillance. It is considerate to contemplate ethical values when developing systems that rely on public information extraction, taking care to not be reckless with sensitive data by insincere or cynical means, and having a genuine interest in the well-being of the public. This is the reason the NIPH ILI daily data from Oslo and Bergen are omitted in the delivery of this thesis, as the possible information derived might be too delicate and protected by Norwegian confidentiality laws. Norway already has a government agency installed protecting such concerns\cite{datatilsynet}, albeit new technologies and usage are revealed continuously it is important to have an ongoing update on such policies.
+
+
+
+
+
+

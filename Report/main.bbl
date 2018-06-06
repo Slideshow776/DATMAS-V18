@@ -77,39 +77,6 @@ J.~Anderson, R.~Soden, B.~Keegan, L.~Palen, and K.~M. Anderson, ``The crowd is
   disasters,'' {\em International Journal of Human--Computer Interaction},
   vol.~34, no.~4, pp.~295--310, 2018.
 
-\bibitem{twitter_politic}
-S.~B. Elson, D.~Yeung, P.~Roshan, S.~R. Bohandy, and A.~Nader, {\em Using
-  social media to gauge Iranian public opinion and mood after the 2009
-  election}.
-\newblock Rand Corporation, 2012.
-
-\bibitem{twitter_flu_trends}
-H.~Achrekar, A.~Gandhe, R.~Lazarus, S.-H. Yu, and B.~Liu, ``Predicting flu
-  trends using twitter data,'' in {\em Computer Communications Workshops
-  (INFOCOM WKSHPS), 2011 IEEE Conference on}, pp.~702--707, IEEE, 2011.
-
-\bibitem{twitter_linguistics}
-J.~Eisenstein, B.~O'Connor, N.~A. Smith, and E.~P. Xing, ``A latent variable
-  model for geographic lexical variation,'' in {\em Proceedings of the 2010
-  Conference on Empirical Methods in Natural Language Processing},
-  pp.~1277--1287, Association for Computational Linguistics, 2010.
-
-\bibitem{twitter_earthQuake}
-T.~Sakaki, M.~Okazaki, and Y.~Matsuo, ``Earthquake shakes twitter users:
-  real-time event detection by social sensors,'' in {\em Proceedings of the
-  19th international conference on World wide web}, pp.~851--860, ACM, 2010.
-
-\bibitem{twitter_what_you_tweet}
-M.~J. Paul and M.~Dredze, ``You are what you tweet: Analyzing twitter for
-  public health.,'' {\em Icwsm}, vol.~20, pp.~265--272, 2011.
-
-\bibitem{de2015geographic}
-J.~P. De~Albuquerque, B.~Herfort, A.~Brenning, and A.~Zipf, ``A geographic
-  approach for combining social media and authoritative data towards
-  identifying useful information for disaster management,'' {\em International
-  Journal of Geographical Information Science}, vol.~29, no.~4, pp.~667--689,
-  2015.
-
 \bibitem{gonzalez2009framework}
 R.~A. Gonzalez and N.~Bharosa, ``A framework linking information quality
   dimensions and coordination challenges during interagency crisis response,''
@@ -133,6 +100,68 @@ M.~L. Stein, J.~W. Rudge, R.~Coker, C.~van~der Weijden, R.~Krumkamp,
   {\em et~al.}, ``Development of a resource modelling tool to support decision
   makers in pandemic influenza preparedness: The asiaflucap simulator,'' {\em
   BMC public health}, vol.~12, no.~1, p.~870, 2012.
+
+\bibitem{who_ebola}
+W.~H. Organization, ``Ebola virus disease.''
+  http://www.who.int/en/news-room/fact-sheets/detail/ebola-virus-disease, 12
+  February 2018.
+
+\bibitem{koch2016ebola}
+T.~Koch, ``Ebola in west africa: lessons we may have learned,'' 2016.
+
+\bibitem{koch2015mapping}
+T.~Koch, ``Mapping medical disasters: Ebola makes old lessons, new,'' {\em
+  Disaster medicine and public health preparedness}, vol.~9, no.~1, pp.~66--73,
+  2015.
+
+\bibitem{gis_support}
+T.~Lüge, ``Gis support for the msf ebola response in liberia, guinea and
+  sierra leone case study,'' 2015.
+
+\bibitem{moeller2015mapping}
+M.~Moeller and S.~Furhmann, ``Mapping the world-a new approach for volunteered
+  geographic information in the cloud,'' {\em The International Archives of
+  Photogrammetry, Remote Sensing and Spatial Information Sciences}, vol.~40,
+  no.~6, p.~9, 2015.
+
+\bibitem{twitter_politic}
+S.~B. Elson, D.~Yeung, P.~Roshan, S.~R. Bohandy, and A.~Nader, {\em Using
+  social media to gauge Iranian public opinion and mood after the 2009
+  election}.
+\newblock Rand Corporation, 2012.
+
+\bibitem{twitter_flu_trends}
+H.~Achrekar, A.~Gandhe, R.~Lazarus, S.-H. Yu, and B.~Liu, ``Predicting flu
+  trends using twitter data,'' in {\em Computer Communications Workshops
+  (INFOCOM WKSHPS), 2011 IEEE Conference on}, pp.~702--707, IEEE, 2011.
+
+\bibitem{twitter_linguistics}
+J.~Eisenstein, B.~O'Connor, N.~A. Smith, and E.~P. Xing, ``A latent variable
+  model for geographic lexical variation,'' in {\em Proceedings of the 2010
+  Conference on Empirical Methods in Natural Language Processing},
+  pp.~1277--1287, Association for Computational Linguistics, 2010.
+
+\bibitem{twitter_earthQuake}
+T.~Sakaki, M.~Okazaki, and Y.~Matsuo, ``Earthquake shakes twitter users:
+  real-time event detection by social sensors,'' in {\em Proceedings of the
+  19th international conference on World wide web}, pp.~851--860, ACM, 2010.
+
+\bibitem{byrd2016mining}
+K.~Byrd, A.~Mansurov, and O.~Baysal, ``Mining twitter data for influenza
+  detection and surveillance,'' in {\em Proceedings of the International
+  Workshop on Software Engineering in Healthcare Systems}, pp.~43--49, ACM,
+  2016.
+
+\bibitem{twitter_what_you_tweet}
+M.~J. Paul and M.~Dredze, ``You are what you tweet: Analyzing twitter for
+  public health.,'' {\em Icwsm}, vol.~20, pp.~265--272, 2011.
+
+\bibitem{de2015geographic}
+J.~P. De~Albuquerque, B.~Herfort, A.~Brenning, and A.~Zipf, ``A geographic
+  approach for combining social media and authoritative data towards
+  identifying useful information for disaster management,'' {\em International
+  Journal of Geographical Information Science}, vol.~29, no.~4, pp.~667--689,
+  2015.
 
 \bibitem{goompy}
 ``Interactive google maps for python, created by simon d. levy.''
@@ -163,10 +192,6 @@ M.~L. Stein, J.~W. Rudge, R.~Coker, C.~van~der Weijden, R.~Krumkamp,
 N.~Bambrick, ``Analyzing time and volume trends in news content.''
   http://blog.aylien.com/analyzing-time-volume-trends-in-news-content/, 2016.
 
-\bibitem{vegkart}
-NPRA, ``Information about norwegian roads from the national road databank..''
-  https://www.vegvesen.no/vegkart/vegkart/, 2018.
-
 \bibitem{meissner2017china}
 M.~Meissner, ``China’s social credit system: A big-data enabled approach to
   market regulation with broad implications for doing business in china,'' {\em
@@ -184,5 +209,9 @@ Wikipedia, ``Social credit system.''
 \bibitem{datatilsynet}
 N.~D.~P. Authority, ``Norwegian government agency responsible for managing data
   protection privacy concerns..'' https://www.datatilsynet.no/en/, 2018.
+
+\bibitem{vegkart}
+NPRA, ``Information about norwegian roads from the national road databank..''
+  https://www.vegvesen.no/vegkart/vegkart/, 2018.
 
 \end{thebibliography}
