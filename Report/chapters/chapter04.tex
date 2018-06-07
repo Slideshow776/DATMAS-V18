@@ -1,35 +1,50 @@
-This chapter describes how the use of the different datasets were implemented and presented. The program is divided into two: The backend and the frontend. The structure and functions are provided by the backend, which governs collection and manipulation of data, and the frontend presents the data in a graphical user interface (GUI) using graphs and maps. Figure \ref{fig:program} show the structure and relations of the backend and the frontend in a simplified manner.
+This chapter describes how the use of the different datasets were implemented and presented. The program is divided into two: The backend and the frontend. The structure and functions are provided by the backend, which governs collection and manipulation of data, and the frontend presents the data in a graphical user interface (GUI) using graphs and maps. Figure \ref{fig:program} show the structure and relations of the backend and the frontend in a simplified manner. The main module to be run is found in frontend/gui.py, and the system works best with two API keys installed as explained in this chapter.
 
 \begin{figure}[h]
-\includegraphics[width=16cm]{program_diagram}
+\includegraphics[width=11cm]{program_diagram}
 \centering
 \caption{Simplification of the overall program structure and relation}
 \label{fig:program}
 \end{figure}
 
 \section{The Backend}
-The backend is responsible for providing the frontend all the data and deeper functions it needs to visualize and administrate data to be show in graphs. The backend is partitioned into modules based on each dataset available. Each module may also be run individually for testing and easy viewing purposes. The Twitter module is unique as it requires 4 application programming interface (API) keys to work properly. The instructions for this set-up is found in the file README.md in the twitter module's directory.
+The backend is responsible for providing the frontend all the data and deeper functions it needs to visualize and administrate data to be show in graphs. The backend is partitioned into modules (Python programs/.py files) in their respective directory folder based on each dataset available. Each module may also be run individually for testing and easy viewing purposes. 
+The Twitter module is unique as it requires 4 application programming interface (API) keys to work properly. The instructions for this set-up is found in the file README.md in the twitter module's directory.
 
 
 
 
 \subsection{The Norwegian Institute of Public Health}
-There are two different sets of data, which is divided into the separate modules of NIPH\_ILS.py and NIPH\_virus\_detections.py located in the same directory, and they show influenza-like illnesses (ILI) and hospitalized viral observations. They both extract data and then draw a graph using Python's matplotlib library, the graphs can be seen by running the modules individually or in the frontend main program frontend/gui.py's appropriate viewport. Figure \ref{fig:infstat} show the three last seasons of influenza in regards to observed viral infections. The plotting was done manually as NIPH only provides viral observational data in reports that are in pdf files on their official website\cite{fhi}.
+There are three different sets of data, which is divided into the separate modules of NIPH\_ILS\_graph.py, NIPH\_virus\_detections.py and ILI\_oslo\_bergen.py located in the same directory backend/NIPH, and they show influenza-like illnesses (ILI), hospitalized viral observations and more detailed ILI from the cities of Oslo and Bergen. The ILS module extract data from a local file, the virus module has it's data hard-coded and the ILI module extracts it's data from a hidden file (more on this in chapter 6), and they all draw their graph(s) using Python's matplotlib library. The graphs can be seen by running the modules individually or in the frontend main program frontend/gui.py's appropriate viewport accessible from the NIPH button. Figure \ref{fig:infstat} show the three last seasons of influenza in regards to observed viral infections. The plotting was done manually as NIPH only provides viral observational data in reports that are in pdf files on their official website\cite{fhi}.
 
 \begin{figure}[h]
-\includegraphics[width=16cm]{influenza_15_till_18}
+\includegraphics[width=12cm]{influenza_15_till_18}
 \centering
 \caption{Influenza virus observation}
 \label{fig:infstat}
 \end{figure}
 
-Figure \ref{fig:ilsstat} shows the influenza-like illnesses (ILI) of the year 2016/2017. This was not done manually as data was provided in a simple .xlsx file which was read using Python's openpyxl module, processed and then drawn as a graph.
+Figure \ref{fig:ilsstat} shows the influenza-like illnesses (ILI) of the year 2016/2017. This was not done manually as data was provided in a simple .xlsx file which was read using Python's openpyxl module, processed and then drawn as a graph. Figure \ref{fig:ili_oslo} and figure \ref{fig:ili_bergen} show reported ILI from Oslo and Bergen.
 
 \begin{figure}[ht]
-\includegraphics[width=16cm]{ILS_16_till_17}
+\includegraphics[width=12cm]{ILS_16_till_17}
 \centering
 \caption{Influenza-like illnesses season 2016/2017}
 \label{fig:ilsstat}
+\end{figure}
+
+\begin{figure}[ht]
+\includegraphics[width=12cm]{ili_daily_oslo}
+\centering
+\caption{Influenza-like illnesses season 2014-2018 in Oslo}
+\label{fig:ili_oslo}
+\end{figure}
+
+\begin{figure}[!htb]
+\includegraphics[width=12cm]{ili_daily_bergen}
+\centering
+\caption{Influenza-like illnesses season 2014-2018 in Bergen}
+\label{fig:ili_bergen}
 \end{figure}
 
 \newpage
@@ -46,7 +61,7 @@ Figure \ref{fig:ilsstat} shows the influenza-like illnesses (ILI) of the year 20
 From the .xlsx files provided by the NPRA, simple graphs were created in python showing the total annual traffic on Norwegian roads from 2002 to 2015 on a monthly basis as seen in figure \ref{fig:anualtotal}.
 
 \begin{figure}[ht]
-\includegraphics[width=16cm]{xml_02_15_annual_total}
+\includegraphics[width=12cm]{xml_02_15_annual_total}
 \centering
 \caption{Annual traffic 2002-2015}
 \label{fig:anualtotal}
@@ -55,90 +70,94 @@ From the .xlsx files provided by the NPRA, simple graphs were created in python 
 Also derived from this dataset is the annual traffic of the two cities of Bergen and Oslo, which are cities of interest.
 %Figure \ref{fig:anualbergen} shows the traffic in Bergen, and figure \ref{fig:anualoslo} show the traffic in Oslo.
 
-\begin{figure}[ht]
-\includegraphics[width=16cm]{xml_02_15_annual_bergen}
-\centering
-\caption{Bergen traffic 2002-2015}
-\label{fig:anualbergen}
-\end{figure}
+%\begin{figure}[ht]
+%\includegraphics[width=12cm]{xml_02_15_annual_bergen}
+%\centering
+%\caption{Bergen traffic 2002-2015}
+%\label{fig:anualbergen}
+%\end{figure}
 
-\begin{figure}[ht]
-\includegraphics[width=16cm]{xml_02_15_annual_oslo}
-\centering
-\caption{Oslo traffic 2002-2015}
-\label{fig:anualoslo}
-\end{figure}
-The dataset is in an XML file structure, a module named NPRA\_monthly.py was created that reads through all rows and collects the relevant columns into an array using Python's openpyxl module and then draws a graph using Python's matplotlib module. For the annual graph, every month of every year was collected. For the towns of Bergen and Oslo the correct roads were identified and then every year of every month of those roads was collected, loaded into an array and then drawn as a graph. The separate text files 'Bergen places.txt' and 'Oslo places.txt' is to make it easy to edit should these roads change in the future. This module when run individually accepts one command argument from the user, either cities of Oslo or Bergen may be provided to specify interest, if no argument is given the annual graph will show. The problem of using these datasets is that the data is an average calculation of monthly traffic, meaning the temporal bounds are too coarse for comparison against the influenza data which in turn is on a weekly basis. For these reasons no figures of this dataset are shown in this thesis, they are however available as modules and in the frontend's main program in the programming project.
+%\begin{figure}[ht]
+%\includegraphics[width=12cm]{xml_02_15_annual_oslo}
+%\centering
+%\caption{Oslo traffic 2002-2015}
+%\label{fig:anualoslo}
+%\end{figure}
+The dataset is in an XML file structure, a module named NPRA\_monthly.py was created that reads through all rows and collects the relevant columns into an array using Python's openpyxl module and then draws a graph using Python's matplotlib module. For the annual graph, every month of every year was collected. For the towns of Bergen and Oslo the correct roads were identified and then every year of every month of those roads was collected, loaded into an array and then drawn as a graph. The separate text files 'Bergen places.txt' and 'Oslo places.txt' is to make it easy to edit should these roads change in the future. This module when run individually accepts one command argument from the user, either cities of Oslo or Bergen may be provided to specify interest, if no argument is given the annual graph will show. The problem of using these datasets is that the data is an average calculation of monthly traffic, meaning the temporal bounds are too coarse for comparison against the influenza data which in turn is on a weekly basis. For these reasons no figures of this dataset are shown in this thesis (except figure \ref{fig:anualtotal}), they are however available as modules in the directory backend/NPRA/NPRA\_monthly.py and can be seen in the frontend's main program frontend/gui.py appropriate viewport accessible from the NPRA button.
 
 For the weekly datasets a set of traffic registration stations was needed to define the temporal bounds of each area of interest. Defined are the towns of Oslo, Stavanger, and Bergen, as well as the whole of Norway on a level 1 basis. The level 1 registrations are continuous throughout the year on an hourly basis and is exactly what this thesis requires. The module NPRA\_weekly.py captures these functions and also provides the user with command arguments if run individually. The commands are the cities of Bergen, Stavanger or Oslo, if no commands are given the annual graph of the whole of Norway will be drawn instead.
 
 Figures \ref{fig:weeklybergen}, \ref{fig:weeklyoslo} and \ref{fig:weeklystavanger} shows the traffic on a weekly basis. This provides a better resolution for better analysis.
 \begin{figure}[ht]
-\includegraphics[width=16cm]{NPRA_13_17_weekly_bergen}
+\includegraphics[width=12cm]{NPRA_13_17_weekly_bergen}
 \centering
 \caption{Weekly data of the city of Bergen}
 \label{fig:weeklybergen}
 \end{figure}
 
 \begin{figure}[ht]
-\includegraphics[width=16cm]{NPRA_13_17_weekly_oslo}
+\includegraphics[width=12cm]{NPRA_13_17_weekly_oslo}
 \centering
 \caption{Weekly data of the city of Oslo}
 \label{fig:weeklyoslo}
 \end{figure}
 
 \begin{figure}[ht]
-\includegraphics[width=16cm]{NPRA_13_17_weekly_stavanger}
+\includegraphics[width=12cm]{NPRA_13_17_weekly_stavanger}
 \centering
 \caption{Weekly data of the city of Stavanger}
 \label{fig:weeklystavanger}
 \end{figure}
 
-Figure \ref{fig:boundsbergen}, \ref{fig:boundsoslo} and \ref{fig:boundsstavanger} shows the different geospatial bounds used to define the cities. The green circles with numbers inside show where and how many traffic registration stations there are.
+Figure \ref{fig:boundsbergen}, \ref{fig:boundsoslo} and \ref{fig:boundsstavanger} shows the different geospatial bounds used to define the cities, and the respective data from traffic registration stations was collected from these. The green circles with numbers inside show where and how many traffic registration stations there are.
 
-\begin{figure}[ht]
-\includegraphics[width=16cm]{nivaa_1_bergen}
+\begin{figure}[!htb]
+\includegraphics[width=10cm]{nivaa_1_bergen}
 \centering
-\caption{Geospatial bounds of Bergen. The green circles show where the traffic registration stations are, and the number reveals how many there are in that general area.}
+\caption{Geospatial bounds of Bergen, used for weekly data. The green circles show where the traffic registration stations are, and the number reveals how many there are in that general area.}
 \label{fig:boundsbergen}
 \end{figure}
 
-\begin{figure}[ht]
-\includegraphics[width=16cm]{nivaa_1_oslo}
+\begin{figure}[!htb]
+\includegraphics[width=10cm]{nivaa_1_oslo}
 \centering
-\caption{Geospatial bounds of Oslo. The green circles show where the traffic registration stations are, and the number reveals how many there are in that general area.}
+\caption{Geospatial bounds of Oslo, used for weekly data. The green circles show where the traffic registration stations are, and the number reveals how many there are in that general area.}
 \label{fig:boundsoslo}
 \end{figure}
 
-\begin{figure}[ht]
-\includegraphics[width=16cm]{nivaa_1_stavanger}
+\begin{figure}[!htb]
+\includegraphics[width=10cm]{nivaa_1_stavanger}
 \centering
-\caption{Geospatial bounds of Stavanger. The green circles show where the traffic registration stations are, and the number reveals how many there are in that general area.}
+\caption{Geospatial bounds of Stavanger, used for weekly data. The green circles show where the traffic registration stations are, and the number reveals how many there are in that general area.}
 \label{fig:boundsstavanger}
 \end{figure}
 
-The last NPRA dataset acquired was raw hourly data from a defined subset of all of NPRA's traffic registration stations previously used. The data contains all whole hours from all weeks over several years, number of fields available on the road (usually only two for regular roads), and how many vehicles passed by that hour and also their lengths in category. Figure \ref{fig:hboundsbergen}, \ref{fig:hboundsoslo} and \ref{fig:hboundsstavanger} shows the different geospatial hourly based bounds used. There are two modules dedicated to the hourly datasets, the NPRA\_Traffic\_Stations\_Graph.py and the NPRA\_Traffic\_Stations\_load\_data.py. The graph module is responsible for drawing a graph with specifications of hour to/from, weekday to/from, month to/from, year and field. The load data module is responsible for providing the graph with all the functions it needs to operate, like querying the dataset, the variance of the queried dataset, extracting the dataset from file and organizing it into a data structure, and reading and handling the coordinates of the traffic registration stations so that it can be shown on the map. These last hourly based datasets provide high quality information and is presented in the GUI where the user can try different queries to find different information, more explained in the frontend section of this chapter.
+The last NPRA dataset acquired was raw hourly data from a defined subset of all of NPRA's traffic registration stations previously used, this is because the NPRA would only provide this much data from their stores. The data contains all whole hours from all weeks over several years, number of fields available on the road (vehicle lanes, usually only two for regular roads), and how many vehicles passed by that hour and also their lengths in category. Figure \ref{fig:hboundsbergen}, \ref{fig:hboundsoslo} and \ref{fig:hboundsstavanger} shows the different geospatial hourly based bounds (traffic registration stations) used. There are two modules dedicated to the hourly datasets, the NPRA\_Traffic\_Stations\_Graph.py and the NPRA\_Traffic\_Stations\_load\_data.py found in the directory
+Backend/NPRA/Traffic\_registration\_stations/hourly\_datasets. The graph module is responsible for drawing a graph with specifications of hour to/from, weekday to/from, month to/from, year and field. The load data module is responsible for providing the graph with all the functions it needs to operate, like querying the dataset, the variance of the queried dataset, extracting the dataset from file and organizing it into a data structure, and reading and handling the coordinates of the traffic registration stations so that it can be shown on the map. These last hourly based datasets provide high quality information and is presented in the GUI, by clicking the NPRA button, where the user can try different queries to find different information, more explanations follow in the frontend section of this chapter.
 
-\begin{figure}[ht]
-\includegraphics[width=16cm]{times_nivaa1_BERGEN}
+\begin{figure}[!htb]
+\includegraphics[width=10cm]{times_nivaa1_BERGEN}
 \centering
-\caption{Geospatial hourly bounds of Bergen}
+\caption{Geospatial hourly bounds of Bergen, used for hourly data}
 \label{fig:hboundsbergen}
 \end{figure}
 
-\begin{figure}[ht]
-\includegraphics[width=16cm]{times_nivaa1_OSLO}
+\begin{figure}[!htb]
+\includegraphics[width=10cm]{times_nivaa1_OSLO}
 \centering
-\caption{Geospatial hourly bounds of Oslo}
+\caption{Geospatial hourly bounds of Oslo, used for hourly data}
 \label{fig:hboundsoslo}
 \end{figure}
 
-\begin{figure}[ht]
-\includegraphics[width=16cm]{times_nivaa1_STAVANGER}
+\begin{figure}[!htb]
+\includegraphics[width=10cm]{times_nivaa1_STAVANGER}
 \centering
-\caption{Geospatial hourly bounds of Stavanger}
+\caption{Geospatial hourly bounds of Stavanger, used for hourly data}
 \label{fig:hboundsstavanger}
 \end{figure}
+
+\newpage
+
 
 
 
@@ -146,10 +165,10 @@ The last NPRA dataset acquired was raw hourly data from a defined subset of all 
 
 
 \subsection{Twitter}
-Using the representational state transfer (REST) application programming interface (API) it was paramount that in order to build a sufficient dataset, acquiring and collecting data had to begin as soon as possible in order to collect enough data for this thesis. A simple python program was created that takes the input of the API keys provided by the file keys.txt and the keywords to be searched upon provided by the file search\_terms.txt. The program ensures that no duplicate messages are recorded, and the limit of a hundred tweets dictated by the REST API was overcome simply by searching for yet another hundred from the last date of the previous hundred until the date limit of about 10 days was reached.
+Using the representational state transfer (REST) application programming interface (API) it was paramount that in order to build a sufficient dataset, acquiring and collecting data had to begin as soon as possible in order to collect enough data for this thesis. A simple python module was created that takes the input of the API keys provided by the file keys.txt and the keywords to be searched upon provided by the file search\_terms.txt. Explanation on how to create the API key is found in the file backend/twitter/README.md. The program ensures that some duplicate messages are ignored but not all (explained more in the following chapter), and the limit of a hundred tweets dictated by the REST API user agreement was overcome simply by searching for yet another hundred from the last date of the previous hundred until the date limit of about 10 days was reached.
 The output is appended to a file in this data structure on new lines: id, date, location, tweet, there is also a dotted separator for each new tweet making it more easy for humans to read. The functions described are implemented by the file twitter\_searching.py, which can be run as its own module and saves new tweets to the file twitter\_data.txt.
 
-A straightforward analysis tool for the Twitter data in the file twitter\_data.txt was created by simply counting how many tweets there are. The idea is that during influenza seasons numbers of influenza-related tweets increases and then decrease when off the season, while the number of non-relevant tweets is constant during the whole year (or slightly increasing or decreasing based on the popularity of Twitter as a social media). A more complex tool for analyzing the tweets for relevance was elected to bee too much work for this thesis. The advantage of simply counting how many possible tweets there are is that it is fast and easy to implement, the drawback is that it captures non-relevant tweets. Future work may be done to improve this quality with a better analyzing tool than this thesis chose. Figure \ref{fig:twitterAnal} shows the results of the time-frame captured. The analyzing function is implemented in the file twitter\_analyser.py, when the module is executed on its own it shows a graph over the data found in the file twitter\_data.txt. A simple batch file twitter.bat was created to make it easy running these programs in the desired order.
+A straightforward analysis tool for the Twitter data in the file twitter\_data.txt was created by simply counting how many tweets there are. The idea is that during influenza seasons numbers of influenza-related tweets increases and then decrease when off the season, while the number of non-relevant tweets is constant during the whole year (or slightly increasing or decreasing based on the popularity of Twitter as a social media). A more complex tool for analysing the tweets for relevance was elected to bee too much work for this thesis. The advantage of simply counting how many possible tweets there are is that it is fast and easy to implement, the drawback is that it captures non-relevant tweets. Future work may be done to improve this quality with a better analysis tool. Figure \ref{fig:twitterAnal} shows the results of the time-frame captured. The analysing function is implemented in the file twitter\_analyser.py, when the module is executed on its own it shows a graph over the data found in the file twitter\_data.txt. A simple batch file twitter.bat was created to make it easy running these programs in the desired order. This module requires manual updates by running the individual module itself in the directory backend/twitter/twitter.bat. If no API key is provided the Twitter graph can still be viewed in the frontend main program frontend/gui.py's appropriate viewport accessible from the Twitter button, but it cannot append new updates without this key.
 
 \begin{figure}[ht]
 \includegraphics[width=16cm]{twitter_tweets_2018}
@@ -158,6 +177,7 @@ A straightforward analysis tool for the Twitter data in the file twitter\_data.t
 \label{fig:twitterAnal}
 \end{figure}
 
+\newpage
 
 
 
@@ -166,10 +186,10 @@ A straightforward analysis tool for the Twitter data in the file twitter\_data.t
 
 
 \subsection{Kolumbus}
-The data provided by Kolumbus was in a .png format needed to be converted into a more convenient (and appropriate) data structure. The chosen data structure conversion was comma separated values (CSV) stored in the file '15\_17\_månedstall\_total.csv'. From there it was a simple job to plot the data in a python script, unfortunately the data is only on a monthly basis. Figure \ref{fig:kolumbus_15_17} shows the results.
+The data provided by Kolumbus was in a .png format needed to be converted into a more convenient (and appropriate) data structure. The chosen data structure conversion was comma separated values (CSV) stored in the delimited text file '15\_17\_månedstall\_total.csv'. From there it was a simple job to plot the data in a python script, unfortunately the data is only on a monthly basis. Figure \ref{fig:kolumbus_15_17} shows the results.
 
-\begin{figure}[ht]
-\includegraphics[width=16cm]{kolumbus_total_num_sold_15_17}
+\begin{figure}[!htb]
+\includegraphics[width=11cm]{kolumbus_total_num_sold_15_17}
 \centering
 \caption{Monthly passenger travel with Kolumbus}
 \label{fig:kolumbus_15_17}
@@ -181,18 +201,17 @@ The data provided by Kolumbus was in a .png format needed to be converted into a
 
 
 
-
-
 \subsection{Ruter}
-The data provided by Ruter was in a .xlsx file and could easily be read, extracted and plotted by a simple python script. Figure \ref{fig:ruter_15_18} shows the results. Note that with Python's matplotlib module a user can zoom in and out to get a more desired and uncluttered view. The data was provided by a daily basis for the years of 2015-2018. Note that the first year is lower because it does not contain Oslo's underground train service passenger data.
+The data provided by Ruter was in a .xlsx file and could easily be read, extracted and plotted by a simple python script. Figure \ref{fig:ruter_15_18} shows the results. Consider that with Python's matplotlib module, mounted in the frontend's main program frontend/gui.py, a user can zoom in and out to get a more desired and uncluttered view. The data was provided by a daily basis for the years of 2015-2018. Observe that the first year is lower because it does not contain Oslo's underground train service passenger data.
 
-\begin{figure}[ht]
-\includegraphics[width=16cm]{ruter_15_18}
+\begin{figure}[!htb]
+\includegraphics[width=11cm]{ruter_15_18}
 \centering
 \caption{Daily tickets sold with Ruter, the year of 2015 does not contain Oslo's underground train service passenger data}
 \label{fig:ruter_15_18}
 \end{figure}
 
+\newpage
 
 
 
@@ -204,16 +223,14 @@ The data provided by Ruter was in a .xlsx file and could easily be read, extract
 
 
 \section{The Frontend}
-The thesis's program is divided into two: The backend and the frontend. The frontend is responsible for visualizing the data provided by the backend. It does so by mounting a graphical user interface (GUI) that provides everything the user needs from this thesis. The GUI uses other frontend modules described in the following subchapters.
+The thesis's program is divided into two: The backend and the frontend. The frontend is responsible for visualising the data provided by the backend. It does so by mounting a graphical user interface (GUI) that provides everything the user needs from this thesis. The GUI uses other frontend modules described in the following subchapters.
 
 \subsection{The GUI}
-The file gui.py is the main program. It mounts the GUI with help from backend modules and the frontend modules such as the file map\_canvas.py, the file scrframe.py, the file double\_y\_graphs.py, the file NIPH\_frame.py and the file NPRA\_frame.py . The GUI is created using Python's standard Tkinter module, and it provides the means of a basic window creation with all the other usual GUI necessities available. 
+The file gui.py is the main program. It mounts the GUI with help from backend modules and the frontend modules such as the file map\_canvas.py, the file scrframe.py, the file double\_y\_graphs.py, the file NIPH\_frame.py and the file NPRA\_frame.py . The GUI is created using Python's standard Tkinter module (standard meaning it's not a required external library), and it provides the means of a basic window creation with all the other usual GUI necessities available. 
 
-The GUI module itself is structured in two parts: The buttons frame and the data frame. The buttons frame produces a menu and simply makes available buttons to be clicked upon showing the different graphs for the respective datasets from the backend. The data frames show the graphs and if needed a map, visualizing the data from the backend. The backend takes time to load, to make this experience more user-friendly a progress bar is shown progressing relative to the loading sequence. Upon completion, the NPIH data is shown as a standard view. The user may use the mouse wheel to scroll up and down the view and click the buttons to change datasets. 
+The program gui.py is structured in two parts: The buttons frame and the data frame. The buttons frame produces a menu and simply makes available buttons to be clicked upon showing the different graphs for the respective datasets from the backend. The data frames show the graphs and if needed a map, visualizing the data from the backend. The backend takes time to load, to make this experience more user-friendly a progress bar is shown progressing relative to the actual loading sequence. Upon completion, the NIPH data is shown as a default view. The user may use the mouse wheel to scroll up and down the view and click the buttons to change datasets. 
 
-In some datasets, a map is provided for further visualization. the map is interactive with its own buttons and also responds to dragging the mouse in order to move the map, double-clicking in order to zoom in and using the mouse wheel, when hovering over the map, to zoom in and out.
-
-Figure \ref{fig:the_gui} shows the GUI.
+In some datasets, a map is provided for further visualisation. the map is interactive with its own buttons and also responds to dragging the mouse in order to move the map, double-clicking in order to zoom in and using the mouse wheel, when hovering over the map, to zoom in and out. Figure \ref{fig:the_gui} shows the GUI.
 
 \begin{figure}[ht]
 \includegraphics[width=16cm]{the_gui}

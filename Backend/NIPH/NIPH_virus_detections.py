@@ -2,7 +2,7 @@
     Shows a graph of influenza seasons 2015/2016, 2016/2017 and 2017/2018
     Data is hardcoded because it is only available from pdf files.
 
-    @ Sandra Moen
+    @author: Sandra Moen
 """
 
 import matplotlib.pyplot as plt

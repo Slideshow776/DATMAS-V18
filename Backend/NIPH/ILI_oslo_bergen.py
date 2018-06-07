@@ -2,6 +2,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import datetime
 
+"""
+@author: Sandra Moen
+"""
 class NIPH_ILI_oslo_bergen:
     def __init__(self, filepath_oslo, filepath_bergen, legend=True):
         oslo_data = self._get_data(filepath_oslo)

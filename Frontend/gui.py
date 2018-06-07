@@ -233,5 +233,5 @@ data_frame1 = scrframe.VerticalScrolledFrame(container)
 the_toolbar = toolbar(root)
 progress_bar(container)
 
-root.after(1, data_frame) # a little hack to make the window load properly before the data_frame1 widget
+root.after(1, data_frame) # a little hack to make the window load properly before the data_frame widget
 root.mainloop()

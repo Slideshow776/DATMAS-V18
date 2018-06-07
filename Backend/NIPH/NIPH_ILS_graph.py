@@ -3,6 +3,9 @@ from openpyxl import load_workbook
 import matplotlib.pyplot as plt
 import numpy as np
 
+"""
+@author: Sandra Moen
+"""
 class NIPH_ILI:
     def __init__(self, filepath):
         x, self.y_2016_2017 = self.get_data(filepath)
