@@ -202,7 +202,7 @@ The data provided by Kolumbus was in a .png format needed to be converted into a
 
 
 \subsection{Ruter}
-The data provided by Ruter was in a .xlsx file and could easily be read, extracted and plotted by a simple python script. Figure \ref{fig:ruter_15_18} shows the results. Consider that with Python's matplotlib module, mounted in the frontend's main program frontend/gui.py, a user can zoom in and out to get a more desired and uncluttered view. The data was provided by a daily basis for the years of 2015-2018. Observe that the first year is lower because it does not contain Oslo's underground train service passenger data.
+The data provided by Ruter was in a .xlsx file and could easily be read, extracted and plotted by a simple python script. Figure \ref{fig:ruter_15_18} shows the results. Consider that with Python's matplotlib module, mounted in the frontend's main program frontend/gui.py, a user can zoom in and out to get a more desired and uncluttered view. The data was provided by a daily basis for the years of 2015-2018. Observe that the first year (in blue) is lower because it does not contain Oslo's underground train service passenger data.
 
 \begin{figure}[!htb]
 \includegraphics[width=11cm]{ruter_15_18}
@@ -232,8 +232,8 @@ The program gui.py is structured in two parts: The buttons frame and the data fr
 
 In some datasets, a map is provided for further visualisation. the map is interactive with its own buttons and also responds to dragging the mouse in order to move the map, double-clicking in order to zoom in and using the mouse wheel, when hovering over the map, to zoom in and out. Figure \ref{fig:the_gui} shows the GUI.
 
-\begin{figure}[ht]
-\includegraphics[width=16cm]{the_gui}
+\begin{figure}[!htb]
+\includegraphics[width=12cm]{the_gui}
 \centering
 \caption{The GUI}
 \label{fig:the_gui}
@@ -242,7 +242,28 @@ In some datasets, a map is provided for further visualisation. the map is intera
 
 
 \subsection{The Map}
-The file map\_canvas.py provides the GUI a Goompy\cite{goompy} map on a Tkinter canvas, as described in chapter 2. This file is also from the Goompy project, but is heavily modified to serve the purpose of this thesis. The file launches a Google static API map on a Tkinter canvas and provides basic Google map functions and user input. The functions edited for this thesis is: better zooming capabilities, coordination markers with individual colors and sizes, ability to focus on the map by will and some other minor bug fixes.
+The file map\_canvas.py provides the GUI a Goompy\cite{goompy} map on a Tkinter canvas. This file is also from the Goompy project, but is heavily modified to serve the purpose of this thesis. The file launches a Google static API map on a Tkinter canvas and provides basic Google map functions and user input. The functions edited for this thesis is: better zooming capabilities, coordination markers with individual colors and sizes, ability to focus on the map by will and some other minor bug fixes.
+
+\subsubsection{Goompy}
+Goompy\cite{goompy} is an open Github project and provides an interactive Google static map\cite{googleSM} for Python, it was created by Simon D. Levy. The main program uses this map implementation with it's own significant modifications to serve an interactive Google based map solution in order to provide visualisation of information. The core Goompy file is found in the file /Frontend/goompy/\_\_init\_\_.py. This was heavily edited to provide the necessary functions of this thesis. The edit includes: Multithreading the fetching of Google static map images thus making Goompy about 4 times faster, dragging now changes latitude and longitude based on x and y position of the map to better help zooming functions, having the API key fetched from a separate text file in order to hide this from misuse by other developers, support of optional map coordinates to be plotted directly in the Google static map API, using and drawing a list of coordinates as a diamond-shaped polygon with individual colors and sizes and using the mouse wheel to zoom in and out. Goompy requires a Google static map API key in order to work properly, users are asked to create the file Frontend/api\_keys.txt and paste the key there as described by the file Frontend/README.md. The original project saved the Google map images in a cache so that fetching a specific map with a familiar geolocations would be instantaneous instead of fetching them again from the Google server, this however was a violation of the terms of agreement and that function was removed from this thesis. Caching resources is a good way to quickly get often used functions, although the new implementation changes latitude and longitude often, as it allows this change, this is no longer a good strategy. For these two reasons the caching was removed.
+Figure \ref{fig:the_goompy} shows the Goompy map interface. In the top left corner radiobuttons change the current viewing map type. The buttons to zoom in and out are found in the bottom right corner.
+
+\begin{figure}[!htb]
+\includegraphics[width=12cm]{goompy}
+\centering
+\caption{A Goompy implementation of Google's static map API}
+\label{fig:the_goompy}
+\end{figure}
+
+\newpage
+
+
+
+
+
+
+
+
 
 
 
