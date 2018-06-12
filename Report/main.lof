@@ -4,32 +4,32 @@
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Figure from Grottenberg et al. \cite {spatiotemp_urban_sys}}}{15}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Simplification of the overall program structure and relation}}{22}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Influenza virus observation}}{23}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Influenza-like illnesses season 2016/2017}}{24}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Influenza-like illnesses season 2014-2018 in Oslo}}{24}
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Influenza-like illnesses season 2014-2018 in Bergen}}{24}
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Annual traffic 2002-2015}}{25}
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Weekly data of the city of Bergen}}{26}
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Weekly data of the city of Oslo}}{26}
-\contentsline {figure}{\numberline {4.9}{\ignorespaces Weekly data of the city of Stavanger}}{27}
-\contentsline {figure}{\numberline {4.10}{\ignorespaces Geospatial bounds of Bergen, used for weekly data. The green circles show where the traffic registration stations are, and the number reveals how many there are in that general area.}}{27}
-\contentsline {figure}{\numberline {4.11}{\ignorespaces Geospatial bounds of Oslo, used for weekly data. The green circles show where the traffic registration stations are, and the number reveals how many there are in that general area.}}{28}
-\contentsline {figure}{\numberline {4.12}{\ignorespaces Geospatial bounds of Stavanger, used for weekly data. The green circles show where the traffic registration stations are, and the number reveals how many there are in that general area.}}{28}
-\contentsline {figure}{\numberline {4.13}{\ignorespaces Geospatial hourly bounds of Bergen, used for hourly data}}{29}
-\contentsline {figure}{\numberline {4.14}{\ignorespaces Geospatial hourly bounds of Oslo, used for hourly data}}{30}
-\contentsline {figure}{\numberline {4.15}{\ignorespaces Geospatial hourly bounds of Stavanger, used for hourly data}}{30}
-\contentsline {figure}{\numberline {4.16}{\ignorespaces Tweets concerning ILS of 2018}}{31}
-\contentsline {figure}{\numberline {4.17}{\ignorespaces Monthly passenger travel with Kolumbus}}{32}
-\contentsline {figure}{\numberline {4.18}{\ignorespaces Daily tickets sold with Ruter, the year of 2015 does not contain Oslo's underground train service passenger data}}{32}
-\contentsline {figure}{\numberline {4.19}{\ignorespaces The GUI}}{33}
-\contentsline {figure}{\numberline {4.20}{\ignorespaces A Goompy implementation of Google's static map API}}{35}
-\contentsline {figure}{\numberline {4.21}{\ignorespaces NIPH comparing buttons panel}}{36}
-\contentsline {figure}{\numberline {4.22}{\ignorespaces NPRA query buttons panel}}{36}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Simplification of the overall program structure and relation}}{23}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Influenza virus observation}}{24}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Influenza-like illnesses season 2016/2017}}{25}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Influenza-like illnesses season 2014-2018 in Oslo}}{25}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Influenza-like illnesses season 2014-2018 in Bergen}}{25}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Annual traffic 2002-2015}}{26}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Weekly data of the city of Bergen}}{27}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Weekly data of the city of Oslo}}{27}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Weekly data of the city of Stavanger}}{28}
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Geospatial bounds of Bergen, used for weekly data. The green circles show where the traffic registration stations are, and the number reveals how many there are in that general area.}}{28}
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Geospatial bounds of Oslo, used for weekly data. The green circles show where the traffic registration stations are, and the number reveals how many there are in that general area.}}{29}
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Geospatial bounds of Stavanger, used for weekly data. The green circles show where the traffic registration stations are, and the number reveals how many there are in that general area.}}{29}
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Geospatial hourly bounds of Bergen, used for hourly data}}{30}
+\contentsline {figure}{\numberline {4.14}{\ignorespaces Geospatial hourly bounds of Oslo, used for hourly data}}{31}
+\contentsline {figure}{\numberline {4.15}{\ignorespaces Geospatial hourly bounds of Stavanger, used for hourly data}}{31}
+\contentsline {figure}{\numberline {4.16}{\ignorespaces Tweets concerning ILS of 2018}}{32}
+\contentsline {figure}{\numberline {4.17}{\ignorespaces Monthly passenger travel with Kolumbus}}{33}
+\contentsline {figure}{\numberline {4.18}{\ignorespaces Daily tickets sold with Ruter, the year of 2015 does not contain Oslo's underground train service passenger data}}{33}
+\contentsline {figure}{\numberline {4.19}{\ignorespaces The GUI}}{34}
+\contentsline {figure}{\numberline {4.20}{\ignorespaces A Goompy implementation of Google's static map API}}{36}
+\contentsline {figure}{\numberline {4.21}{\ignorespaces NIPH comparing buttons panel}}{37}
+\contentsline {figure}{\numberline {4.22}{\ignorespaces NPRA query buttons panel}}{37}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces NPRA data compared with the NIPH ILI data of the city of Oslo for the influenza season of 2016/2017}}{38}
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Twitter data compared with the NIPH ILI data of the city of Oslo for the influenza season of 2017/2018}}{39}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces NPRA data compared with the NIPH ILI data of the city of Oslo for the influenza season of 2016/2017}}{39}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Twitter data compared with the NIPH ILI data of the city of Oslo for the influenza season of 2017/2018}}{40}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {6.1}{\ignorespaces Size of the programs Google static map URLs}}{43}
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Size of the programs Google static map URLs}}{44}
 \addvspace {10\p@ }
 \addvspace {10\p@ }

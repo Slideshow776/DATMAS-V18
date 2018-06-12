@@ -1,11 +1,5 @@
 \begin{thebibliography}{10}
 
-\bibitem{spatiotemp_urban_sys}
-L.~O. Grottenberg, O.~Njå, E.~Tøssebro, G.~Braut, R.~Tønnessen, and G.~M.
-  Grøneng, ``Detecting flu outbreaks based on spatiotemporal information from
-  urban systems – designing a novel study,'' {\em Icwsm}, vol.~20, pp.~1--7,
-  2017.
-
 \bibitem{who2017}
 ``Pandemic influenza risk management: A who guide to inform and harmonize
   national and international pandemic preparedness and response.''
@@ -43,6 +37,12 @@ C.~Robertson, ``Towards a geocomputational landscape epidemiology:
   surveillance, modelling, and interventions,'' {\em GeoJournal}, vol.~82,
   no.~2, pp.~397--414, 2017.
 
+\bibitem{spatiotemp_urban_sys}
+L.~O. Grottenberg, O.~Njå, E.~Tøssebro, G.~Braut, R.~Tønnessen, and G.~M.
+  Grøneng, ``Detecting flu outbreaks based on spatiotemporal information from
+  urban systems – designing a novel study,'' {\em Icwsm}, vol.~20, pp.~1--7,
+  2017.
+
 \bibitem{enduri2018dynamics}
 M.~K. Enduri and S.~Jolad, ``Dynamics of dengue disease with human and vector
   mobility,'' {\em Spatial and spatio-temporal epidemiology}, vol.~25,
@@ -53,53 +53,6 @@ M.~K. Enduri and S.~Jolad, ``Dynamics of dengue disease with human and vector
   surveillance system.''
   https://www.fhi.no/en/hn/statistics/NorSySS/about-the-norwegian-syndromic-surveillance-system/.
 \newblock Accessed: 2018-06-11.
-
-\bibitem{palen2015success}
-L.~Palen, R.~Soden, T.~J. Anderson, and M.~Barrenechea, ``Success \& scale in a
-  data-producing organization: The socio-technical evolution of openstreetmap
-  in response to humanitarian events,'' in {\em Proceedings of the 33rd annual
-  ACM conference on human factors in computing systems}, pp.~4113--4122, ACM,
-  2015.
-
-\bibitem{OpenStreetMap}
-{OpenStreetMap}, ``Openstreetmap is a map of the world, created by people like
-  you and free to use under an open licence..'' https://www.openstreetmap.org,
-  2018.
-
-\bibitem{hu2016task}
-Y.~Hu, K.~Janowicz, and Y.~Chen, ``Task-oriented information value measurement
-  based on space-time prisms,'' {\em International Journal of Geographical
-  Information Science}, vol.~30, no.~6, pp.~1228--1249, 2016.
-
-\bibitem{anderson2018crowd}
-J.~Anderson, R.~Soden, B.~Keegan, L.~Palen, and K.~M. Anderson, ``The crowd is
-  the territory: Assessing quality in peer-produced spatial data during
-  disasters,'' {\em International Journal of Human--Computer Interaction},
-  vol.~34, no.~4, pp.~295--310, 2018.
-
-\bibitem{gonzalez2009framework}
-R.~A. Gonzalez and N.~Bharosa, ``A framework linking information quality
-  dimensions and coordination challenges during interagency crisis response,''
-  in {\em System Sciences, 2009. HICSS'09. 42nd Hawaii International Conference
-  on}, pp.~1--10, IEEE, 2009.
-
-\bibitem{resch2018combining}
-B.~Resch, F.~Usl{\"a}nder, and C.~Havas, ``Combining machine-learning topic
-  models and spatiotemporal analysis of social media data for disaster
-  footprint and damage assessment,'' {\em Cartography and Geographic
-  Information Science}, vol.~45, no.~4, pp.~362--376, 2018.
-
-\bibitem{shao2016forecasting}
-H.~Shao, K.~Hossain, H.~Wu, M.~Khan, A.~Vullikanti, B.~A. Prakash, M.~Marathe,
-  and N.~Ramakrishnan, ``Forecasting the flu: designing social network sensors
-  for epidemics,'' {\em arXiv preprint arXiv:1602.06866}, 2016.
-
-\bibitem{stein2012development}
-M.~L. Stein, J.~W. Rudge, R.~Coker, C.~van~der Weijden, R.~Krumkamp,
-  P.~Hanvoravongchai, I.~Chavez, W.~Putthasri, B.~Phommasack, W.~Adisasmito,
-  {\em et~al.}, ``Development of a resource modelling tool to support decision
-  makers in pandemic influenza preparedness: The asiaflucap simulator,'' {\em
-  BMC public health}, vol.~12, no.~1, p.~870, 2012.
 
 \bibitem{who_ebola}
 W.~H. Organization, ``Ebola virus disease.''
@@ -161,6 +114,63 @@ V.~Dukic, H.~F. Lopes, and N.~G. Polson, ``Tracking epidemics with google flu
 \bibitem{google_flu_trends}
 Google, ``Google flu trends; provided estimates of influenza activity for more
   than 25 countries.,'' 2018.
+
+\bibitem{gonzalez2009framework}
+R.~A. Gonzalez and N.~Bharosa, ``A framework linking information quality
+  dimensions and coordination challenges during interagency crisis response,''
+  in {\em System Sciences, 2009. HICSS'09. 42nd Hawaii International Conference
+  on}, pp.~1--10, IEEE, 2009.
+
+\bibitem{resch2018combining}
+B.~Resch, F.~Usl{\"a}nder, and C.~Havas, ``Combining machine-learning topic
+  models and spatiotemporal analysis of social media data for disaster
+  footprint and damage assessment,'' {\em Cartography and Geographic
+  Information Science}, vol.~45, no.~4, pp.~362--376, 2018.
+
+\bibitem{shao2016forecasting}
+H.~Shao, K.~Hossain, H.~Wu, M.~Khan, A.~Vullikanti, B.~A. Prakash, M.~Marathe,
+  and N.~Ramakrishnan, ``Forecasting the flu: designing social network sensors
+  for epidemics,'' {\em arXiv preprint arXiv:1602.06866}, 2016.
+
+\bibitem{stein2012development}
+M.~L. Stein, J.~W. Rudge, R.~Coker, C.~van~der Weijden, R.~Krumkamp,
+  P.~Hanvoravongchai, I.~Chavez, W.~Putthasri, B.~Phommasack, W.~Adisasmito,
+  {\em et~al.}, ``Development of a resource modelling tool to support decision
+  makers in pandemic influenza preparedness: The asiaflucap simulator,'' {\em
+  BMC public health}, vol.~12, no.~1, p.~870, 2012.
+
+\bibitem{palen2015success}
+L.~Palen, R.~Soden, T.~J. Anderson, and M.~Barrenechea, ``Success \& scale in a
+  data-producing organization: The socio-technical evolution of openstreetmap
+  in response to humanitarian events,'' in {\em Proceedings of the 33rd annual
+  ACM conference on human factors in computing systems}, pp.~4113--4122, ACM,
+  2015.
+
+\bibitem{OpenStreetMap}
+{OpenStreetMap}, ``Openstreetmap is a map of the world, created by people like
+  you and free to use under an open licence..'' https://www.openstreetmap.org,
+  2018.
+
+\bibitem{hu2016task}
+Y.~Hu, K.~Janowicz, and Y.~Chen, ``Task-oriented information value measurement
+  based on space-time prisms,'' {\em International Journal of Geographical
+  Information Science}, vol.~30, no.~6, pp.~1228--1249, 2016.
+
+\bibitem{anderson2018crowd}
+J.~Anderson, R.~Soden, B.~Keegan, L.~Palen, and K.~M. Anderson, ``The crowd is
+  the territory: Assessing quality in peer-produced spatial data during
+  disasters,'' {\em International Journal of Human--Computer Interaction},
+  vol.~34, no.~4, pp.~295--310, 2018.
+
+\bibitem{CDC}
+C.~for Disease~Control and Prevention, ``The cdc focuses usa attention on
+  developing and applying disease control and prevention.,'' 2018.
+
+\bibitem{strava_main}
+Strava, ``The number 1 application for runners and cyclists,'' 2018.
+
+\bibitem{strata_wiki}
+Wikipedia, ``Wikipedia about strava.,'' 2018.
 
 \bibitem{twitter_twitter}
 ``Twitter, an online news and social networking service.''
