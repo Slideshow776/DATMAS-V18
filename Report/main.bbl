@@ -124,6 +124,44 @@ M.~Moeller and S.~Furhmann, ``Mapping the world-a new approach for volunteered
   Photogrammetry, Remote Sensing and Spatial Information Sciences}, vol.~40,
   no.~6, p.~9, 2015.
 
+\bibitem{article_Paules}
+C.~Paules and K.~Subbarao, ``Influenza,'' vol.~390, 03 2017.
+
+\bibitem{guan2010emergence}
+Y.~Guan, D.~Vijaykrishna, J.~Bahl, H.~Zhu, J.~Wang, and G.~J. Smith, ``The
+  emergence of pandemic influenza viruses,'' {\em Protein \& cell}, vol.~1,
+  no.~1, pp.~9--13, 2010.
+
+\bibitem{world2009pandemic}
+W.~H. Organization {\em et~al.}, ``Pandemic h1n1 2009,'' 2009.
+
+\bibitem{karimi2015effect}
+E.~Karimi, K.~Schmitt, and A.~Akgunduz, ``Effect of individual protective
+  behaviors on influenza transmission: an agent-based model,'' {\em Health care
+  management science}, vol.~18, no.~3, pp.~318--333, 2015.
+
+\bibitem{van2013impact}
+K.~Van~Kerckhove, N.~Hens, W.~J. Edmunds, and K.~T. Eames, ``The impact of
+  illness on social networks: implications for transmission and control of
+  influenza,'' {\em American journal of epidemiology}, vol.~178, no.~11,
+  pp.~1655--1662, 2013.
+
+\bibitem{xu2014surveillance}
+F.~Xu, T.~Mawokomatanda, D.~Flegel, C.~Pierannunzi, W.~Garvin, P.~Chowdhury,
+  S.~Salandy, C.~Crawford, and M.~Town, ``Surveillance for certain health
+  behaviors among states and selected local areas—behavioral risk factor
+  surveillance system, united states, 2011,'' {\em Morbidity and Mortality
+  Weekly Report: Surveillance Summaries}, vol.~63, no.~9, pp.~1--149, 2014.
+
+\bibitem{dukic2012tracking}
+V.~Dukic, H.~F. Lopes, and N.~G. Polson, ``Tracking epidemics with google flu
+  trends data and a state-space seir model,'' {\em Journal of the American
+  Statistical Association}, vol.~107, no.~500, pp.~1410--1426, 2012.
+
+\bibitem{google_flu_trends}
+Google, ``Google flu trends; provided estimates of influenza activity for more
+  than 25 countries.,'' 2018.
+
 \bibitem{twitter_twitter}
 ``Twitter, an online news and social networking service.''
   https://en.wikipedia.org/wiki/Twitter.
