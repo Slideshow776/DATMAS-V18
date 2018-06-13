@@ -1,5 +1,11 @@
 \begin{thebibliography}{10}
 
+\bibitem{spatiotemp_urban_sys}
+L.~O. Grottenberg, O.~Njå, E.~Tøssebro, G.~Braut, R.~Tønnessen, and G.~M.
+  Grøneng, ``Detecting flu outbreaks based on spatiotemporal information from
+  urban systems – designing a novel study,'' {\em Icwsm}, vol.~20, pp.~1--7,
+  2017.
+
 \bibitem{who2017}
 ``Pandemic influenza risk management: A who guide to inform and harmonize
   national and international pandemic preparedness and response.''
@@ -36,12 +42,6 @@ B.~Yang, H.~Pei, H.~Chen, J.~Liu, and S.~Xia, ``Characterizing and discovering
 C.~Robertson, ``Towards a geocomputational landscape epidemiology:
   surveillance, modelling, and interventions,'' {\em GeoJournal}, vol.~82,
   no.~2, pp.~397--414, 2017.
-
-\bibitem{spatiotemp_urban_sys}
-L.~O. Grottenberg, O.~Njå, E.~Tøssebro, G.~Braut, R.~Tønnessen, and G.~M.
-  Grøneng, ``Detecting flu outbreaks based on spatiotemporal information from
-  urban systems – designing a novel study,'' {\em Icwsm}, vol.~20, pp.~1--7,
-  2017.
 
 \bibitem{enduri2018dynamics}
 M.~K. Enduri and S.~Jolad, ``Dynamics of dengue disease with human and vector

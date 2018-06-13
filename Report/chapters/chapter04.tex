@@ -1,4 +1,18 @@
-This chapter describes how the use of the different datasets were implemented and presented. The program is divided into two: The backend and the frontend. The structure and functions are provided by the backend, which governs collection and manipulation of data, and the frontend presents the data in a graphical user interface (GUI) using graphs and maps. Figure \ref{fig:program} show the structure and relations of the backend and the frontend in a simplified manner. The main module to be run is found in frontend/gui.py, and the system works best with two API keys installed as explained in this chapter.
+This chapter describes how the use of the different datasets were implemented and presented. The program is divided into two: The backend and the frontend. The structure and functions are provided by the backend, which governs collection and manipulation of data, and the frontend presents the data in a graphical user interface (GUI) using graphs and maps. 
+Figure \ref{fig:Conceptual_o} show the conceptual oversights of what this program hopes to be structured like. First the sources are collected and converted into a more convenient format to work with, that format is stored and then analysed, and lastly the results are presented visually.
+
+\begin{figure}[h]
+\includegraphics[width=8cm]{conseptual_overall}
+\centering
+\caption{Conceptual oversight}
+\label{fig:Conceptual_o}
+\end{figure}
+
+
+\newpage
+
+
+Figure \ref{fig:program} show the structural relations of the backend and the frontend in a simplified manner. The main module to be run is found in frontend/gui.py, and the system works best with two API keys installed as explained in this chapter. Both the frontend and the backend have more detailed diagrams in their own sub chapters.
 
 \begin{figure}[h]
 \includegraphics[width=11cm]{program_diagram}
@@ -7,11 +21,23 @@ This chapter describes how the use of the different datasets were implemented an
 \label{fig:program}
 \end{figure}
 
+
+\newpage
+
+
+
 \section{The Backend}
 The backend is responsible for providing the frontend all the data and deeper functions it needs to visualize and administrate data to be show in graphs. The backend is partitioned into modules (Python programs/.py files) in their respective directory folder based on each dataset available. Each module may also be run individually for testing and easy viewing purposes. 
-The Twitter module is unique as it requires 4 application programming interface (API) keys to work properly. The instructions for this set-up is found in the file README.md in the twitter module's directory.
+The Twitter module is unique as it requires 4 application programming interface (API) keys to work properly. The instructions for this set-up is found in the file README.md in the twitter module's directory. Figure \ref{fig:backend_diagram} shows a diagram of the backend.
 
+\begin{figure}[!htb]
+\includegraphics[width=16cm]{backend_diagram}
+\centering
+\caption{A semi detailed diagram of the Backend structure and functions}
+\label{fig:backend_diagram}
+\end{figure}
 
+\newpage
 
 
 \subsection{The Norwegian Institute of Public Health}
@@ -88,78 +114,56 @@ The dataset is in an XML file structure, a module named NPRA\_monthly.py was cre
 For the weekly datasets a set of traffic registration stations was needed to define the temporal bounds of each area of interest. Defined are the towns of Oslo, Stavanger, and Bergen, as well as the whole of Norway on a level 1 basis. The level 1 registrations are continuous throughout the year on an hourly basis and is exactly what this thesis requires. The module NPRA\_weekly.py captures these functions and also provides the user with command arguments if run individually. The commands are the cities of Bergen, Stavanger or Oslo, if no commands are given the annual graph of the whole of Norway will be drawn instead.
 
 Figures \ref{fig:weeklybergen}, \ref{fig:weeklyoslo} and \ref{fig:weeklystavanger} shows the traffic on a weekly basis. This provides a better resolution for better analysis.
-\begin{figure}[ht]
+
+\begin{figure}[!htb]
 \includegraphics[width=12cm]{NPRA_13_17_weekly_bergen}
 \centering
 \caption{Weekly data of the city of Bergen}
 \label{fig:weeklybergen}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[!htb]
 \includegraphics[width=12cm]{NPRA_13_17_weekly_oslo}
 \centering
 \caption{Weekly data of the city of Oslo}
 \label{fig:weeklyoslo}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[!htb]
 \includegraphics[width=12cm]{NPRA_13_17_weekly_stavanger}
 \centering
 \caption{Weekly data of the city of Stavanger}
 \label{fig:weeklystavanger}
 \end{figure}
 
-Figure \ref{fig:boundsbergen}, \ref{fig:boundsoslo} and \ref{fig:boundsstavanger} shows the different geospatial bounds used to define the cities, and the respective data from traffic registration stations was collected from these. The green circles with numbers inside show where and how many traffic registration stations there are.
-
-\begin{figure}[!htb]
-\includegraphics[width=10cm]{nivaa_1_bergen}
-\centering
-\caption{Geospatial bounds of Bergen, used for weekly data. The green circles show where the traffic registration stations are, and the number reveals how many there are in that general area.}
-\label{fig:boundsbergen}
-\end{figure}
-
-\begin{figure}[!htb]
-\includegraphics[width=10cm]{nivaa_1_oslo}
-\centering
-\caption{Geospatial bounds of Oslo, used for weekly data. The green circles show where the traffic registration stations are, and the number reveals how many there are in that general area.}
-\label{fig:boundsoslo}
-\end{figure}
-
-\begin{figure}[!htb]
-\includegraphics[width=10cm]{nivaa_1_stavanger}
-\centering
-\caption{Geospatial bounds of Stavanger, used for weekly data. The green circles show where the traffic registration stations are, and the number reveals how many there are in that general area.}
-\label{fig:boundsstavanger}
-\end{figure}
-
-The last NPRA dataset acquired was raw hourly data from a defined subset of all of NPRA's traffic registration stations previously used, this is because the NPRA would only provide this much data from their stores. The data contains all whole hours from all weeks over several years, number of fields available on the road (vehicle lanes, usually only two for regular roads), and how many vehicles passed by that hour and also their lengths in category. Figure \ref{fig:hboundsbergen}, \ref{fig:hboundsoslo} and \ref{fig:hboundsstavanger} shows the different geospatial hourly based bounds (traffic registration stations) used. There are two modules dedicated to the hourly datasets, the NPRA\_Traffic\_Stations\_Graph.py and the NPRA\_Traffic\_Stations\_load\_data.py found in the directory
+The last NPRA dataset acquired was raw hourly data from a defined subset of all of NPRA's traffic registration stations previously used, this is because the NPRA would only provide this much data from their stores. The data contains all whole hours from all weeks over several years, number of fields available on the road (vehicle lanes, usually only two for regular roads), and how many vehicles passed by that hour and also their lengths in category. Figure \ref{fig:hboundsbergen}, \ref{fig:hboundsoslo} and \ref{fig:hboundsstavanger} shows the different geospatial hourly based bounds (traffic registration stations) used. There are two modules dedicated to the hourly datasets, the NPRA\_Traffic\_Stations\_Graph.py and the NPRA\_Traffic\_Stations\_load\_data.py found in the directory \\
 Backend/NPRA/Traffic\_registration\_stations/hourly\_datasets. The graph module is responsible for drawing a graph with specifications of hour to/from, weekday to/from, month to/from, year and field. The load data module is responsible for providing the graph with all the functions it needs to operate, like querying the dataset, the variance of the queried dataset, extracting the dataset from file and organizing it into a data structure, and reading and handling the coordinates of the traffic registration stations so that it can be shown on the map. These last hourly based datasets provide high quality information and is presented in the GUI, by clicking the NPRA button, where the user can try different queries to find different information, more explanations follow in the frontend section of this chapter.
 
 \begin{figure}[!htb]
-\includegraphics[width=10cm]{times_nivaa1_BERGEN}
+\includegraphics[width=8cm]{times_nivaa1_BERGEN}
 \centering
-\caption{Geospatial hourly bounds of Bergen, used for hourly data}
+\caption{Geospatial hourly bounds of Bergen, used for hourly data. The green dots show the location of traffic registration stations chosen}
 \label{fig:hboundsbergen}
 \end{figure}
 
 \begin{figure}[!htb]
-\includegraphics[width=10cm]{times_nivaa1_OSLO}
+\includegraphics[width=8cm]{times_nivaa1_OSLO}
 \centering
-\caption{Geospatial hourly bounds of Oslo, used for hourly data}
+\caption{Geospatial hourly bounds of Oslo, used for hourly data.}
 \label{fig:hboundsoslo}
 \end{figure}
 
 \begin{figure}[!htb]
-\includegraphics[width=10cm]{times_nivaa1_STAVANGER}
+\includegraphics[width=8cm]{times_nivaa1_STAVANGER}
 \centering
-\caption{Geospatial hourly bounds of Stavanger, used for hourly data}
+\caption{Geospatial hourly bounds of Stavanger, used for hourly data.}
 \label{fig:hboundsstavanger}
 \end{figure}
 
+
 \newpage
 
-
-
+\newpage
 
 
 
@@ -223,7 +227,14 @@ The data provided by Ruter was in a .xlsx file and could easily be read, extract
 
 
 \section{The Frontend}
-The thesis's program is divided into two: The backend and the frontend. The frontend is responsible for visualising the data provided by the backend. It does so by mounting a graphical user interface (GUI) that provides everything the user needs from this thesis. The GUI uses other frontend modules described in the following subchapters.
+The thesis's program is divided into two: The backend and the frontend. The frontend is responsible for visualising the data provided by the backend. It does so by mounting a graphical user interface (GUI) that provides everything the user needs from this thesis. The GUI uses other frontend modules described in the following subchapters. Figure \ref{fig:frontend_diagram} shows a diagram of the frontend.
+
+\begin{figure}[h]
+\includegraphics[width=16cm]{frontend_diagram}
+\centering
+\caption{A semi detailed diagram of the Frontend structure and functions}
+\label{fig:frontend_diagram}
+\end{figure}
 
 \subsection{The GUI}
 The file gui.py is the main program. It mounts the GUI with help from backend modules and the frontend modules such as the file map\_canvas.py, the file scrframe.py, the file double\_y\_graphs.py, the file NIPH\_frame.py and the file NPRA\_frame.py . The GUI is created using Python's standard Tkinter module (standard meaning it's not a required external library), and it provides the means of a basic window creation with all the other usual GUI necessities available. 
