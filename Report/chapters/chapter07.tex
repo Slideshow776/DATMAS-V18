@@ -1,49 +1,26 @@
-TODO: svakheter, hvordan gjøre bedre? hva er mitt bidrag?  \\
-
 This chapter presents possible future works and concludes this thesis.
-
-\section{Thesis Contribution}
-This thesis presents a program that visualises collected data both spatially on a map and by traditional graphs. The information is presented by category and with multiple tools to help with investigative analysis. Tools like moving, zooming in and out on graph assets, capturing graph state, adjusting subplot parameters, comparison of graphs, querying graphs and map visualisation.\\
-The early months of this thesis's time scope were characterised by collecting data to be used in the backend. This was notably a though grind as initiating contact could take several weeks followed by multiple rounds of communication back and forth, with reminders and careful explanations of what was intended and needed. The cooperation with the involved agents varied in quality, but the overall assemblage was sufficient. This process involved some waiting days with modest development, this is a common occurrence in professional work.\\
+\\
+\\
+This thesis presents a program that visualises collected data both spatially on a map and by traditional graphs. The information is presented by category and with multiple tools to help with investigative analysis. Tools like moving, zooming in and out on graph assets, capturing graph state, adjusting subplot parameters, comparison of graphs, querying graphs and map visualisation.
+\\
+The early months of this thesis's time scope were characterised by collecting data from various agencies to be used in the backend. This was notably a though grind as initiating contact could take several weeks followed by multiple rounds of communication back and forth, with reminders and careful explanations of what was intended and needed. The cooperation with the involved agents varied in quality, but the overall assemblage was sufficient. This process involved some waiting days with modest development, this is a common occurrence in professional work.
+\\
 The program is a prototype of what an automated collection of multi-source spatial information for emergency management systems may look like. It contains a basic assembly of what such a system would be embodied of and is also modular and scalable making future work possible by integrating new sources from other agencies and further development of structure and accessory features.
-
-\section{Future works}
-The program contains bugs and inefficient solutions, and ameliorating these algorithms requires more work than what is this thesis's time scope. There is a multitude of different open sources, tools, and frameworks in existence. Choosing the right technology and solution for the right project and problem is a challenging task that perhaps becomes easier with experience and adequate knowledge. The willingness, endurance, and eagerness to learn a new contrivance ultimately persuade productivity though missteps are a menace. The state of ever-changing available technologies makes it so viable options change rapidly, and the adherence to adapt is an ever-evolving developer skill. This thesis could have been better served with additional forethought which would require supplemental research on applied standardisation and feasible solutions to structure and wanted features. Although the presented work is within the desired outcome, better realisation of necessities and accessibilities may have been further advantageous.
-
-\subsection{Known bugs and other imperfect implementations}
-One known negligent solution is the algorithms in the program of double\_y\_graphs.py where redundant calculations take place. Fixing this would make the program gui.py slightly faster and be more structural preferable. The difficulty lies with not reusing already created objects and instead forge a new, this is in probity a crude imposition underneath expected proficiency.\\
-The program NIPH\_frame.py serves the function to present two graphs on the same x-axis and with their own separate y-axes, this was however only accomplished on a weekly temporal resolution. Some graphs have a higher resolution like for instance Twitter, but the data is still aggregated into a weekly resolution in the program. Writing algorithms that would support an hourly or weekly resolution became outside of the time scope of this thesis. Future work may focus on being able to compare different resolutions as this would offer a better comparison of the different datasets.\\
-Another known bug is that the buttons panel disappear when the window size is not big enough, the attempt to amend this has again and again produced frustration and the answer remains to this day a mystery.
-The NPRA hourly dataset GUI implementation is missing the option to choose from different traffic registration stations. One reason this was not prioritised in time was that the data obtained was in an older data structure and conversion was difficult, though the one available hourly data set in the program proves the concept of manipulating and studying statistics.\\
-Some functions in the different modules both in the backend and in the frontend are redundant, a better overall structure would be to collect these often used functions in their own utility module. An example of this may be the drawing of graphs in the backend. Having a draw module that only draws whatever the different modules require would serve as a uniform utility tool. This was implemented lastly in the frontend with the program constants.py which only serves the shared constants for the color theme. This makes it easy to change because one would only have to alter it in one place, not having the need to search through every place it is implemented. A solid utility module for both the backend and the frontend should have been achieved for better structure and optimisation.
-
-\subsection{Google static map}
-As discussed in the previous chapter clustering traffic registration stations would solve the maximum URL problem. When presented with a map that shows all of Norway instead of showing each traffic registration stations one could cluster them together by proximity, and when zooming in present an even more fine-tuned clustering until the zoom level is sufficient enough to show all of the traffic registration stations on that level. This is already a standard way of presenting spatial data as seen in the NPRA's online roadmap\cite{vegkart} when selecting multiple elements. Further standardising colors and sizes would significantly save url length, the thought behind different sizes and colors was only intended on a very zoomed in level and is not necessarily needed when showing clusters. Considering when and what is needed amends the complication. The url size problem would also completely vanish if taken a Node/Javascript approach instead. 
-
-\subsection{Database}
-At the very end of the time scope of this thesis, it became obvious that the backend's data should have been implemented in some sort of a database in order to speed up the process of reading and extracting exact information, this especially relevant for the NPRA hourly dataset. Data filtering is the process of refining data sets for relevant user information, different filters can be tailored to different needs. Filtering becomes particularly useful in the NPRA's hourly dataset, an example would be to filter out the different vehicle lanes available, this would on average make the algorithm two times faster. In order to take advantage of data filtering and indexing the data would have to be implemented in a database. A possible more optimal solution would be to rewrite the entire project in Node/Javascript and mount the backend's data on a server such that it is available to the frontend modules.
-
-\subsection{Test driven development}
-Test-driven development (TDD) is the exercise of writing tests for code even before the creation of the algorithm to be tested upon. The goal is to specify the exact parameters and functions an algorithm should have by writing a test firstly, and then writing the actual algorithm and making it pass the test. Although this is a big investment that essentially adds another layer of complexity and requires continuous tweaking the advantages are imposing. A clear acceptance criteria safely define the purpose should one be left astray, and convey a focus on integration, control and well-organized code for safer refactorisation and fewer bugs. The toll of utilizing TDD is high inherently but quickly offers increasing returns and is a virtuous investment that also serves as a living document.
-In hindsight, it is the belief that this thesis would benefit greatly from this practice, and should be considered a future contrivance if this thesis should ever be rewritten by others.
-
-\subsection{Additional features}
-A wanted feature was the variance calculation of the different traffic registration stations that had hourly dataset on them. This would visualize the data on the map in an interestingly manner by differing the sizes based on amount of traffic and colourise them based on the difference by each station's variance. This planned feature fell of of this thesis's time-scope, and although outlined never reach actualisation. There are however attempted experimental algorithms in the program NPRA\_Traffic\_Stations\_load\_data.py, the main concern was the time-cost of these algorithms as calculating the variance of one hourly dataset over the course of five years meant reading through about 87.630 lines of data which could take nearly a minute to run on modern computers. This is why having an indexed database would be beneficial when running such an algorithm on all of the 53 traffic registration stations accessible in this thesis. Although a neat feature the lack of a indexed database and insufficient time, this was never completed.
-
-
-\section{Conclusion}
+\\
+\\
 Automated collection of multi-source spatial information for emergency management such as creating a responsive real-time reactionary system for influenza is feasible.
-The automation part may not become practical for years to come as the Norwegian public API infrastructure is notwithstanding at the current time. However collecting data manually is still a reasonable effort. Implementing more relevant sources should also be a priority, as well as collecting spatial data for specific regions of Norway. 
+The automation part may not become practical for years to come as the Norwegian public API infrastructure is notwithstanding at the current time. However collecting data manually is still a reasonable effort. Implementing more relevant sources should also be a priority, as well as collecting spatial data for specific regions of Norway.
+\\
 This thesis shows that an automated collection of multi-source spatial information for emergency management is achievable, however, this would require much more resources than a single master student can offer on a six month time-scope. Further development of such a program, be that for influenza purposes or other, would be highly ethical as it would be an exceptional aid to ameliorate the purposed predicament. Efforts to further support data collection of citizen behaviour on a macro scale should be initiated such as to encourage additional endeavours.
 
-
-
-TODO: synsing om marked som kan utnyttes, utfording å hente data
-
-It seems that there is a potential untapped market with the dealing of retrieving multi-source data for the purposes of real-time responsive system that derive information and exploits this.
-
-
 TODO: synsing om at big data må uansett kobles tett sammen med forskning og faktiske influensa og ili data for å være politlig.
+
+
+
+
+
+
+
 
 
 

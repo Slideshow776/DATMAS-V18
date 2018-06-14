@@ -1,5 +1,5 @@
 This chapter describes how the use of the different datasets were implemented and presented. The program is divided into two: The backend and the frontend. The structure and functions are provided by the backend, which governs collection and manipulation of data, and the frontend presents the data in a graphical user interface (GUI) using graphs and maps. 
-Figure \ref{fig:Conceptual_o} show the conceptual oversights of what this program hopes to be structured like. First the sources are collected and converted into a more convenient format to work with, that format is stored and then analysed, and lastly the results are presented visually.
+Figure \ref{fig:Conceptual_o} show the conceptual oversights of what this program hopes to achieve. First the sources are collected and converted into a more convenient format to work with, that format is stored and then analysed, and lastly the results are presented visually.
 
 \begin{figure}[h]
 \includegraphics[width=8cm]{conseptual_overall}
@@ -209,7 +209,7 @@ The data provided by Kolumbus was in a .png format needed to be converted into a
 The data provided by Ruter was in a .xlsx file and could easily be read, extracted and plotted by a simple python script. Figure \ref{fig:ruter_15_18} shows the results. Consider that with Python's matplotlib module, mounted in the frontend's main program frontend/gui.py, a user can zoom in and out to get a more desired and uncluttered view. The data was provided by a daily basis for the years of 2015-2018. Observe that the first year (in blue) is lower because it does not contain Oslo's underground train service passenger data.
 
 \begin{figure}[!htb]
-\includegraphics[width=11cm]{ruter_15_18}
+\includegraphics[width=16cm]{ruter_15_18}
 \centering
 \caption{Daily tickets sold with Ruter, the year of 2015 does not contain Oslo's underground train service passenger data}
 \label{fig:ruter_15_18}
