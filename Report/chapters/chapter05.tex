@@ -1,9 +1,14 @@
-This chapter describes the subjective view of the results derived from this thesis's program detailed in chapter three and four. Discussion about the results is elaborated upon in the following chapter.
-
-
+This chapter describes the subjective view of the results derived from this thesis's program detailed in chapter three and four. %Discussion about the results is elaborated upon in the following chapter.
 
 \section{NPRA}
-There are three levels of data available: monthly, weekly and hourly. For this reason, the monthly dataset will be disregarded as there are better data available. Weekly data distinctly show the Norwegian holidays described in table \ref{table:jesus} and shown in figure \ref{fig:graph_vacation_and_compare}. From the figure the Christmas holiday is shown in weeks 51 and 52, the easter holiday is distinctly shown in weeks 14 and 15, and week 25 to week 33 is the summer vacation. The dramatic drop at the end must be overlooked and may be explained as insufficient data (days) for that week. 
+There are three levels of data available: monthly, weekly and hourly. For this reason, the monthly dataset will be disregarded as there are better data available. The NPRA datasets are especially interesting because of it's high quality temporal resolution.
+
+From the end of November to the beginning of December there is a slight drop in the amount of traffic without there being any vacations or holidays, this anomaly might be correlated with the influenza season as numbers of reported virus observations and ILI incidents seems to increase at the same time. When the influenza season slowly begins to decline, traffic slightly returns to normal over the course of January to June. The weekly data is an aggregated set of many traffic registration stations based on the cities of interest or the all of Norway, therefore roadworks, accidents, festivals, sports events, or closed roads is not directly apparent. They are however visible, by assumption, on the hourly datasets as they only show one traffic registration station at a time. When in doubt of closed roads one could pick another traffic registration station nearby and see if it is also affected in the same manner. Another advantage with the hourly datasets is that there is not a dramatic yearly increase of traffic, which means more reliable data can be obtained, especially from the older traffic registration stations that have been operational for several years already.
+
+Weekly data distinctly show the Norwegian holidays described in table \ref{table:jesus} and shown in figure \ref{fig:graph_vacation_and_compare}. From the figure the Christmas holiday is shown in weeks 51 and 52, the Easter holiday is distinctly shown in weeks 14 and 15, and week 25 to week 33 is the summer vacation. The dramatic drop at the end must be overlooked and may be explained as insufficient data (days) for that week. 
+
+It is important to take vacation and holidays into account when procuring information from these data, as otherwise, it would be easy to conclude wrongly. The most dramatic drop is the summer vacation, which luckily is outside the influenza season anyway. 
+Another challenge with holidays and vacations is that the start and duration change yearly, and because of the Gregorian calendar set dates shift one day up the next weekday for the next year, an exception is if there is a leap year, in that case, the shift is two days. This needs to be taken into consideration, and possibly weeded out or glossed over in order to avoid misinterpretations.
 
 \begin{center}
 \begin{table}[!h]
@@ -30,18 +35,12 @@ There are three levels of data available: monthly, weekly and hourly. For this r
 \end{center}
 
 \begin{figure}[!htb]
-\includegraphics[width=15cm]{graph_vacation_and_compare}
+\includegraphics[width=14cm]{graph_vacation_and_compare}
 \centering
 \caption{NPRA data compared with the NIPH ILI data of the city of Oslo for the influenza season of 2016/2017.}
 \label{fig:graph_vacation_and_compare}
 \end{figure}
 
-It is important to take vacation and holidays into account when procuring information from these data, as otherwise, it would be easy to conclude wrongly. The most dramatic drop is the summer vacation, which luckily is outside the influenza season anyway. 
-
-\newpage
-
-Another challenge with holidays and vacations is that the start and duration change yearly, and because of the Gregorian calendar set dates shift one day up the next weekday for the next year, an exception is if there is a leap year, in that case, the shift is two days. This needs to be taken into consideration, and possibly weeded out or glossed over in order to avoid misinterpretations.
-\\
 Further, the weekly graphs show a considerable increase in traffic each year as seen in figure \ref{fig:weeklystavanger}, when asked about this the NPRA admitted to their action plan to increase the numbers of traffic registration stations yearly. This increase of infrastructure is transparent in the graphs shown as jumps in the amount of traffic with each new year. 
 
 \begin{figure}[!htb]
@@ -51,7 +50,7 @@ Further, the weekly graphs show a considerable increase in traffic each year as 
 \label{fig:weeklystavanger}
 \end{figure}
 
-From the end of November to the beginning of December there is a slight drop in the amount of traffic without there being any vacations or holidays, this anomaly might be correlated with the influenza season as numbers of reported virus observations and ILI incidents seems to increase at the same time. When the influenza season slowly begins to decline, traffic slightly returns to normal over the course of January to June. The weekly data is an aggregated set of many traffic registration stations based on the cities of interest or the all of Norway, therefore roadworks, accidents, festivals, sport events, or closed roads is not directly apparent. They are however visible, by assumption, on the hourly datasets as they only show one traffic registration station at a time. An example of this is the annual "Tour des Fjord" which for some reason is the French name of the bike race from Bergen to Stavanger, and during this celebration, to the annoyance of many, several roads down town of Stavanger are closed. When in doubt of closed roads one could pick another traffic registration station nearby and see if it is also affected in the same manner. Another advantage with the hourly datasets is that there is not a dramatic yearly increase of traffic, which means more reliable data can be obtained, especially from the older traffic registration stations that have been operational for several years already.
+
 
 
 
@@ -72,7 +71,7 @@ When comparing the datasets of twitter and NIPH there is a clear similarity betw
 \label{fig:graph_twitter_ili_oslo}
 \end{figure}
 
-The garner of Twitter data began in week seven, which means that the earlier trend of twitter messages during the actual peak of this years influenza season is unknown. The details of the whole of this season and earlier seasons would have been beneficial, and is crucial to determine the analytic effect of examining Twitter as a reliable source for influenza insights in Norway.
+The garner of Twitter data began in week seven, which means that the earlier trend of Twitter messages during the actual peak of this year's influenza season is unknown. The details of the whole of this season and earlier seasons would have been beneficial, it is also important to use these data not on their own but complementary with other data sets as well, especially with the NIPH's data. By analytical endeavours, a means for better search terms would perhaps amend the quality for accurate data and thus, be a more reliable estimation between the NIPH's ILI data.
 
 
 
@@ -96,7 +95,7 @@ Comparing the Ruter data with the ILI data of Oslo is especially interesting bec
 \label{fig:ruter_15_18}
 \end{figure}
 
-The weeks of 47, 48 and 49 show a slight decrease of passenger travel without overlapping any vacations and holidays, there is also a slight increase of reported ILI every influenza season in those weeks. Should this correlation be confirmed to be valid after further investigations, this represents a measure link between urban travel habits and presence of flu within a society.
+The weeks of 47, 48 and 49 show a slight decrease in passenger travel without overlapping any vacations and holidays, there is also a slight increase of reported ILI every influenza season in those weeks. Should this correlation be confirmed to be valid after further investigations, this represents a measure link between urban travel habits and presence of flu within a society.
 After the Christmas holiday passenger travel struggle for a few weeks to 'catch up' to a more stable level, interestingly enough the influenza seasons usually are on its peaks at that very time.
 The amount of passenger travel also seems to be slightly increasing as the influenza season declines.
 

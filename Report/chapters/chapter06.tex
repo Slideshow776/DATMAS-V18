@@ -1,8 +1,6 @@
 
 In this chapter, the results and other constraints encountered will be discussed.
 
-TODO: si noe om bedre Twitter search terms?
-
 \section{Project Management}
 
 Early in the planning and management phase of this thesis, it became evident that the Norwegian infrastructure for retrieving data from various public sources by API was not sufficient for the needs of this thesis. Therefore the initial plan to automate the collection of data needed was adapted to the means of acquiring the data by manually asking the various agencies and implementing their data hard-coded.
@@ -91,6 +89,3 @@ In hindsight, it is the belief that this thesis would benefit greatly from this 
 A wanted feature was the variance calculation of the different traffic registration stations that had hourly dataset on them. This would visualize the data on the map in an interestingly manner by differing the sizes based on amount of traffic and colourise them based on the difference by each station's yearly variance. This planned feature fell of of this thesis's time-scope, and although outlined never reach actualisation. There are however attempted experimental algorithms in the program NPRA\_Traffic\_Stations\_load\_data.py, the main concern was the time-cost of these algorithms as calculating the variance of one hourly dataset over the course of five years meant reading through about 87.630 lines of data which could take nearly a minute to run on modern computers. This is why having an indexed database would be beneficial when running such an algorithm on all of the 53 traffic registration stations accessible in this thesis. Although a neat feature the lack of a indexed database and insufficient time, this was never completed.
 
 
-TODO: synsing om marked som kan utnyttes, utfording å hente data
-
-It seems that there is a potential untapped market with the dealing of retrieving multi-source data for the purposes of real-time responsive system that derive information and exploits this.

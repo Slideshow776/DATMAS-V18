@@ -13,6 +13,15 @@
 \usepackage{pdfpages}
 \usepackage{array}
 \usepackage[section]{placeins} % TODO: denne tvinger bilder på plass, kanskje ta vekk?
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=black ,  %choose some color if you want links to stand out
+    citecolor=[rgb]{0.3,0.0,1.0},
+}
+\usepackage{url}
+
 
 \title{Automated collection of multi-source spatial information for emergency management}
 \author{Sandra Moen}
@@ -28,7 +37,8 @@
 \chapter*{Acknowledgements}
 This thesis is considered an impressive achievement for the author, it was completed in spite of hardships endured. Under no circumstance should this thesis be considered a Norwegian accomplishment, for the oppression suffered they are deemed unworthy.
 \newline \\
-This thesis was written for the Department of Electrical Engineering and Computer Science at the University of Stavanger. Creating a means to solve problems that limit peoples lives have always been a real motivator. Predicting the flu season and hindering it in early stages would save an enormous amount of resources and improve life quality, this would be very rewarding. A special thanks to the supervisor for this project from the University of Stavanger Professor Erlend Tøssebro for his enthusiastic guidance and involvement, and the initiator who inspired incentive to the creation of this project as well as his continuous helpful guidance and involvement Phd fellow Lars Ole Grottenberg.
+This thesis was written for the Department of Electrical Engineering and Computer Science at the University of Stavanger. Creating a means to solve problems that limit peoples lives have always been a real motivator. Predicting the flu season and hindering it in early stages would save an enormous amount of resources and improve life quality, this would be very rewarding.\\
+A special thanks to the supervisor for this project from the University of Stavanger Professor Erlend Tøssebro for his enthusiastic guidance and involvement, and the initiator who inspired incentive to the creation of this project as well as his continuous helpful guidance and involvement research Fellow Lars Ole Grottenberg.
 
 \setcounter{secnumdepth}{5}
 \setcounter{tocdepth}{5}
@@ -58,7 +68,9 @@ This thesis was written for the Department of Electrical Engineering and Compute
 \input{chapters/chapter07}
 
 \appendix
-\chapter{TODO: Appendix Title}
+\chapter{A.1 Source Code}
+The source code for the program created for this thesis is found by this link: \url{https://github.com/Slideshow776/DATMAS-V18}. This is also the intended way to view the directory, as the three readme .md files contained are best visualised with their markup language, the github page is also considered a part of this thesis's work. \\
+There was no way to append the code to the delivery of this thesis, so the code is available only by this means. There are no guarantees that the link will work.
 
 %\printbibliography
 \bibliography{references}
