@@ -7,7 +7,7 @@ L.~O. Grottenberg, O.~Njå, E.~Tøssebro, G.~Braut, R.~Tønnessen, and G.~M.
   2017.
 
 \bibitem{fhi_sykdommer}
-``The norwegian institute of public health: Influenza symptoms.''
+``The {Norwegian} {Institute} of {Public} {Health}: Influenza symptoms.''
   https://www.fhi.no/en/id/influensa/seasonal-influenza/influenza---fact-sheet-about-season/.
 \newblock Accessed: 2018-06-11.
 
@@ -30,7 +30,7 @@ A.~D. Iuliano, K.~M. Roguski, H.~H. Chang, D.~J. Muscatello, R.~Palekar,
   modelling study,'' {\em The Lancet}, 2017.
 
 \bibitem{niph}
-``The norwegian institute of public health.'' https://www.fhi.no/en/.
+``The {Norwegian} {Institute} of {Public} {Health}.'' https://www.fhi.no/en/.
 \newblock Accessed: 2018-06-11.
 
 \bibitem{poletto2013human}
@@ -60,8 +60,8 @@ M.~K. Enduri and S.~Jolad, ``Dynamics of dengue disease with human and vector
   pp.~57--66, 2018.
 
 \bibitem{NorSySS}
-``The norwegian institute of public health: About the norwegian syndromic
-  surveillance system.''
+``The {Norwegian} {Institute} of {Public} {Health}: About the {Norwegian}
+  syndromic surveillance system.''
   https://www.fhi.no/en/hn/statistics/NorSySS/about-the-norwegian-syndromic-surveillance-system/.
 \newblock Accessed: 2018-06-11.
 
@@ -117,8 +117,8 @@ T.~Koch, ``Mapping medical disasters: Ebola makes old lessons, new,'' {\em
   2015.
 
 \bibitem{gis_support}
-T.~Lüge, ``Gis support for the msf ebola response in liberia, guinea and
-  sierra leone case study,'' 2015.
+T.~Lüge, ``Gis support for the {MSF} {Ebola} response in {Liberia}, {Guinea}
+  and {Sierra} {Leone} case study,'' 2015.
 
 \bibitem{moeller2015mapping}
 M.~Moeller and S.~Furhmann, ``Mapping the world-a new approach for volunteered
@@ -222,13 +222,13 @@ J.~P. De~Albuquerque, B.~Herfort, A.~Brenning, and A.~Zipf, ``A geographic
   2015.
 
 \bibitem{fhi}
-``The norwegian institute of public health: Influenza information.''
+``The {Norwegian} {Institute} of {Public} {Health}: Influenza information.''
   https://fhi.no/en/id/influensa/seasonal-influenza/.
 \newblock Accessed: 2018-06-11.
 
 \bibitem{vegvesenet}
-``The norwegian public roads administration: Open data, api for developers.''
-  https://www.vegvesen.no/en/the+npra/about-the-npra/open-data.
+``The {Norwegian} {Public} {Roads} {Administration}: Open data, api for
+  developers.'' https://www.vegvesen.no/en/the+npra/about-the-npra/open-data.
 \newblock Accessed: 2018-06-11.
 
 \bibitem{goompy}
@@ -250,6 +250,10 @@ J.~P. De~Albuquerque, B.~Herfort, A.~Brenning, and A.~Zipf, ``A geographic
 N.~Bambrick, ``Analyzing time and volume trends in news content.''
   http://blog.aylien.com/analyzing-time-volume-trends-in-news-content/, 2016.
 
+\bibitem{datatilsynet}
+N.~D.~P. Authority, ``Norwegian government agency responsible for managing data
+  protection privacy concerns..'' https://www.datatilsynet.no/en/, 2018.
+
 \bibitem{meissner2017china}
 M.~Meissner, ``China’s social credit system: A big-data enabled approach to
   market regulation with broad implications for doing business in china,'' {\em
@@ -263,10 +267,6 @@ R.~Botsman, ``Big data meets big brother as china moves to rate its citizens.''
 \bibitem{china_wiki}
 Wikipedia, ``Social credit system.''
   https://en.m.wikipedia.org/wiki/Social\_Credit\_System, 2018.
-
-\bibitem{datatilsynet}
-N.~D.~P. Authority, ``Norwegian government agency responsible for managing data
-  protection privacy concerns..'' https://www.datatilsynet.no/en/, 2018.
 
 \bibitem{vegkart}
 NPRA, ``Information about norwegian roads from the national road databank..''
