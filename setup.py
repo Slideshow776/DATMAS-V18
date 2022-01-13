@@ -15,7 +15,7 @@ setup(
     description='W python version 3.6.4',
     long_description=open('README.md').read(),
     install_requires=[
-        "Pillow==5.0.0",
+        "Pillow==9.0.0",
         "numpy==1.14.0",
 		"matplotlib==2.1.2",
 		"openpyxl==2.4.10",
