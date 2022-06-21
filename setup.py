@@ -16,7 +16,7 @@ setup(
     long_description=open('README.md').read(),
     install_requires=[
         "Pillow==5.0.0",
-        "numpy==1.14.0",
+        "numpy==1.22.0",
 		"matplotlib==2.1.2",
 		"openpyxl==2.4.10",
 		"twitter==1.18.0",
